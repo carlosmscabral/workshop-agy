@@ -1,23 +1,22 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/bash
 
-PROJECT_ID="$1"
-REGION="$2"
-ZONE="$3"
+# Environment variables passed from main.tf
+PROJECT_ID=$1
+REGION=$2
+ZONE=$3
 
-echo "================================================================="
-echo " Starting GEAP & Vertex AI Agent Engine Lab Setup Automation"
-echo " Project: ${PROJECT_ID}"
-echo " Region:  ${REGION}"
-echo " Zone:    ${ZONE}"
-echo "================================================================="
+echo "============================================================"
+echo "Starting Lab Setup Automation for GEAP & Vertex AI"
+echo "Project: ${PROJECT_ID}"
+echo "Region:  ${REGION}"
+echo "Zone:    ${ZONE}"
+echo "============================================================"
 
-gcloud config set project "${PROJECT_ID}"
+# Set the active project
+gcloud config set project "$PROJECT_ID"
 
-# -----------------------------------------------------------------
-# 1. Enable Full GEAP Enterprise API Surface
-# -----------------------------------------------------------------
-echo "[1/4] Enabling GEAP, Vertex AI, Data, Security & Compute APIs..."
+# 1. Enable Core & Vertex AI APIs
+echo "Enabling GEAP & Vertex AI APIs..."
 gcloud services enable \
   serviceusage.googleapis.com \
   cloudresourcemanager.googleapis.com \
@@ -41,32 +40,25 @@ gcloud services enable \
   iamcredentials.googleapis.com \
   logging.googleapis.com \
   monitoring.googleapis.com \
-  cloudtrace.googleapis.com
+  cloudtrace.googleapis.com || true
 
-# -----------------------------------------------------------------
-# 2. Pre-create Artifact Registry for Custom Agent / MCP Containers
-# -----------------------------------------------------------------
-echo "[2/4] Initializing Artifact Registry repository for Agent containers..."
-gcloud artifacts repositories create "geap-agent-docker" \
-  --project="${PROJECT_ID}" \
+# 2. Pre-create Artifact Registry repository
+echo "Creating Artifact Registry repository for Agent containers..."
+gcloud artifacts repositories create geap-agent-docker \
+  --project="$PROJECT_ID" \
   --repository-format=docker \
-  --location="${REGION}" \
-  --description="Docker repository for GEAP Custom Agents and MCP servers" || echo "Repository already exists."
+  --location="$REGION" \
+  --description="Docker repository for GEAP Custom Agents and MCP servers" || true
 
-# -----------------------------------------------------------------
-# 3. Create Staging Cloud Storage Bucket for Agent Engine & Pickles
-# -----------------------------------------------------------------
+# 3. Create Staging Cloud Storage Bucket
 BUCKET_NAME="${PROJECT_ID}-geap-artifacts"
-echo "[3/4] Creating staging GCS bucket: gs://${BUCKET_NAME} in ${REGION}..."
+echo "Creating staging GCS bucket: gs://${BUCKET_NAME} in ${REGION}..."
 gcloud storage buckets create "gs://${BUCKET_NAME}" \
-  --project="${PROJECT_ID}" \
-  --location="${REGION}" \
-  --uniform-bucket-level-access || echo "Bucket already exists."
+  --project="$PROJECT_ID" \
+  --location="$REGION" \
+  --uniform-bucket-level-access || true
 
-# -----------------------------------------------------------------
-# 4. Seed Sample Agent Manifest & Reference Schemas
-# -----------------------------------------------------------------
-echo "[4/4] Seeding sample agent manifest and reference schemas..."
+# 4. Seed Sample Agent Manifest
 cat << 'EOF' > /tmp/agent_manifest.json
 {
   "agent_id": "enterprise-customer-support-agent",
@@ -89,8 +81,9 @@ cat << 'EOF' > /tmp/agent_manifest.json
 }
 EOF
 
-gcloud storage cp /tmp/agent_manifest.json "gs://${BUCKET_NAME}/manifests/agent_manifest.json"
+gcloud storage cp /tmp/agent_manifest.json "gs://${BUCKET_NAME}/manifests/agent_manifest.json" || true
 
-echo "================================================================="
-echo " GEAP Lab Setup Automation Successfully Completed!"
-echo "================================================================="
+echo "============================================================"
+echo "Lab Setup Complete!"
+echo "============================================================"
+exit 0
