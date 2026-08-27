@@ -26,20 +26,37 @@ Ao final deste laboratório, você será capaz de:
 Leia estas instruções com atenção. Os laboratórios têm um temporizador regressivo e o ambiente sandbox não pode ser pausado. O cronômetro começa a contar quando você clica em **Start Lab**.
 
 ### Parâmetros e Credenciais do seu Sandbox
-* **ID do Projeto GCP:** `{{{ project_0.project_id }}}`
-* **Região Atribuída:** `{{{ project_0.region }}}`
-* **Zona Atribuída:** `{{{ project_0.zone }}}`
-* **Usuário do Aluno:** `{{{ user_0.username }}}`
-* **Senha:** *(exibida no painel esquerdo após iniciar o lab)*
+
+As credenciais e parâmetros exclusivos da sua sessão temporária são gerados dinamicamente e exibidos no **painel lateral esquerdo** desta página:
+
+<div style="background-color: #f8f9fa; border-left: 4px solid #1a73e8; padding: 15px; margin: 15px 0; border-radius: 4px;">
+  <p><strong>💡 Detalhes de Conexão (Painel Lateral Esquerdo):</strong></p>
+  <ul>
+    <li><strong>ID do Projeto GCP:</strong> Consulte o campo <code>project_id</code> na barra lateral esquerda (ou use: <ql-variable key="project_0.project_id" placeholder="qwiklabs-gcp-..."></ql-variable>)</li>
+    <li><strong>Região Atribuída:</strong> Consulte <code>default_region</code> na barra lateral esquerda (ou: <ql-variable key="project_0.region" placeholder="us-central1"></ql-variable>)</li>
+    <li><strong>Usuário do Aluno:</strong> Consulte o campo <code>Username</code> na barra lateral</li>
+    <li><strong>Senha:</strong> Consulte o campo <code>Password</code> na barra lateral</li>
+  </ul>
+</div>
+
+<p align="center" style="margin: 25px 0;">
+  <a href="https://console.cloud.google.com" target="_blank" rel="noopener noreferrer" style="background-color: #1a73e8; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; display: inline-block; font-weight: bold; font-size: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">
+    🚀 Abrir Google Cloud Console
+  </a>
+  <br>
+  <span style="font-size: 12px; color: #5f6368; display: inline-block; margin-top: 8px;">
+    👉 <em>Clique com o botão direito no botão acima e selecione <strong>"Abrir link em uma janela anônima"</strong> (Open link in incognito window).</em>
+  </span>
+</p>
 
 ---
 
 ## Como iniciar o laboratório e fazer login no Google Cloud Console
 
 1. Clique no botão **Start Lab** no canto superior esquerdo da página.
-2. Aguarde aproximadamente 1 a 2 minutos enquanto o script de automação configura as APIs e o projeto sandbox.
-3. Quando o painel esquerdo exibir suas credenciais temporárias:
-   * Clique com o **botão direito** no botão **Open Google Cloud Console** (Abrir Console do Google Cloud).
+2. Aguarde aproximadamente 1 a 2 minutos enquanto o script de automação inicializa o ambiente sandbox.
+3. Com o laboratório ativo, acesse o console usando o botão azul **Open Google Console** na barra lateral esquerda (ou use o botão acima):
+   * Clique com o **botão direito** no botão.
    * Selecione **"Abrir link em uma janela anônima"** (*Open link in incognito window*).
 
 > ⚠️ **MUITO IMPORTANTE:** Sempre utilize uma **Janela Anônima (Incognito)**. Isso evita conflitos de autenticação com sua conta corporativa (@google.com) ou pessoal (@gmail.com) e impede o uso ou cobrança acidental em projetos pessoais.
