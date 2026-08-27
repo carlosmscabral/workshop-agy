@@ -13,10 +13,10 @@ Todos os serviços essenciais, configurações de rede, buckets de armazenamento
 ## Objetivos
 Ao final deste laboratório, você será capaz de:
 * Acessar o Google Cloud Console utilizando credenciais temporárias em modo anônimo.
-* Verificar os serviços e APIs do GEAP e Vertex AI habilitados no seu projeto sandbox.
-* Inspecionar manifestos de agentes e repositórios do Artifact Registry pré-criados.
+* Verificar os serviços e APIs essenciais do GEAP, Vertex AI Agent Engine, Sessions e Telemetria.
+* Inspecionar o Chat Engine corporativo pré-criado no Discovery Engine / Agent Builder (`agy-enterprise-app`).
+* Baixar e carregar o arquivo de ambiente local (`.env`) e os metadados do **AgentCard** no Cloud Shell.
 * Interagir com modelos de fundação Vertex AI Gemini a partir do Cloud Shell com respostas em JSON estruturado.
-* Validar a arquitetura de persistência e repositórios para implantação de agentes e servidores MCP remotos.
 
 ---
 
@@ -122,42 +122,76 @@ echo "=========================================="
 
 ## Tarefa 2: Validar os Serviços e APIs Principais do GEAP
 
-O script de inicialização automatizado pré-habilitou todo o ecossistema de APIs corporativas do Google Cloud para o GEAP e o Vertex AI Agent Engine.
+O script de inicialização automatizado pré-habilitou todo o ecossistema de APIs corporativas do Google Cloud para o GEAP, Vertex AI Agent Engine, Sessions e Telemetria.
 
 Execute o comando a seguir no Cloud Shell para verificar os serviços ativos:
 
 ```bash
-gcloud services list --enabled --filter="name:(aiplatform OR discoveryengine OR modelarmor OR run)"
+gcloud services list --enabled --filter="name:(aiplatform OR discoveryengine OR cloudaicompanion OR modelarmor OR run OR logging OR cloudtrace)"
 ```
 
-### Serviços esperados na saída:
-* `aiplatform.googleapis.com` &rarr; Vertex AI, Reasoning Engines e Agent Engine.
-* `discoveryengine.googleapis.com` &rarr; Vertex AI Agent Builder, Search & Conversation e RAG Data Stores.
+### Principais serviços ativos e sua função na arquitetura:
+* `aiplatform.googleapis.com` &rarr; Vertex AI Agent Engine, Reasoning Engines, Sessions Service e inferência de modelos Gemini.
+* `discoveryengine.googleapis.com` &rarr; Google Enterprise Agent Builder, Search & Conversation e GE App.
+* `cloudaicompanion.googleapis.com` &rarr; Integração nativa do Gemini Enterprise App e Cloud Companion.
 * `modelarmor.googleapis.com` &rarr; Salvaguardas de segurança corporativas e filtros de prompt injection do Model Armor.
-* `run.googleapis.com` &rarr; Cloud Run para hospedagem de servidores remotos MCP e contêineres de agentes customizados.
+* `cloudtrace.googleapis.com` & `logging.googleapis.com` &rarr; Telemetria unificada, rastreamento distribuído e auditoria de execução de agentes.
+* `run.googleapis.com` &rarr; Cloud Run para hospedagem de servidores remotos MCP e serviços de agentes.
 
 ---
 
-## Tarefa 3: Inspecionar Artefatos Pré-configurados e o Repositório Docker
+## Tarefa 3: Inspecionar o GE App (Agent Builder / Discovery Engine)
 
-1. Verifique o repositório Docker criado no Artifact Registry para hospedar imagens de contêiner de agentes e servidores MCP:
+O script de inicialização pré-criou automaticamente uma aplicação corporativa no Discovery Engine / Agent Builder (`agy-enterprise-app`) para registro e roteamento dos seus agentes autônomos.
+
+Inspecione os metadados do Chat Engine executando a chamada REST a seguir diretamente no Cloud Shell:
 
 ```bash
-gcloud artifacts repositories describe geap-agent-docker --location=${REGION}
+curl -s -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+  -H "X-Goog-User-Project: ${PROJECT_ID}" \
+  "https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/global/collections/default_collection/engines/agy-enterprise-app" | python3 -m json.tool
 ```
 
-2. Inspecione o manifesto de exemplo de agente corporativo armazenado no bucket de preparação do Cloud Storage:
+Verifique na saída JSON:
+* `displayName`: `"AGY Enterprise Agent App"`
+* `solutionType`: `"SOLUTION_TYPE_CHAT"`
+* O motor está pronto para montagem e registro de subagentes ADK.
+
+---
+
+## Tarefa 4: Baixar e Validar o Arquivo de Configuração Local (.env e agent_card.json)
+
+O script de inicialização gerou o arquivo de ambiente local (`.env`) e o manifesto de metadados do agente (`agent_card.json`) no Cloud Storage para você utilizá-los no desenvolvimento e deploy com o Google ADK.
+
+Execute os comandos abaixo para criar seu diretório de trabalho local no Cloud Shell e baixar os arquivos:
 
 ```bash
 export BUCKET_NAME="${PROJECT_ID}-geap-artifacts"
-gcloud storage cat "gs://${BUCKET_NAME}/manifests/agent_manifest.json"
+mkdir -p ~/agy-agent && cd ~/agy-agent
+
+# Baixar arquivo de ambiente (.env) e especificações do agente
+gcloud storage cp "gs://${BUCKET_NAME}/config/.env" .
+gcloud storage cp "gs://${BUCKET_NAME}/config/agent_card.json" .
+gcloud storage cp "gs://${BUCKET_NAME}/manifests/agent_manifest.json" .
+
+# Carregar as variáveis de ambiente locais
+source .env
+
+echo "Configurações carregadas localmente:"
+cat .env
+```
+
+Exiba os metadados do **AgentCard** que descrevem o agente especialista para a plataforma GEAP:
+
+```bash
+cat agent_card.json | python3 -m json.tool
 ```
 
 ---
 
-## Tarefa 4: Testar a Invocação de Modelos Vertex AI Gemini via Cloud Shell
+## Tarefa 5: Testar a Invocação de Modelos Vertex AI Gemini via Cloud Shell
 
-Execute o script Python a seguir no Cloud Shell para testar o envio de uma solicitação com geração estruturada (JSON) para o modelo Gemini 1.5 Flash no Vertex AI:
+Execute o script Python a seguir no Cloud Shell para testar o envio de uma solicitação com geração estruturada (JSON) para o modelo Gemini 1.5 Flash no Vertex AI, simulando o classificador semântico do agente:
 
 ```bash
 python3 -c '
@@ -184,7 +218,7 @@ Você deverá receber uma resposta em formato JSON categorizando a intenção do
 
 ---
 
-## Tarefa 5: Finalizar o Laboratório
+## Tarefa 6: Finalizar o Laboratório
 
 Parabéns! Você acessou o ambiente com segurança em modo anônimo, validou a infraestrutura do GEAP, inspecionou os repositórios pré-provisionados e testou a integração com o modelo Gemini no Vertex AI.
 
