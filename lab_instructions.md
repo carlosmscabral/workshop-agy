@@ -27,15 +27,15 @@ Leia estas instruções com atenção. Os laboratórios têm um temporizador reg
 
 ### Parâmetros e Credenciais do seu Sandbox
 
-As credenciais e parâmetros exclusivos da sua sessão temporária são gerados dinamicamente e exibidos no **painel lateral esquerdo** desta página:
+Todos os parâmetros exclusivos da sua sessão temporária são gerados dinamicamente e exibidos no **painel lateral esquerdo** desta página:
 
-<div style="background-color: #f8f9fa; border-left: 4px solid #1a73e8; padding: 15px; margin: 15px 0; border-radius: 4px;">
-  <p><strong>💡 Detalhes de Conexão (Painel Lateral Esquerdo):</strong></p>
-  <ul>
-    <li><strong>ID do Projeto GCP:</strong> Consulte o campo <code>project_id</code> na barra lateral esquerda (ou use: <ql-variable key="project_0.project_id" placeholder="qwiklabs-gcp-..."></ql-variable>)</li>
-    <li><strong>Região Atribuída:</strong> Consulte <code>default_region</code> na barra lateral esquerda (ou: <ql-variable key="project_0.region" placeholder="us-central1"></ql-variable>)</li>
-    <li><strong>Usuário do Aluno:</strong> Consulte o campo <code>Username</code> na barra lateral</li>
-    <li><strong>Senha:</strong> Consulte o campo <code>Password</code> na barra lateral</li>
+<div style="background-color: #f8f9fa; border-left: 4px solid #1a73e8; padding: 16px; margin: 16px 0; border-radius: 4px;">
+  <p style="margin-top: 0;"><strong>💡 Detalhes da sua Sessão (consulte o painel lateral esquerdo):</strong></p>
+  <ul style="margin-bottom: 0;">
+    <li><strong>Project ID:</strong> O identificador exclusivo do seu projeto sandbox temporário (clique no ícone de cópia ao lado).</li>
+    <li><strong>Region:</strong> A região geográfica atribuída para a sua sessão (ex: <code>us-west1</code>).</li>
+    <li><strong>User:</strong> A conta de e-mail temporária de estudante atribuída a você.</li>
+    <li><strong>Password:</strong> A senha temporária para login no Google Cloud Console.</li>
   </ul>
 </div>
 
@@ -45,7 +45,7 @@ As credenciais e parâmetros exclusivos da sua sessão temporária são gerados 
   </a>
   <br>
   <span style="font-size: 12px; color: #5f6368; display: inline-block; margin-top: 8px;">
-    👉 <em>Clique com o botão direito no botão acima e selecione <strong>"Abrir link em uma janela anônima"</strong> (Open link in incognito window).</em>
+    👉 <em>Você pode usar o botão acima ou o botão <strong>Console</strong> na barra lateral esquerda. Sempre clique com o botão direito e selecione <strong>"Abrir link em uma janela anônima"</strong> (Open link in incognito window).</em>
   </span>
 </p>
 
@@ -88,9 +88,9 @@ Ao fazer login pela primeira vez com o usuário temporário do laboratório, voc
 
 ---
 
-## Tarefa 1: Abrir e Autorizar o Google Cloud Shell
+## Tarefa 1: Abrir e Configurar o Google Cloud Shell
 
-O Cloud Shell é uma máquina virtual com ferramentas de desenvolvimento e o SDK `gcloud` pré-instalado.
+O Cloud Shell é um terminal interativo no navegador com as ferramentas `gcloud` e utilitários de desenvolvimento pré-instalados.
 
 1. No canto superior direito do Console do Google Cloud, clique no ícone **Ativar Cloud Shell** (`>_`).
 2. Quando a janela do terminal abrir na parte inferior da tela, clique em **Continuar (*Continue*)**.
@@ -99,14 +99,22 @@ O Cloud Shell é uma máquina virtual com ferramentas de desenvolvimento e o SDK
 ```bash
 gcloud auth list
 ```
-*(A conta ativa exibida deve ser o `{{{ user_0.username }}}`)*.
+*(A conta ativa assinalada com `*` deve coincidir com o e-mail exibido no campo **User** da barra lateral esquerda).*
 
-4. Configure sua região padrão e garanta que o projeto ativo seja o sandbox atribuído:
+4. Inicialize as variáveis de ambiente baseadas no projeto ativo e configure a região atribuída:
 
 ```bash
-gcloud config set project {{{ project_0.project_id }}}
-gcloud config set compute/region {{{ project_0.region }}}
+export PROJECT_ID=$(gcloud config get-value project)
+export REGION="us-west1"
+
+gcloud config set compute/region $REGION
+
+echo "=========================================="
+echo "Projeto Sandbox Ativo: ${PROJECT_ID}"
+echo "Região Ativa:          ${REGION}"
+echo "=========================================="
 ```
+*(Caso o campo **Region** da sua barra lateral indique outra região, ajuste o valor da variável `REGION` acima).*
 
 5. Caso apareça uma janela pop-up solicitando **"Autorizar o Cloud Shell a fazer chamadas de API do GCP"** (*Authorize Cloud Shell to make GCP API calls*), clique em **Autorizar (*Authorize*)**.
 
@@ -135,13 +143,13 @@ gcloud services list --enabled --filter="name:(aiplatform OR discoveryengine OR 
 1. Verifique o repositório Docker criado no Artifact Registry para hospedar imagens de contêiner de agentes e servidores MCP:
 
 ```bash
-gcloud artifacts repositories describe geap-agent-docker --location={{{ project_0.region }}}
+gcloud artifacts repositories describe geap-agent-docker --location=${REGION}
 ```
 
 2. Inspecione o manifesto de exemplo de agente corporativo armazenado no bucket de preparação do Cloud Storage:
 
 ```bash
-export BUCKET_NAME="{{{ project_0.project_id }}}-geap-artifacts"
+export BUCKET_NAME="${PROJECT_ID}-geap-artifacts"
 gcloud storage cat "gs://${BUCKET_NAME}/manifests/agent_manifest.json"
 ```
 
@@ -153,11 +161,11 @@ Execute o script Python a seguir no Cloud Shell para testar o envio de uma solic
 
 ```bash
 python3 -c '
-import urllib.request, json, subprocess
+import urllib.request, json, subprocess, os
 
 token = subprocess.check_output(["gcloud", "auth", "print-access-token"]).decode("utf-8").strip()
-project_id = "{{{ project_0.project_id }}}"
-region = "{{{ project_0.region }}}"
+project_id = subprocess.check_output(["gcloud", "config", "get-value", "project"]).decode("utf-8").strip()
+region = os.environ.get("REGION") or subprocess.check_output(["gcloud", "config", "get-value", "compute/region"]).decode("utf-8").strip() or "us-west1"
 
 url = f"https://{region}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{region}/publishers/google/models/gemini-1.5-flash:generateContent"
 
