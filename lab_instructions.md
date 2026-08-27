@@ -27,15 +27,16 @@ Leia estas instruções com atenção. Os laboratórios têm um temporizador reg
 
 ### Parâmetros e Credenciais do seu Sandbox
 
-Todos os parâmetros exclusivos da sua sessão temporária são gerados dinamicamente e exibidos no **painel lateral esquerdo** desta página:
+Todos os parâmetros exclusivos da sua sessão temporária são gerados dinamicamente para o seu laboratório:
 
 <div style="background-color: #f8f9fa; border-left: 4px solid #1a73e8; padding: 16px; margin: 16px 0; border-radius: 4px;">
-  <p style="margin-top: 0;"><strong>💡 Detalhes da sua Sessão (consulte o painel lateral esquerdo):</strong></p>
+  <p style="margin-top: 0;"><strong>💡 Detalhes de Conexão da sua Sessão:</strong></p>
   <ul style="margin-bottom: 0;">
-    <li><strong>Project ID:</strong> O identificador exclusivo do seu projeto sandbox temporário (clique no ícone de cópia ao lado).</li>
-    <li><strong>Region:</strong> A região geográfica atribuída para a sua sessão (ex: <code>us-west1</code>).</li>
-    <li><strong>User:</strong> A conta de e-mail temporária de estudante atribuída a você.</li>
-    <li><strong>Password:</strong> A senha temporária para login no Google Cloud Console.</li>
+    <li><strong>ID do Projeto GCP:</strong> <ql-variable key="project_0.project_id"></ql-variable></li>
+    <li><strong>Região Atribuída:</strong> <ql-variable key="project_0.default_region"></ql-variable></li>
+    <li><strong>Zona Atribuída:</strong> <ql-variable key="project_0.default_zone"></ql-variable></li>
+    <li><strong>Usuário do Aluno:</strong> <ql-variable key="user_0.username"></ql-variable></li>
+    <li><strong>Senha de Acesso:</strong> Consulte o campo <code>Password</code> na barra lateral esquerda</li>
   </ul>
 </div>
 
@@ -99,14 +100,15 @@ O Cloud Shell é um terminal interativo no navegador com as ferramentas `gcloud`
 ```bash
 gcloud auth list
 ```
-*(A conta ativa assinalada com `*` deve coincidir com o e-mail exibido no campo **User** da barra lateral esquerda).*
+*(A conta ativa assinalada com `*` deve ser: <ql-variable key="user_0.username"></ql-variable>).*
 
-4. Inicialize as variáveis de ambiente baseadas no projeto ativo e configure a região atribuída:
+4. Inicialize as variáveis de ambiente com o projeto e região exclusivos do seu sandbox:
 
-```bash
-export PROJECT_ID=$(gcloud config get-value project)
-export REGION="us-west1"
+```bash templated
+export PROJECT_ID="{{{project_0.project_id}}}"
+export REGION="{{{project_0.default_region}}}"
 
+gcloud config set project $PROJECT_ID
 gcloud config set compute/region $REGION
 
 echo "=========================================="
@@ -114,7 +116,6 @@ echo "Projeto Sandbox Ativo: ${PROJECT_ID}"
 echo "Região Ativa:          ${REGION}"
 echo "=========================================="
 ```
-*(Caso o campo **Region** da sua barra lateral indique outra região, ajuste o valor da variável `REGION` acima).*
 
 5. Caso apareça uma janela pop-up solicitando **"Autorizar o Cloud Shell a fazer chamadas de API do GCP"** (*Authorize Cloud Shell to make GCP API calls*), clique em **Autorizar (*Authorize*)**.
 
@@ -146,10 +147,10 @@ O script de inicialização pré-criou automaticamente uma aplicação corporati
 
 Inspecione os metadados do Chat Engine executando a chamada REST a seguir diretamente no Cloud Shell:
 
-```bash
+```bash templated
 curl -s -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-  -H "X-Goog-User-Project: ${PROJECT_ID}" \
-  "https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/global/collections/default_collection/engines/agy-enterprise-app" | python3 -m json.tool
+  -H "X-Goog-User-Project: {{{project_0.project_id}}}" \
+  "https://discoveryengine.googleapis.com/v1/projects/{{{project_0.project_id}}}/locations/global/collections/default_collection/engines/agy-enterprise-app" | python3 -m json.tool
 ```
 
 Verifique na saída JSON:
@@ -165,8 +166,8 @@ O script de inicialização gerou o arquivo de ambiente local (`.env`) e o manif
 
 Execute os comandos abaixo para criar seu diretório de trabalho local no Cloud Shell e baixar os arquivos:
 
-```bash
-export BUCKET_NAME="${PROJECT_ID}-geap-artifacts"
+```bash templated
+export BUCKET_NAME="{{{project_0.project_id}}}-geap-artifacts"
 mkdir -p ~/agy-agent && cd ~/agy-agent
 
 # Baixar arquivo de ambiente (.env) e especificações do agente
@@ -193,13 +194,13 @@ cat agent_card.json | python3 -m json.tool
 
 Execute o script Python a seguir no Cloud Shell para testar o envio de uma solicitação com geração estruturada (JSON) para o modelo Gemini 1.5 Flash no Vertex AI, simulando o classificador semântico do agente:
 
-```bash
+```bash templated
 python3 -c '
-import urllib.request, json, subprocess, os
+import urllib.request, json, subprocess
 
 token = subprocess.check_output(["gcloud", "auth", "print-access-token"]).decode("utf-8").strip()
-project_id = subprocess.check_output(["gcloud", "config", "get-value", "project"]).decode("utf-8").strip()
-region = os.environ.get("REGION") or subprocess.check_output(["gcloud", "config", "get-value", "compute/region"]).decode("utf-8").strip() or "us-west1"
+project_id = "{{{project_0.project_id}}}"
+region = "{{{project_0.default_region}}}"
 
 url = f"https://{region}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{region}/publishers/google/models/gemini-1.5-flash:generateContent"
 
