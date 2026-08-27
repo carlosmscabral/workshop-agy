@@ -52,21 +52,36 @@ gcloud storage buckets create "gs://${BUCKET_NAME}" \
   --location="${REGION}" \
   --uniform-bucket-level-access || true
 
-# 3. Pre-create GE App (Chat Engine in Discovery Engine / Agent Builder)
+# 3. Pre-create GE App (Data Store and Chat Engine in Discovery Engine / Agent Builder)
 echo "Pre-creating GE App (agy-enterprise-app) in Discovery Engine..."
 ADC_TOKEN=$(gcloud auth print-access-token 2>/dev/null || true)
+DATA_STORE_ID="agy-kb-store"
 APP_ID="agy-enterprise-app"
 APP_DISPLAY_NAME="AGY Enterprise Agent App"
 
 if [ -n "${ADC_TOKEN}" ]; then
-  # Check if app already exists
+  # 3a. Create Data Store for the Chat Engine
+  echo "Creating Data Store '${DATA_STORE_ID}'..."
+  curl -s -X POST \
+    -H "Authorization: Bearer ${ADC_TOKEN}" \
+    -H "X-Goog-User-Project: ${PROJECT_ID}" \
+    -H "Content-Type: application/json; charset=utf-8" \
+    -d '{
+      "displayName": "AGY Knowledge Base",
+      "industryVertical": "GENERIC",
+      "solutionTypes": ["SOLUTION_TYPE_CHAT"],
+      "contentConfig": "NO_CONTENT"
+    }' \
+    "https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/global/collections/default_collection/dataStores?dataStoreId=${DATA_STORE_ID}" || true
+
+  # 3b. Check if app already exists
   HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
     -H "Authorization: Bearer ${ADC_TOKEN}" \
     -H "X-Goog-User-Project: ${PROJECT_ID}" \
     "https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/global/collections/default_collection/engines/${APP_ID}" || true)
 
   if [ "${HTTP_CODE}" == "404" ] || [ -z "${HTTP_CODE}" ]; then
-    echo "Creating Chat Engine '${APP_ID}'..."
+    echo "Creating Chat Engine '${APP_ID}' linked to '${DATA_STORE_ID}'..."
     curl -s -X POST \
       -H "Authorization: Bearer ${ADC_TOKEN}" \
       -H "X-Goog-User-Project: ${PROJECT_ID}" \
@@ -74,6 +89,8 @@ if [ -n "${ADC_TOKEN}" ]; then
       -d '{
         "displayName": "'"${APP_DISPLAY_NAME}"'",
         "solutionType": "SOLUTION_TYPE_CHAT",
+        "industryVertical": "GENERIC",
+        "dataStoreIds": ["'"${DATA_STORE_ID}"'"],
         "chatEngineConfig": {
           "agentCreationConfig": {
             "business": "Enterprise Multi-Agent Platform",

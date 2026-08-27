@@ -4,7 +4,7 @@ module "cli" {
 
   platform = "linux"
 
-  additional_components = ["beta"]
+  additional_components = []
 
   create_cmd_entrypoint = "chmod +x ${path.module}/scripts/script.sh; ${path.module}/scripts/script.sh"
   create_cmd_body       = "${var.gcp_project_id} ${var.gcp_region} ${var.gcp_zone}"
