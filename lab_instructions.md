@@ -1,34 +1,39 @@
-# Building Enterprise Autonomous Agents with Vertex AI & GEAP
+# Construindo Agentes Autônomos Empresariais com Vertex AI & GEAP
 
-## Overview
-Welcome to the **Google Enterprise Agent Platform (GEAP)** hands-on lab. In this lab, you will explore how to build, test, and deploy enterprise AI agents using the Vertex AI Agent Engine, Google ADK (Agent Development Kit), Model Armor safety guardrails, and Vertex RAG grounding.
+## Visão Geral
+Boas-vindas ao laboratório prático da **Google Enterprise Agent Platform (GEAP)**. Neste laboratório, você explorará como construir, validar e implantar agentes de inteligência artificial corporativos utilizando o Vertex AI Agent Engine, Google ADK (Agent Development Kit), salvaguardas de segurança do Model Armor e técnicas de aterramento com Vertex RAG.
 
-All foundational services, networking, staging Cloud Storage buckets, and container registries have been pre-provisioned.
+Todos os serviços essenciais, configurações de rede, buckets de armazenamento de preparação no Cloud Storage e repositórios de contêineres já foram pré-provisionados automaticamente para você.
 
-## Objectives
-* Verify the enabled GEAP and Vertex AI services in your sandbox.
-* Inspect pre-staged agent manifests and Artifact Registry repositories.
-* Interact with Vertex AI Gemini foundation models from Cloud Shell.
-* Explore Vertex AI Agent Engine and ADK endpoints.
-
----
-
-## Environment Credentials
-
-Your assigned sandbox parameters:
-* **GCP Project ID:** `{{{ project_0.project_id }}}`
-* **Assigned Region:** `{{{ project_0.region }}}`
-* **Assigned Zone:** `{{{ project_0.zone }}}`
-* **Student Username:** `{{{ user_0.username }}}`
+## Objetivos
+Neste laboratório, você aprenderá a:
+* Verificar os serviços e APIs do GEAP e Vertex AI habilitados no seu sandbox.
+* Inspecionar manifestos de agentes e repositórios do Artifact Registry pré-criados.
+* Interagir com modelos de fundação Vertex AI Gemini a partir do Cloud Shell.
+* Explorar endpoints do Vertex AI Agent Engine e do ecossistema ADK.
 
 ---
 
-## Task 1: Open Google Cloud Console and Cloud Shell
+## Credenciais e Detalhes do Ambiente
 
-1. Click **Open Google Cloud Console** in the left panel.
-2. Sign in with the temporary **Student Username** and **Password**.
-3. In the top-right corner of the Cloud Console, click **Activate Cloud Shell** (`>_`).
-4. Set your default compute region and verify project context:
+Os parâmetros do seu sandbox temporário no Google Cloud são exibidos abaixo:
+
+* **ID do Projeto GCP:** `{{{ project_0.project_id }}}`
+* **Região Atribuída:** `{{{ project_0.region }}}`
+* **Zona Atribuída:** `{{{ project_0.zone }}}`
+* **Usuário do Aluno:** `{{{ user_0.username }}}`
+
+> **Importante:** Não utilize sua conta pessoal do Google. Sempre acesse utilizando as credenciais temporárias de estudante fornecidas na barra lateral em uma janela anônima (Incognito/Private).
+
+---
+
+## Tarefa 1: Acessar o Google Cloud Console e o Cloud Shell
+
+1. Clique no botão **Open Google Cloud Console** no painel esquerdo.
+2. Faça login utilizando o **Username** e **Password** temporários exibidos na barra lateral do laboratório.
+3. Aceite os Termos de Serviço caso solicitado.
+4. No canto superior direito do Google Cloud Console, clique em **Ativar Cloud Shell** (`>_`).
+5. Execute o comando abaixo para configurar sua região padrão e garantir que o contexto do projeto esteja ativo:
 
 ```bash
 gcloud config set project {{{ project_0.project_id }}}
@@ -37,31 +42,33 @@ gcloud config set compute/region {{{ project_0.region }}}
 
 ---
 
-## Task 2: Verify GEAP Core Services
+## Tarefa 2: Validar os Serviços e APIs Principais do GEAP
 
-Confirm that all required GEAP, Discovery Engine, and Model Armor services are running:
+O script de inicialização automatizado habilitou previamente todo o ecossistema de APIs para suportar o GEAP e o Vertex AI Agent Engine.
+
+Execute o comando a seguir para verificar se os serviços estão ativos:
 
 ```bash
 gcloud services list --enabled --filter="name:(aiplatform OR discoveryengine OR modelarmor OR run)"
 ```
 
-You should see:
-* `aiplatform.googleapis.com` (Vertex AI / Reasoning Engines)
-* `discoveryengine.googleapis.com` (Vertex AI Agent Builder)
-* `modelarmor.googleapis.com` (Model Armor Guardrails)
-* `run.googleapis.com` (Cloud Run for Remote MCP & Custom Agents)
+Você verá na saída os seguintes serviços ativos:
+* `aiplatform.googleapis.com` (Vertex AI / Reasoning Engines / Agent Engine)
+* `discoveryengine.googleapis.com` (Vertex AI Agent Builder / Search & Conversation)
+* `modelarmor.googleapis.com` (Salvaguardas de Segurança e Filtros do Model Armor)
+* `run.googleapis.com` (Cloud Run para servidores MCP remotos e agentes em contêiner)
 
 ---
 
-## Task 3: Inspect Pre-staged Agent Artifacts & Docker Registry
+## Tarefa 3: Inspecionar Artefatos Pré-configurados e o Repositório Docker
 
-1. Check the Docker repository prepared for custom agent containers and remote MCP servers:
+1. Verifique o repositório Docker criado no Artifact Registry para hospedar imagens de agentes customizados e servidores remotos do Model Context Protocol (MCP):
 
 ```bash
 gcloud artifacts repositories describe geap-agent-docker --location={{{ project_0.region }}}
 ```
 
-2. Inspect the pre-staged agent manifest in your Cloud Storage staging bucket:
+2. Inspecione o manifesto de exemplo do agente no bucket de preparação do Cloud Storage:
 
 ```bash
 export BUCKET_NAME="{{{ project_0.project_id }}}-geap-artifacts"
@@ -70,9 +77,9 @@ gcloud storage cat "gs://${BUCKET_NAME}/manifests/agent_manifest.json"
 
 ---
 
-## Task 4: Test Vertex AI Model Invocation from Cloud Shell
+## Tarefa 4: Testar a Invocação de Modelos Vertex AI Gemini via Cloud Shell
 
-Run a Python script in Cloud Shell to query Gemini with structured generation:
+Execute o script Python a seguir no Cloud Shell para enviar uma solicitação com geração estruturada (JSON) para o modelo Gemini 1.5 Flash no Vertex AI:
 
 ```bash
 python3 -c '
@@ -85,7 +92,7 @@ region = "{{{ project_0.region }}}"
 url = f"https://{region}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{region}/publishers/google/models/gemini-1.5-flash:generateContent"
 
 payload = {
-    "contents": [{"role": "user", "parts": [{"text": "You are a GEAP router. Classify user intent: \"Where is my order #12345?\" into JSON {intent: string, confidence: float}"}]}],
+    "contents": [{"role": "user", "parts": [{"text": "Você é um roteador semântico da plataforma GEAP. Classifique a intenção do usuário: \"Onde está o meu pedido #12345?\" em formato JSON {intent: string, confidence: float, language: string}"}]}],
     "generationConfig": {"responseMimeType": "application/json"}
 }
 
@@ -97,6 +104,11 @@ with urllib.request.urlopen(req) as resp:
 
 ---
 
-## Task 5: End Lab
+## Tarefa 5: Finalizar o Laboratório
 
-1. Click **End Lab** in the Qwiklabs tab to release your sandbox project.
+Parabéns! Você validou a infraestrutura do GEAP, inspecionou as configurações pré-provisionadas e testou chamadas aos modelos de linguagem no Vertex AI.
+
+Para encerrar o laboratório:
+1. Retorne à aba do **Qwiklabs**.
+2. Clique no botão vermelho **End Lab** (Encerrar Laboratório).
+3. Confirme para liberar os recursos do sandbox automaticamente.
