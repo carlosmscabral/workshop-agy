@@ -65,16 +65,16 @@ O **Antigravity CLI (`agy`)** é o seu assistente de inteligência artificial em
 2. Siga as 4 etapas interativas de autenticação e consentimento exibidas no console:
 
 ### Passo 1: Inicialização do setup interativo
-![Passo 1 - Inicialização](imgs/agy_auth_1.png)
+![Passo 1 - Inicialização](assets/imgs/agy_auth_1.png)
 
 ### Passo 2: Autenticação da conta Google Cloud
-![Passo 2 - Autenticação](imgs/agy_auth_2.png)
+![Passo 2 - Autenticação](assets/imgs/agy_auth_2.png)
 
 ### Passo 3: Autorização de permissões de acesso
-![Passo 3 - Permissões](imgs/agy_auth_3.png)
+![Passo 3 - Permissões](assets/imgs/agy_auth_3.png)
 
 ### Passo 4: Conclusão do setup e ativação do prompt
-![Passo 4 - Pronto para Uso](imgs/agy_auth_4.png)
+![Passo 4 - Pronto para Uso](assets/imgs/agy_auth_4.png)
 
 Clique em **Verificar meu progresso** para conferir o objetivo.
 *Configurar e ativar o Antigravity CLI.*
@@ -91,7 +91,7 @@ O `agents-cli` pode ser utilizado de forma autônoma (*standalone*) na linha de 
    ```
 
    Ao concluir o setup, tanto a CLI quanto as **skills do agents-cli** serão instaladas e configuradas automaticamente no seu ambiente:
-   ![Instalação do agents-cli e skills](imgs/agents_cli_install.png)
+   ![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
 
 2. Atualize o `PATH` do ambiente:
    ```bash
@@ -103,7 +103,7 @@ O `agents-cli` pode ser utilizado de forma autônoma (*standalone*) na linha de 
    agy
    ```
    > Digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas.
-   ![Visualização das skills no agy](imgs/agy_agents_cli.png)
+   ![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
 
 4. Crie o arquivo de variáveis de ambiente `.env` com as configurações do seu projeto Google Cloud:
    ```bash
@@ -189,10 +189,10 @@ Nesta tarefa final, você disponibilizará o agente de Due Diligence para os col
 1. No Console do Google Cloud, acesse o **Gemini Enterprise**.
 
 2. **Ativação da Licença / Habilitação do GE App:** Certifique-se de que o Gemini Enterprise App está habilitado no seu ambiente:
-   ![Habilitar Gemini Enterprise App](imgs/ge_app_enable.png)
+   ![Habilitar Gemini Enterprise App](assets/imgs/ge_app_enable.png)
 
 3. **Criar uma Instância do App:** Crie um novo aplicativo corporativo (por exemplo, `Cymbal Compliance & Legal Hub`):
-   ![Criar Instância do GE App](imgs/ge_app_create.png)
+   ![Criar Instância do GE App](assets/imgs/ge_app_create.png)
 
 4. **Habilitar Recursos de Agentes:**
    * Navegue até a aba **Features** (Recursos) nas configurações do app;
@@ -200,12 +200,12 @@ Nesta tarefa final, você disponibilizará o agente de Due Diligence para os col
 
 5. **Adicionar Agente:**
    * Retorne para o menu de **Agentes** do aplicativo e clique em **Criar Novo Agente** / **Adicionar Agente**:
-   ![Adicionar Agente no GE App](imgs/ge_app_add_agent.png)
+   ![Adicionar Agente no GE App](assets/imgs/ge_app_add_agent.png)
 
 6. **Apontar para o Agent Runtime:**
    * Selecione a opção **"Agentes do Agent Runtime"**;
    * Cole o **Resource Name** do agente obtido na Tarefa 4:
-   ![Apontar para o Agent Runtime](imgs/ge_app_runtime.png)
+   ![Apontar para o Agent Runtime](assets/imgs/ge_app_runtime.png)
 
 7. **Teste de Produção:** Inicie uma conversa com o agente no Gemini Enterprise App, envie um trecho do contrato de teste e valide a geração do relatório de Due Diligence.
 
