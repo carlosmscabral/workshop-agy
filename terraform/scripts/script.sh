@@ -44,23 +44,7 @@ gcloud services enable \
   cloudtrace.googleapis.com \
   pubsub.googleapis.com || true
 
-# Set project-level default compute region and zone metadata
-if [ -n "${REGION}" ] && [ -n "${ZONE}" ]; then
-  echo "Configuring default project metadata (region: ${REGION}, zone: ${ZONE})..."
-  gcloud compute project-info add-metadata \
-    --project="${PROJECT_ID}" \
-    --metadata="google-compute-default-region=${REGION},google-compute-default-zone=${ZONE}" || true
-fi
-
-# 2. Create Artifact Staging Cloud Storage Bucket
-BUCKET_NAME="${PROJECT_ID}-geap-artifacts"
-echo "Creating staging GCS bucket: gs://${BUCKET_NAME} in ${REGION}..."
-gcloud storage buckets create "gs://${BUCKET_NAME}" \
-  --project="${PROJECT_ID}" \
-  --location="${REGION}" \
-  --uniform-bucket-level-access || true
-
-# 3. Pre-create GE App (Gemini Enterprise Intranet App - "Pelado", sem Data Store)
+# 2. Pre-create GE App (Gemini Enterprise Intranet App - "Pelado", sem Data Store)
 echo "Pre-creating GE App (agy-enterprise-app) in Discovery Engine..."
 ADC_TOKEN=$(gcloud auth print-access-token 2>/dev/null || true)
 APP_ID="agy-enterprise-app"
@@ -95,61 +79,6 @@ if [ -n "${ADC_TOKEN}" ]; then
     echo "GE App '${APP_ID}' already exists or status code: ${HTTP_CODE}."
   fi
 fi
-
-# 4. Generate local environment and agent manifest configuration files
-TMP_DIR=$(mktemp -d)
-
-# A. .env configuration file
-cat << EOF > "${TMP_DIR}/.env"
-# Environment Configuration for GEAP & Vertex AI Agent Runtime
-PROJECT_ID=${PROJECT_ID}
-REGION=${REGION}
-ZONE=${ZONE}
-GE_APP_ID=${APP_ID}
-GEAP_BUCKET=gs://${BUCKET_NAME}
-VERTEX_LOCATION=${REGION}
-EOF
-
-# B. agent_card.json metadata specification
-cat << EOF > "${TMP_DIR}/agent_card.json"
-{
-  "name": "AGY Due Diligence Specialist Agent",
-  "description": "Autonomous enterprise agent developed with Google ADK for due diligence analysis and multi-turn reasoning.",
-  "version": "1.0.0",
-  "runtime": "Vertex AI Agent Engine (GEAP)",
-  "appId": "${APP_ID}",
-  "capabilities": [
-    "autonomous_reasoning",
-    "session_persistence",
-    "telemetry_logging"
-  ]
-}
-EOF
-
-# C. Seed Sample Agent Manifest
-cat << EOF > "${TMP_DIR}/agent_manifest.json"
-{
-  "agent_id": "agy-due-diligence-agent",
-  "version": "v1.0",
-  "framework": "google-adk-2.0",
-  "runtime": "vertex-reasoning-engine",
-  "model": "gemini-1.5-flash",
-  "grounding": {
-    "datastore": "discovery-engine-kb"
-  },
-  "guardrails": {
-    "model_armor_template": "enterprise-safety-floor"
-  }
-}
-EOF
-
-# Upload generated files to Cloud Storage config/ and manifests/
-echo "Uploading generated configuration files to gs://${BUCKET_NAME}/config/..."
-gcloud storage cp "${TMP_DIR}/.env" "gs://${BUCKET_NAME}/config/.env" || true
-gcloud storage cp "${TMP_DIR}/agent_card.json" "gs://${BUCKET_NAME}/config/agent_card.json" || true
-gcloud storage cp "${TMP_DIR}/agent_manifest.json" "gs://${BUCKET_NAME}/manifests/agent_manifest.json" || true
-
-rm -rf "${TMP_DIR}"
 
 echo "============================================================"
 echo "Lab Setup Complete!"

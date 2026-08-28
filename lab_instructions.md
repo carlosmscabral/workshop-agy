@@ -97,33 +97,26 @@ O Cloud Shell é um terminal interativo no navegador com as ferramentas `gcloud`
 2. Quando a janela do terminal abrir na parte inferior da tela, clique em **Continuar (*Continue*)**.
 3. Confirme que você está autenticado com o usuário do laboratório:
 
-```bash
+<ql-code-block language="bash">
 gcloud auth list
-```
+</ql-code-block>
+
 *(A conta ativa assinalada com um asterisco (\*) deve ser: <ql-variable key="user_0.username"></ql-variable>).*
 
 4. Inicialize as variáveis de ambiente com o projeto e a região exclusivos provisionados para o seu sandbox:
 
-```bash
-export PROJECT_ID=$(gcloud config get-value project 2>/dev/null)
+<ql-code-block language="bash" templated>
+export PROJECT_ID="{{{project_0.project_id}}}"
+export REGION="{{{project_0.default_region}}}"
 
-# Obter dinamicamente a região exata do sandbox provisionada pelo Qwiklabs:
-export REGION=$(gcloud storage cat "gs://${PROJECT_ID}-geap-artifacts/config/.env" 2>/dev/null | grep "^REGION=" | cut -d'=' -f2)
-if [ -z "$REGION" ]; then
-  export REGION=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-region])" 2>/dev/null)
-fi
-if [ -z "$REGION" ]; then
-  export REGION="us-central1"
-fi
-
-gcloud config set project "$PROJECT_ID"
-gcloud config set compute/region "$REGION"
+gcloud config set project $PROJECT_ID
+gcloud config set compute/region $REGION
 
 echo "=========================================="
 echo "Projeto Sandbox Ativo: ${PROJECT_ID}"
 echo "Região Ativa:          ${REGION}"
 echo "=========================================="
-```
+</ql-code-block>
 
 5. Caso apareça uma janela pop-up solicitando **"Autorizar o Cloud Shell a fazer chamadas de API do GCP"** (*Authorize Cloud Shell to make GCP API calls*), clique em **Autorizar (*Authorize*)**.
 
@@ -135,9 +128,9 @@ O script de inicialização automatizado pré-habilitou todo o ecossistema de AP
 
 Execute o comando a seguir no Cloud Shell para verificar os serviços ativos:
 
-```bash
+<ql-code-block language="bash">
 gcloud services list --enabled --filter="name:(aiplatform.googleapis.com OR discoveryengine.googleapis.com OR cloudaicompanion.googleapis.com OR modelarmor.googleapis.com OR run.googleapis.com OR logging.googleapis.com OR cloudtrace.googleapis.com)"
-```
+</ql-code-block>
 
 ### Principais serviços ativos e sua função na arquitetura:
 * `aiplatform.googleapis.com` &rarr; Vertex AI Agent Engine, Reasoning Engines, Sessions Service e inferência de modelos Gemini.
@@ -155,13 +148,11 @@ O script de inicialização pré-criou automaticamente uma aplicação corporati
 
 Inspecione os metadados do GE App executando a chamada REST a seguir diretamente no Cloud Shell:
 
-```bash
-export PROJECT_ID=$(gcloud config get-value project 2>/dev/null)
-
+<ql-code-block language="bash" templated>
 curl -s -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-  -H "X-Goog-User-Project: ${PROJECT_ID}" \
-  "https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/global/collections/default_collection/engines/agy-enterprise-app" | python3 -m json.tool
-```
+  -H "X-Goog-User-Project: {{{project_0.project_id}}}" \
+  "https://discoveryengine.googleapis.com/v1/projects/{{{project_0.project_id}}}/locations/global/collections/default_collection/engines/agy-enterprise-app" | python3 -m json.tool
+</ql-code-block>
 
 Verifique na saída JSON que a aplicação está configurada corretamente:
 * `displayName`: `"AGY Enterprise Agent App"`
@@ -173,34 +164,50 @@ Verifique na saída JSON que a aplicação está configurada corretamente:
 
 ---
 
-## Tarefa 4: Baixar e Validar o Arquivo de Configuração Local (.env e agent_card.json)
+## Tarefa 4: Criar o Ambiente Local (.env e agent_card.json)
 
-O script de inicialização gerou o arquivo de ambiente local (`.env`) e o manifesto de metadados do agente (`agent_card.json`) no Cloud Storage para você utilizá-los no desenvolvimento e deploy com o Google ADK.
+Prepare o seu diretório de trabalho local no Cloud Shell e gere os arquivos de configuração contendo os parâmetros dinâmicos do seu sandbox para uso com o Google ADK:
 
-Execute os comandos abaixo para criar seu diretório de trabalho local no Cloud Shell e baixar os arquivos:
-
-```bash
-export PROJECT_ID=$(gcloud config get-value project)
-export BUCKET_NAME="${PROJECT_ID}-geap-artifacts"
+<ql-code-block language="bash" templated>
 mkdir -p ~/agy-agent && cd ~/agy-agent
 
-# Baixar arquivo de ambiente (.env) e especificações do agente
-gcloud storage cp "gs://${BUCKET_NAME}/config/.env" .
-gcloud storage cp "gs://${BUCKET_NAME}/config/agent_card.json" .
-gcloud storage cp "gs://${BUCKET_NAME}/manifests/agent_manifest.json" .
+# Gerar arquivo .env local com as variáveis dinâmicas do sandbox
+cat << 'EOF' > .env
+PROJECT_ID={{{project_0.project_id}}}
+REGION={{{project_0.default_region}}}
+ZONE={{{project_0.default_zone}}}
+APP_ID=agy-enterprise-app
+GEMINI_MODEL=gemini-1.5-flash
+EOF
 
-# Carregar as variáveis de ambiente locais
 source .env
 
-echo "Configurações carregadas localmente:"
+echo "Configurações carregadas localmente no .env:"
 cat .env
-```
+</ql-code-block>
 
-Exiba os metadados do **AgentCard** que descrevem o agente especialista para a plataforma GEAP:
+Crie o arquivo de metadados do **AgentCard** que descreve o agente especialista para a plataforma GEAP:
 
-```bash
+<ql-code-block language="bash" templated>
+cat << 'EOF' > agent_card.json
+{
+  "name": "AGY Due Diligence Specialist Agent",
+  "description": "Autonomous enterprise agent developed with Google ADK for due diligence analysis and multi-turn reasoning.",
+  "version": "1.0.0",
+  "runtime": "Vertex AI Agent Engine (GEAP)",
+  "appId": "agy-enterprise-app",
+  "project": "{{{project_0.project_id}}}",
+  "region": "{{{project_0.default_region}}}",
+  "capabilities": [
+    "autonomous_reasoning",
+    "session_persistence",
+    "telemetry_logging"
+  ]
+}
+EOF
+
 cat agent_card.json | python3 -m json.tool
-```
+</ql-code-block>
 
 ---
 
@@ -208,16 +215,16 @@ cat agent_card.json | python3 -m json.tool
 
 Crie e execute o script Python a seguir no Cloud Shell para testar o envio de uma solicitação com geração estruturada (JSON) para o modelo Gemini 1.5 Flash no Vertex AI, simulando o classificador semântico do agente:
 
-```bash
+<ql-code-block language="bash" templated>
 cat << 'EOF' > test_gemini.py
 import subprocess
 import json
 import urllib.request
 
-# Obter credenciais e contexto ativos do Cloud Shell
+# Obter credenciais ativas do Cloud Shell
 token = subprocess.check_output(["gcloud", "auth", "print-access-token"]).decode("utf-8").strip()
-project_id = subprocess.check_output(["gcloud", "config", "get-value", "project"]).decode("utf-8").strip()
-region = subprocess.check_output(["gcloud", "config", "get-value", "compute/region"]).decode("utf-8").strip() or "us-central1"
+project_id = "{{{project_0.project_id}}}"
+region = "{{{project_0.default_region}}}"
 
 url = f"https://{region}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{region}/publishers/google/models/gemini-1.5-flash:generateContent"
 
@@ -237,7 +244,7 @@ with urllib.request.urlopen(req) as resp:
 EOF
 
 python3 test_gemini.py
-```
+</ql-code-block>
 
 Você deverá receber uma resposta em formato JSON categorizando a intenção do usuário com alta confiança.
 
