@@ -110,7 +110,6 @@ export PROJECT_ID=$DEVSHELL_PROJECT_ID
 
 # Obter dinamicamente a região atribuída ao sandbox pelo Qwiklabs:
 export REGION=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-region])" 2>/dev/null)
-export REGION=${REGION:-$(python3 -c "import subprocess, json; meta = json.loads(subprocess.check_output(['gcloud', 'compute', 'project-info', 'describe', '--format=json'])); print(next((i['value'] for i in meta.get('commonInstanceMetadata',{}).get('items',[]) if i['key']=='google-compute-default-region'), ''))" 2>/dev/null)}
 export REGION=${REGION:-$(gcloud config get-value compute/region 2>/dev/null)}
 export REGION=${REGION:-us-central1}
 
