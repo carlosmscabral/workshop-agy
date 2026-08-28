@@ -109,7 +109,8 @@ gcloud auth list
 export PROJECT_ID=$DEVSHELL_PROJECT_ID
 
 # Obter dinamicamente a região atribuída ao sandbox pelo Qwiklabs:
-export REGION=$(gcloud compute project-info describe --flatten="commonInstanceMetadata[]" --filter="commonInstanceMetadata.key=google-compute-default-region" --format="value(commonInstanceMetadata.value)" 2>/dev/null)
+export REGION=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-region])" 2>/dev/null)
+export REGION=${REGION:-$(python3 -c "import subprocess, json; meta = json.loads(subprocess.check_output(['gcloud', 'compute', 'project-info', 'describe', '--format=json'])); print(next((i['value'] for i in meta.get('commonInstanceMetadata',{}).get('items',[]) if i['key']=='google-compute-default-region'), ''))" 2>/dev/null)}
 export REGION=${REGION:-$(gcloud config get-value compute/region 2>/dev/null)}
 export REGION=${REGION:-us-central1}
 
@@ -121,6 +122,8 @@ echo "Projeto Sandbox Ativo: ${PROJECT_ID}"
 echo "Região Ativa:          ${REGION}"
 echo "=========================================="
 ```
+
+*(Dica: A região deve coincidir com a atribuída no painel à esquerda. Se necessário, você pode executar `export REGION="sua-regiao"` para sincronizar manualmente).*
 
 5. Caso apareça uma janela pop-up solicitando **"Autorizar o Cloud Shell a fazer chamadas de API do GCP"** (*Authorize Cloud Shell to make GCP API calls*), clique em **Autorizar (*Authorize*)**.
 

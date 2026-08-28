@@ -7,7 +7,7 @@ module "cli" {
   additional_components = []
 
   create_cmd_entrypoint = "chmod +x ${path.module}/scripts/script.sh; ${path.module}/scripts/script.sh"
-  create_cmd_body       = "${var.gcp_project_id} ${var.gcp_region} ${var.gcp_zone}"
+  create_cmd_body       = "${var.gcp_project_id} ${var.gcp_region} ${var.gcp_zone} ${var.service_account_key_file}"
 
   skip_download = false
   upgrade       = false

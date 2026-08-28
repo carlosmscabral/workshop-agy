@@ -47,9 +47,11 @@ gcloud services enable \
 # Set project-level default compute region and zone metadata
 if [ -n "${REGION}" ] && [ -n "${ZONE}" ]; then
   echo "Configuring default project metadata (region: ${REGION}, zone: ${ZONE})..."
-  gcloud compute project-info add-metadata \
-    --project="${PROJECT_ID}" \
-    --metadata="google-compute-default-region=${REGION},google-compute-default-zone=${ZONE}" || true
+  for i in 1 2 3 4 5; do
+    gcloud compute project-info add-metadata \
+      --project="${PROJECT_ID}" \
+      --metadata="google-compute-default-region=${REGION},google-compute-default-zone=${ZONE}" && break || sleep 3
+  done
 fi
 
 # 2. Pre-create GE App (Gemini Enterprise Intranet App - "Pelado", sem Data Store)
