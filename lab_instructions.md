@@ -102,12 +102,17 @@ gcloud auth list
 ```
 *(A conta ativa assinalada com um asterisco (\*) deve ser: <ql-variable key="user_0.username"></ql-variable>).*
 
-4. Inicialize as variáveis de ambiente com o projeto e região exclusivos do seu sandbox:
+4. Inicialize as variáveis de ambiente com o projeto e a região exclusivos provisionados para o seu sandbox:
 
 ```bash
 export PROJECT_ID=$(gcloud config get-value project 2>/dev/null)
-export REGION=$(gcloud config get-value compute/region 2>/dev/null)
-if [ -z "$REGION" ] || [ "$REGION" = "(unset)" ]; then
+
+# Obter dinamicamente a região exata do sandbox provisionada pelo Qwiklabs:
+export REGION=$(gcloud storage cat "gs://${PROJECT_ID}-geap-artifacts/config/.env" 2>/dev/null | grep "^REGION=" | cut -d'=' -f2)
+if [ -z "$REGION" ]; then
+  export REGION=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-region])" 2>/dev/null)
+fi
+if [ -z "$REGION" ]; then
   export REGION="us-central1"
 fi
 

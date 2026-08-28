@@ -44,6 +44,14 @@ gcloud services enable \
   cloudtrace.googleapis.com \
   pubsub.googleapis.com || true
 
+# Set project-level default compute region and zone metadata
+if [ -n "${REGION}" ] && [ -n "${ZONE}" ]; then
+  echo "Configuring default project metadata (region: ${REGION}, zone: ${ZONE})..."
+  gcloud compute project-info add-metadata \
+    --project="${PROJECT_ID}" \
+    --metadata="google-compute-default-region=${REGION},google-compute-default-zone=${ZONE}" || true
+fi
+
 # 2. Create Artifact Staging Cloud Storage Bucket
 BUCKET_NAME="${PROJECT_ID}-geap-artifacts"
 echo "Creating staging GCS bucket: gs://${BUCKET_NAME} in ${REGION}..."
