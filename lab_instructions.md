@@ -177,7 +177,8 @@ PROJECT_ID={{{project_0.project_id}}}
 REGION={{{project_0.default_region}}}
 ZONE={{{project_0.default_zone}}}
 APP_ID=agy-enterprise-app
-GEMINI_MODEL=gemini-1.5-flash
+GEMINI_MODEL=gemini-flash-3.7
+VERTEX_LOCATION=global
 EOF
 
 source .env
@@ -213,20 +214,22 @@ cat agent_card.json | python3 -m json.tool
 
 ## Tarefa 5: Testar a Invocação de Modelos Vertex AI Gemini via Cloud Shell
 
-Crie e execute o script Python a seguir no Cloud Shell para testar o envio de uma solicitação com geração estruturada (JSON) para o modelo Gemini 1.5 Flash no Vertex AI, simulando o classificador semântico do agente:
+Crie e execute o script Python a seguir no Cloud Shell para testar o envio de uma solicitação com geração estruturada (JSON) para o modelo **Gemini 3.7 Flash** no Vertex AI na região **global**, simulando o classificador semântico do agente:
 
 <ql-code-block language="bash" templated>
 cat << 'EOF' > test_gemini.py
 import subprocess
 import json
 import urllib.request
+import urllib.error
 
 # Obter credenciais ativas do Cloud Shell
 token = subprocess.check_output(["gcloud", "auth", "print-access-token"]).decode("utf-8").strip()
 project_id = "{{{project_0.project_id}}}"
-region = "{{{project_0.default_region}}}"
 
-url = f"https://{region}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{region}/publishers/google/models/gemini-1.5-flash:generateContent"
+# Endpoint fixo na região global para o modelo Gemini 3.7 Flash
+model = "gemini-flash-3.7"
+url = f"https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publishers/google/models/{model}:generateContent"
 
 payload = {
     "contents": [{"role": "user", "parts": [{"text": "Você é um roteador semântico da plataforma GEAP. Classifique a intenção do usuário: 'Onde está o meu pedido #12345?' em formato JSON {intent: string, confidence: float, language: string}"}]}],
@@ -239,8 +242,19 @@ req = urllib.request.Request(
     headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 )
 
-with urllib.request.urlopen(req) as resp:
-    print(resp.read().decode("utf-8"))
+try:
+    with urllib.request.urlopen(req) as resp:
+        print(resp.read().decode("utf-8"))
+except urllib.error.HTTPError as e:
+    # Suporte para o alias gemini-3.7-flash caso haja variação de registro
+    url_alt = f"https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publishers/google/models/gemini-3.7-flash:generateContent"
+    req_alt = urllib.request.Request(
+        url_alt,
+        data=json.dumps(payload).encode("utf-8"),
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+    )
+    with urllib.request.urlopen(req_alt) as resp:
+        print(resp.read().decode("utf-8"))
 EOF
 
 python3 test_gemini.py
