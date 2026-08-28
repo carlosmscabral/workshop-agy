@@ -100,13 +100,13 @@ O Cloud Shell é um terminal interativo no navegador com as ferramentas `gcloud`
 ```bash
 gcloud auth list
 ```
-*(A conta ativa assinalada com `*` deve ser: <ql-variable key="user_0.username"></ql-variable>).*
+*(A conta ativa assinalada com um asterisco (\*) deve ser: <ql-variable key="user_0.username"></ql-variable>).*
 
 4. Inicialize as variáveis de ambiente com o projeto e região exclusivos do seu sandbox:
 
-```bash templated
-export PROJECT_ID="{{{project_0.project_id}}}"
-export REGION="{{{project_0.default_region}}}"
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+export REGION=$(gcloud config get-value compute/region 2>/dev/null || echo "us-central1")
 
 gcloud config set project $PROJECT_ID
 gcloud config set compute/region $REGION
@@ -141,22 +141,25 @@ gcloud services list --enabled --filter="name:(aiplatform OR discoveryengine OR 
 
 ---
 
-## Tarefa 3: Inspecionar o GE App (Agent Builder / Discovery Engine)
+## Tarefa 3: Inspecionar o GE App (Discovery Engine / Gemini Enterprise)
 
-O script de inicialização pré-criou automaticamente uma aplicação corporativa no Discovery Engine / Agent Builder (`agy-enterprise-app`) para registro e roteamento dos seus agentes autônomos.
+O script de inicialização pré-criou automaticamente uma aplicação corporativa no Discovery Engine (`agy-enterprise-app`) para registro e roteamento dos seus agentes autônomos.
 
-Inspecione os metadados do Chat Engine executando a chamada REST a seguir diretamente no Cloud Shell:
+Inspecione os metadados do GE App executando a chamada REST a seguir diretamente no Cloud Shell:
 
-```bash templated
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+
 curl -s -H "Authorization: Bearer $(gcloud auth print-access-token)" \
-  -H "X-Goog-User-Project: {{{project_0.project_id}}}" \
-  "https://discoveryengine.googleapis.com/v1/projects/{{{project_0.project_id}}}/locations/global/collections/default_collection/engines/agy-enterprise-app" | python3 -m json.tool
+  -H "X-Goog-User-Project: ${PROJECT_ID}" \
+  "https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/global/collections/default_collection/engines/agy-enterprise-app" | python3 -m json.tool
 ```
 
 Verifique na saída JSON:
 * `displayName`: `"AGY Enterprise Agent App"`
-* `solutionType`: `"SOLUTION_TYPE_CHAT"`
-* O motor está pronto para montagem e registro de subagentes ADK.
+* `solutionType`: `"SOLUTION_TYPE_SEARCH"`
+* `appType`: `"APP_TYPE_INTRANET"`
+* O motor está provisionado no Discovery Engine sem data stores, pronto para registro dos agentes ADK.
 
 ---
 
@@ -166,8 +169,9 @@ O script de inicialização gerou o arquivo de ambiente local (`.env`) e o manif
 
 Execute os comandos abaixo para criar seu diretório de trabalho local no Cloud Shell e baixar os arquivos:
 
-```bash templated
-export BUCKET_NAME="{{{project_0.project_id}}}-geap-artifacts"
+```bash
+export PROJECT_ID=$(gcloud config get-value project)
+export BUCKET_NAME="${PROJECT_ID}-geap-artifacts"
 mkdir -p ~/agy-agent && cd ~/agy-agent
 
 # Baixar arquivo de ambiente (.env) e especificações do agente
@@ -192,27 +196,37 @@ cat agent_card.json | python3 -m json.tool
 
 ## Tarefa 5: Testar a Invocação de Modelos Vertex AI Gemini via Cloud Shell
 
-Execute o script Python a seguir no Cloud Shell para testar o envio de uma solicitação com geração estruturada (JSON) para o modelo Gemini 1.5 Flash no Vertex AI, simulando o classificador semântico do agente:
+Crie e execute o script Python a seguir no Cloud Shell para testar o envio de uma solicitação com geração estruturada (JSON) para o modelo Gemini 1.5 Flash no Vertex AI, simulando o classificador semântico do agente:
 
-```bash templated
-python3 -c '
-import urllib.request, json, subprocess
+```bash
+cat << 'EOF' > test_gemini.py
+import subprocess
+import json
+import urllib.request
 
+# Obter credenciais e contexto ativos do Cloud Shell
 token = subprocess.check_output(["gcloud", "auth", "print-access-token"]).decode("utf-8").strip()
-project_id = "{{{project_0.project_id}}}"
-region = "{{{project_0.default_region}}}"
+project_id = subprocess.check_output(["gcloud", "config", "get-value", "project"]).decode("utf-8").strip()
+region = subprocess.check_output(["gcloud", "config", "get-value", "compute/region"]).decode("utf-8").strip() or "us-central1"
 
 url = f"https://{region}-aiplatform.googleapis.com/v1/projects/{project_id}/locations/{region}/publishers/google/models/gemini-1.5-flash:generateContent"
 
 payload = {
-    "contents": [{"role": "user", "parts": [{"text": "Você é um roteador semântico da plataforma GEAP. Classifique a intenção do usuário: \"Onde está o meu pedido #12345?\" em formato JSON {intent: string, confidence: float, language: string}"}]}],
+    "contents": [{"role": "user", "parts": [{"text": "Você é um roteador semântico da plataforma GEAP. Classifique a intenção do usuário: 'Onde está o meu pedido #12345?' em formato JSON {intent: string, confidence: float, language: string}"}]}],
     "generationConfig": {"responseMimeType": "application/json"}
 }
 
-req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"), headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"})
+req = urllib.request.Request(
+    url,
+    data=json.dumps(payload).encode("utf-8"),
+    headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
+)
+
 with urllib.request.urlopen(req) as resp:
     print(resp.read().decode("utf-8"))
-'
+EOF
+
+python3 test_gemini.py
 ```
 
 Você deverá receber uma resposta em formato JSON categorizando a intenção do usuário com alta confiança.
