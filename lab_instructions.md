@@ -107,7 +107,11 @@ gcloud auth list
 
 ```bash
 export PROJECT_ID=$DEVSHELL_PROJECT_ID
-export REGION="us-west1"
+
+# Obter dinamicamente a região atribuída ao sandbox pelo Qwiklabs:
+export REGION=$(gcloud compute project-info describe --flatten="commonInstanceMetadata[]" --filter="commonInstanceMetadata.key=google-compute-default-region" --format="value(commonInstanceMetadata.value)" 2>/dev/null)
+export REGION=${REGION:-$(gcloud config get-value compute/region 2>/dev/null)}
+export REGION=${REGION:-us-central1}
 
 gcloud config set project $PROJECT_ID
 gcloud config set compute/region $REGION
@@ -169,9 +173,9 @@ Prepare o seu diretório de trabalho local no Cloud Shell e gere os arquivos de 
 ```bash
 mkdir -p ~/agy-agent && cd ~/agy-agent
 
-cat << 'EOF' > .env
-PROJECT_ID=$DEVSHELL_PROJECT_ID
-REGION=us-west1
+cat << EOF > .env
+PROJECT_ID=${PROJECT_ID}
+REGION=${REGION}
 APP_ID=agy-enterprise-app
 GEMINI_MODEL=gemini-flash-3.7
 VERTEX_LOCATION=global
@@ -193,8 +197,8 @@ cat << EOF > agent_card.json
   "version": "1.0.0",
   "runtime": "Vertex AI Agent Engine (GEAP)",
   "appId": "agy-enterprise-app",
-  "project": "${DEVSHELL_PROJECT_ID}",
-  "region": "us-west1",
+  "project": "${PROJECT_ID}",
+  "region": "${REGION}",
   "capabilities": [
     "autonomous_reasoning",
     "session_persistence",

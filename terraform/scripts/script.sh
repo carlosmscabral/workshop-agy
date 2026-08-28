@@ -44,6 +44,14 @@ gcloud services enable \
   cloudtrace.googleapis.com \
   pubsub.googleapis.com || true
 
+# Set project-level default compute region and zone metadata
+if [ -n "${REGION}" ] && [ -n "${ZONE}" ]; then
+  echo "Configuring default project metadata (region: ${REGION}, zone: ${ZONE})..."
+  gcloud compute project-info add-metadata \
+    --project="${PROJECT_ID}" \
+    --metadata="google-compute-default-region=${REGION},google-compute-default-zone=${ZONE}" || true
+fi
+
 # 2. Pre-create GE App (Gemini Enterprise Intranet App - "Pelado", sem Data Store)
 echo "Pre-creating GE App (agy-enterprise-app) in Discovery Engine..."
 ADC_TOKEN=$(gcloud auth print-access-token 2>/dev/null || true)
