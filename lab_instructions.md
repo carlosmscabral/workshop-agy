@@ -105,11 +105,14 @@ gcloud auth list
 4. Inicialize as variáveis de ambiente com o projeto e região exclusivos do seu sandbox:
 
 ```bash
-export PROJECT_ID=$(gcloud config get-value project)
-export REGION=$(gcloud config get-value compute/region 2>/dev/null || echo "us-central1")
+export PROJECT_ID=$(gcloud config get-value project 2>/dev/null)
+export REGION=$(gcloud config get-value compute/region 2>/dev/null)
+if [ -z "$REGION" ] || [ "$REGION" = "(unset)" ]; then
+  export REGION="us-central1"
+fi
 
-gcloud config set project $PROJECT_ID
-gcloud config set compute/region $REGION
+gcloud config set project "$PROJECT_ID"
+gcloud config set compute/region "$REGION"
 
 echo "=========================================="
 echo "Projeto Sandbox Ativo: ${PROJECT_ID}"
@@ -128,7 +131,7 @@ O script de inicialização automatizado pré-habilitou todo o ecossistema de AP
 Execute o comando a seguir no Cloud Shell para verificar os serviços ativos:
 
 ```bash
-gcloud services list --enabled --filter="name:(aiplatform OR discoveryengine OR cloudaicompanion OR modelarmor OR run OR logging OR cloudtrace)"
+gcloud services list --enabled --filter="name:(aiplatform.googleapis.com OR discoveryengine.googleapis.com OR cloudaicompanion.googleapis.com OR modelarmor.googleapis.com OR run.googleapis.com OR logging.googleapis.com OR cloudtrace.googleapis.com)"
 ```
 
 ### Principais serviços ativos e sua função na arquitetura:
@@ -148,18 +151,20 @@ O script de inicialização pré-criou automaticamente uma aplicação corporati
 Inspecione os metadados do GE App executando a chamada REST a seguir diretamente no Cloud Shell:
 
 ```bash
-export PROJECT_ID=$(gcloud config get-value project)
+export PROJECT_ID=$(gcloud config get-value project 2>/dev/null)
 
 curl -s -H "Authorization: Bearer $(gcloud auth print-access-token)" \
   -H "X-Goog-User-Project: ${PROJECT_ID}" \
   "https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/global/collections/default_collection/engines/agy-enterprise-app" | python3 -m json.tool
 ```
 
-Verifique na saída JSON:
+Verifique na saída JSON que a aplicação está configurada corretamente:
 * `displayName`: `"AGY Enterprise Agent App"`
 * `solutionType`: `"SOLUTION_TYPE_SEARCH"`
 * `appType`: `"APP_TYPE_INTRANET"`
-* O motor está provisionado no Discovery Engine sem data stores, pronto para registro dos agentes ADK.
+* `observabilityConfig.observabilityEnabled`: `true`
+* `marketplaceAgentVisibility`: `"SHOW_ALL_AGENTS"`
+* O motor está provisionado no Discovery Engine sem data stores, pronto para registro dos agentes ADK via `agents-cli publish gemini-enterprise`.
 
 ---
 
