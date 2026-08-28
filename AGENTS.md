@@ -117,14 +117,46 @@ When students need to generate local files:
 
 ## 4. Terraform Startup Automation Standards
 
-Startup automation runs unattended in Qwiklabs via Terraform. Follow this architecture strictly:
+Startup automation runs unattended in Qwiklabs via Terraform and the **Project Octopus** script runner.
 
-### 1. `terraform/variables.tf` Contract
-Qwiklabs mandates these four variable declarations:
+### The 5 Mandatory Files of the Startup Bundle (`Archive.zip`)
+
+Every startup archive uploaded to a Qwiklabs `gcp_project` resource (e.g. `project_0`) with `Script Type: qwiklabs` MUST contain these exact files at its root:
+
+```
+Archive.zip
+├── runtime.yaml      <-- MANDATORY: Project Octopus runner declaration
+├── variables.tf      <-- MANDATORY: 4 input variables passed by Qwiklabs
+├── provider.tf       <-- MANDATORY: Google provider credentials configuration
+├── main.tf           <-- MANDATORY: Terraform module & execution entrypoint
+└── scripts/
+    └── script.sh     <-- MANDATORY: Bash provisioning script
+```
+
+---
+
+### 1. `runtime.yaml` (Project Octopus Engine Contract)
+
+> [!CAUTION]
+> **The `runtime.yaml` Requirement:**  
+> If `runtime.yaml` is missing from the root of `Archive.zip`, Qwiklabs will instantly reject the startup package with:  
+> `missing runtime.yaml file` &rarr; `Resources failed to launch: project 0`.  
+> This file informs the Qwiklabs runner which execution engine and version to spin up.
+
+```yaml
+runtime: terraform
+version: 1.4.6
+```
+
+---
+
+### 2. `variables.tf` (Qwiklabs Input Contract)
+
+Qwiklabs automatically passes four specific input variables into the Terraform root module. All four **must** be declared:
 
 ```terraform
 variable "gcp_project_id" {
-  description = "The GCP project ID provided by Qwiklabs"
+  description = "The GCP project ID provided dynamically by Qwiklabs"
   type        = string
 }
 
@@ -144,12 +176,30 @@ variable "service_account_key_file" {
 }
 ```
 
-### 2. `terraform/main.tf` - Module Call
-Use `terraform-google-modules/gcloud/google`.
+---
+
+### 3. `provider.tf` (Google Cloud Provider Configuration)
+
+Configures the Terraform Google provider to authenticate using the temporary credentials file injected by Qwiklabs:
+
+```terraform
+provider "google" {
+  project     = var.gcp_project_id
+  region      = var.gcp_region
+  zone        = var.gcp_zone
+  credentials = var.service_account_key_file
+}
+```
+
+---
+
+### 4. `main.tf` (Module Call & Entrypoint)
+
+Use the official `terraform-google-modules/gcloud/google` module to invoke `scripts/script.sh`.
 
 > [!CRITICAL]
 > **Passing the Service Account Key:**  
-> You **MUST** pass `${var.service_account_key_file}` in `create_cmd_body`. If omitted, the shell script cannot run `gcloud auth activate-service-account`, and subsequent `gcloud` commands fail.
+> You **MUST** pass `${var.service_account_key_file}` in `create_cmd_body` (as argument `$4`). If omitted, the shell script cannot execute `gcloud auth activate-service-account`, and all subsequent `gcloud` commands will fail due to lack of an active authenticated account.
 
 ```terraform
 module "cli" {
@@ -170,7 +220,9 @@ module "cli" {
 }
 ```
 
-### 3. `terraform/scripts/script.sh` - Standard Lifecycle
+---
+
+### 5. `scripts/script.sh` - Standard Lifecycle
 Every startup script must follow this lifecycle order:
 
 ```bash
