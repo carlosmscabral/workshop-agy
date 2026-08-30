@@ -61,12 +61,27 @@ gcloud auth list
   ```
   `<ql-variable>` is a registered browser Custom Element that interpolates live session parameters directly into paragraphs and HTML callouts.
 
+  > [!CAUTION]
+  > **Key Name Invariant (`default_region` vs `region`):**  
+  > The exact attribute names defined in the Qwiklabs specification are `default_region` and `default_zone`.  
+  > Writing `key="project_0.region"` will **fail silently** and display the default fallback placeholder (`____`). Always use `default_region` and `default_zone`.
+
 ### Rule 3: Callouts, Alerts, and Lists
 * Use standard Markdown blockquotes for warnings and notes:
   ```markdown
   > ⚠️ **MUITO IMPORTANTE:** Sempre utilize uma **Janela Anônima (Incognito)**.
   ```
 * Avoid inserting raw unindented `<div>` tags directly in the middle of Markdown numbered lists, as this resets list numbering back to `1.`.
+
+### Rule 4: Cloud Shell Execution Invariants & Gotchas
+* **First-Run API Authorization Pop-up:** On the first execution of any command issuing API requests, Cloud Shell triggers a modal dialog: *"Autorizar o Cloud Shell a fazer chamadas de API do GCP" (Authorize Cloud Shell to make GCP API calls)*. Instructions must explicitly instruct the student to click **"Autorizar" (Authorize)**.
+* **Strict Incognito Window Protocol:** Mandatory requirement. Running labs in regular browser windows risks cross-account auth leaks between corporate `@google.com` / personal `@gmail.com` accounts and the student's temporary `@qwiklabs.net` session. Instruct students to never register personal phone numbers or 2FA on temporary lab accounts.
+* **Zero-Dependency Execution (`urllib` vs `pip install`):** For test and verification scripts inside Cloud Shell, favor Python standard library `urllib.request` with `ADC_TOKEN=$(gcloud auth print-access-token)` over heavy SDK installations (`pip install google-cloud-*`). Standard library scripts run with 100% reliability immediately without pip network delays, virtual environment conflicts, or permission issues.
+* **FQDNs in `gcloud services list` Filters:** Service Usage API filters strictly require fully qualified domain names (FQDNs). Writing `--filter="name:(aiplatform OR discoveryengine)"` will produce a warning: `WARNING: The following filter keys were not present in any resource : name`. Always use the complete domain:
+  ```bash
+  gcloud services list --enabled \
+    --filter="name:(aiplatform.googleapis.com OR discoveryengine.googleapis.com)"
+  ```
 
 ---
 
@@ -288,6 +303,21 @@ Follow this procedure when creating or updating any Qwiklabs lab:
        │
        └──> 4. Test Lab -> Start Lab -> Verify in Incognito Window
 ```
+
+### Web Console Configuration: Student Visible Outputs Checklist
+When creating or editing a lab on `explore.qwiklabs.com/labs/<id>/edit`:
+In the **Lab Resources** tab, under the student panel settings, you must check the following **Student Visible Outputs** properties:
+
+| Output Label in UI | Resource Reference | Student UI Impact |
+| :--- | :--- | :--- |
+| **Open Google Cloud Console** | `project_0.console_url` | Generates the primary blue **"Open Google Console"** action button in the student left sidebar. |
+| **GCP Project ID** | `project_0.project_id` | Displays the copyable temporary project ID. |
+| **Username** | `user_0.username` | Displays the copyable student login email (`student-xx-...@qwiklabs.net`). |
+| **Password** | `user_0.password` | Displays the copyable temporary student password. |
+| **Region** | `project_0.default_region` | Displays the assigned lab region (e.g. `us-west1`). |
+
+> [!WARNING]
+> If `project_0.console_url` is omitted from the Student Visible Outputs, the student interface will **not** display the button to open the GCP Cloud Console, forcing students to navigate manually.
 
 ---
 
