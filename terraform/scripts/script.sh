@@ -42,6 +42,8 @@ gcloud services enable \
   logging.googleapis.com \
   monitoring.googleapis.com \
   cloudtrace.googleapis.com \
+  artifactregistry.googleapis.com \
+  cloudbuild.googleapis.com \
   pubsub.googleapis.com || true
 
 # Set project-level default compute region and zone metadata
@@ -52,42 +54,6 @@ if [ -n "${REGION}" ] && [ -n "${ZONE}" ]; then
       --project="${PROJECT_ID}" \
       --metadata="google-compute-default-region=${REGION},google-compute-default-zone=${ZONE}" && break || sleep 3
   done
-fi
-
-# 2. Pre-create GE App (Gemini Enterprise Intranet App - "Pelado", sem Data Store)
-echo "Pre-creating GE App (agy-enterprise-app) in Discovery Engine..."
-ADC_TOKEN=$(gcloud auth print-access-token 2>/dev/null || true)
-APP_ID="agy-enterprise-app"
-APP_DISPLAY_NAME="AGY Enterprise Agent App"
-
-if [ -n "${ADC_TOKEN}" ]; then
-  HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
-    -H "Authorization: Bearer ${ADC_TOKEN}" \
-    -H "X-Goog-User-Project: ${PROJECT_ID}" \
-    "https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/global/collections/default_collection/engines/${APP_ID}" || true)
-
-  if [ "${HTTP_CODE}" == "404" ] || [ -z "${HTTP_CODE}" ]; then
-    echo "Creating empty GE App '${APP_ID}'..."
-    curl -s -X POST \
-      -H "Authorization: Bearer ${ADC_TOKEN}" \
-      -H "X-Goog-User-Project: ${PROJECT_ID}" \
-      -H "Content-Type: application/json; charset=utf-8" \
-      -d '{
-        "displayName": "'"${APP_DISPLAY_NAME}"'",
-        "solutionType": "SOLUTION_TYPE_SEARCH",
-        "industryVertical": "GENERIC",
-        "appType": "APP_TYPE_INTRANET",
-        "dataStoreIds": [],
-        "searchEngineConfig": {
-          "searchTier": "SEARCH_TIER_ENTERPRISE",
-          "searchAddOns": ["SEARCH_ADD_ON_LLM"],
-          "requiredSubscriptionTier": "SUBSCRIPTION_TIER_SEARCH_AND_ASSISTANT"
-        }
-      }' \
-      "https://discoveryengine.googleapis.com/v1/projects/${PROJECT_ID}/locations/global/collections/default_collection/engines?engineId=${APP_ID}" || true
-  else
-    echo "GE App '${APP_ID}' already exists or status code: ${HTTP_CODE}."
-  fi
 fi
 
 echo "============================================================"
