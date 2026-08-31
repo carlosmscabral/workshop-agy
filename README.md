@@ -217,9 +217,10 @@ Clique em **Verificar meu progresso** para conferir o objetivo.
 ## Parabéns!
 
 Neste laboratório com desafio, você:
-* Configurou e utilizou o **Antigravity CLI (`agy`)** para acelerar o desenvolvimento de agentes em terminal;
-* Habilitou e visualizou o catálogo de **Skills** do `agents-cli` integradas ao assistente `agy`;
-* Criou um agente inteligente com o **Google ADK** integrado à skill de Due Diligence utilizando o comando `/grill-me`;
-* Validou e refinou o comportamento do agente localmente através da interface **ADK Web** com assistência do `agy`;
-* Orquestrou o deployment no **Google Cloud Agent Runtime** diretamente através do `agy`;
-* Publicou e integrou o agente corporativo no **Gemini Enterprise App** para a **Cymbal Technologies**.
+
+- Configurou e utilizou o **Antigravity CLI (`agy`)** para acelerar o desenvolvimento de agentes em terminal;
+- Habilitou e visualizou o catálogo de **Skills** do `agents-cli` integradas ao assistente `agy`;
+- Criou um agente inteligente com o **Google ADK** integrado à skill de Due Diligence utilizando o comando `/grill-me`;
+- Validou e refinou o comportamento do agente localmente através da interface **ADK Web** com assistência do `agy`;
+- Orquestrou o deployment no **Google Cloud Agent Runtime** diretamente através do `agy`;
+- Publicou e integrou o agente corporativo no **Gemini Enterprise App** para a **Cymbal Technologies**.

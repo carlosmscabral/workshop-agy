@@ -67,7 +67,28 @@ gcloud auth list
   > Writing `key="project_0.region"` will **fail silently** and display the default fallback placeholder (`____`). Always use `default_region` and `default_zone`.
 
 ### Rule 3: Callouts, Alerts, and Lists
-* Use standard Markdown blockquotes for warnings and notes:
+* **Mandatory Blank Line Before Lists:** In CommonMark and the Qwiklabs browser markdown parser (SimpleMDE / marked.js), an unordered or ordered list **must always be preceded by an empty blank line**. If a list immediately follows a paragraph line without an empty line:
+  ```markdown
+  <!-- WRONG: Collapses into a single paragraph with literal asterisks -->
+  Neste laboratório, você:
+  * Configurou o agy...
+  * Habilitou skills...
+  
+  <!-- CORRECT: Renders as a proper HTML unordered list -->
+  Neste laboratório, você:
+
+  - Configurou o agy...
+  - Habilitou skills...
+  ```
+  Failing to leave a blank line causes the parser to treat all bullet points as continuous text of the preceding paragraph, rendering literal `*` characters inline on a single line.
+* **Use Hyphens (`- `) Instead of Asterisks (`* `):** Prefer `- ` for bullet lists to avoid ambiguity with markdown italics/bold emphasis syntax.
+* **Sub-lists in Numbered Steps:** When adding sub-bullets inside an ordered list step, indent the bullet with 3 or 4 spaces:
+  ```markdown
+  4. **Habilitar Recursos:**
+     - Navegue até a aba Features;
+     - Ative a opção Agentes.
+  ```
+* **Alerts and Callouts:** Use standard Markdown blockquotes for warnings and notes:
   ```markdown
   > ⚠️ **MUITO IMPORTANTE:** Sempre utilize uma **Janela Anônima (Incognito)**.
   ```

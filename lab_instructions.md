@@ -13,13 +13,15 @@ Neste laboratório prático com desafio, você vai demonstrar sua capacidade de 
 Você vai integrar uma skill especializada de Due Diligence, testar e refinar o comportamento localmente com a interface **ADK Web**, orquestrar a implantação no **Google Cloud Agent Runtime** diretamente através do assistente `agy` e publicá-lo no **Gemini Enterprise App**.
 
 ### Objetivos do Laboratório
+
 Neste laboratório, você vai:
-* Configurar o ambiente do Cloud Shell e inicializar o assistente **Antigravity CLI (`agy`)**;
-* Instalar o `agents-cli` e habilitar a suíte de skills do ADK para uso no `agy`;
-* Criar e estruturar um agente ADK de Due Diligence integrado a skills usando o comando interativo `/grill-me` no `agy`;
-* Executar, validar e depurar o fluxo do agente localmente com a interface **ADK Web** e assistência do `agy`;
-* Fazer a implantação do agente no **Google Cloud Agent Runtime** utilizando o `agy` e as skills do `agents-cli`;
-* Publicar e disponibilizar o agente no **Gemini Enterprise App** conectando o resource name do Agent Runtime.
+
+- Configurar o ambiente do Cloud Shell e inicializar o assistente **Antigravity CLI (`agy`)**;
+- Instalar o `agents-cli` e habilitar a suíte de skills do ADK para uso no `agy`;
+- Criar e estruturar um agente ADK de Due Diligence integrado a skills usando o comando interativo `/grill-me` no `agy`;
+- Executar, validar e depurar o fluxo do agente localmente com a interface **ADK Web** com assistência do `agy`;
+- Fazer a implantação do agente no **Google Cloud Agent Runtime** utilizando o `agy` e as skills do `agents-cli`;
+- Publicar e disponibilizar o agente no **Gemini Enterprise App** conectando o resource name do Agent Runtime.
 
 ---
 
@@ -252,16 +254,16 @@ Nesta tarefa final, você disponibilizará o agente de Due Diligence para os col
 ![Criar Instância do GE App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_create.png)
 
 4. **Habilitar Recursos de Agentes:**
-* Navegue até a aba **Features** (Recursos) nas configurações do app;
-* Ative a funcionalidade de **Agentes** (*Agents*).
+   - Navegue até a aba **Features** (Recursos) nas configurações do app;
+   - Ative a funcionalidade de **Agentes** (*Agents*).
 
 5. **Adicionar Agente:**
-* Retorne para o menu de **Agentes** do aplicativo e clique em **Criar Novo Agente** / **Adicionar Agente**:
+   - Retorne para o menu de **Agentes** do aplicativo e clique em **Criar Novo Agente** / **Adicionar Agente**:
 ![Adicionar Agente no GE App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_add_agent.png)
 
 6. **Apontar para o Agent Runtime:**
-* Selecione a opção **"Agentes do Agent Runtime"** (*Agent Runtime agents*);
-* Cole o **Resource Name** do agente obtido na Tarefa 4:
+   - Selecione a opção **"Agentes do Agent Runtime"** (*Agent Runtime agents*);
+   - Cole o **Resource Name** do agente obtido na Tarefa 4:
 ![Apontar para o Agent Runtime](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_runtime.png)
 
 7. **Teste de Produção:** Inicie uma conversa com o agente no Gemini Enterprise App, envie um trecho do contrato de teste e valide a geração do relatório de Due Diligence em produção corporativa.
@@ -276,9 +278,10 @@ Clique em **Verificar meu progresso** para conferir o objetivo.
 Você concluiu com sucesso o laboratório com desafio de **Implantação de Agente de Due Diligence com Antigravity CLI e ADK**!
 
 Neste laboratório, você:
-* Configurou e utilizou o **Antigravity CLI (`agy`)** para acelerar o desenvolvimento de agentes em linha de comando;
-* Habilitou e visualizou o catálogo de **Skills** do `agents-cli` integradas ao assistente `agy`;
-* Criou um agente inteligente com o **Google ADK** integrado à skill de Due Diligence utilizando o comando `/grill-me`;
-* Validou e refinou o comportamento do agente localmente através da interface **ADK Web** com assistência do `agy`;
-* Orquestrou o deployment no **Google Cloud Agent Runtime** diretamente através do assistente `agy`;
-* Publicou e integrou o agente corporativo no **Gemini Enterprise App** para a **Cymbal Technologies**.
+
+- Configurou e utilizou o **Antigravity CLI (`agy`)** para acelerar o desenvolvimento de agentes em linha de comando;
+- Habilitou e visualizou o catálogo de **Skills** do `agents-cli` integradas ao assistente `agy`;
+- Criou um agente inteligente com o **Google ADK** integrado à skill de Due Diligence utilizando o comando `/grill-me`;
+- Validou e refinou o comportamento do agente localmente através da interface **ADK Web** com assistência do `agy`;
+- Orquestrou o deployment no **Google Cloud Agent Runtime** diretamente através do assistente `agy`;
+- Publicou e integrou o agente corporativo no **Gemini Enterprise App** para a **Cymbal Technologies**.
