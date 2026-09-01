@@ -1,0 +1,25 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+
+# Environment & Secrets
+.env
+.env.*
+*.key.json
+*.json.bak
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+.pytest_cache/
+
+# System & Editor
+.DS_Store
+.vscode/
+.idea/
