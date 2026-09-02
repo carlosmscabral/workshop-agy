@@ -131,7 +131,7 @@ agy
 
 ---
 
-## Tarefa 2. Instalar o `agents-cli`, habilitar skills e criar o agente
+## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
 
 Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, configura as variáveis de ambiente do projeto e utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence.
 

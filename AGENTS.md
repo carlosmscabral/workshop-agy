@@ -104,6 +104,10 @@ gcloud auth list
     --filter="name:(aiplatform.googleapis.com OR discoveryengine.googleapis.com)"
   ```
 
+### Rule 5: No Backticks or Code Formatting in Headings (`#`, `##`, `###`)
+* **TOC Parser Truncation Bug:** The Qwiklabs navigation panel / Table of Contents (TOC) builder extracts markdown headings to generate the student sidebar index. When it encounters backticks (e.g. `## Tarefa 2. Instalar o `agents-cli`, habilitar skills...`), the TOC parser fails on inline code tags and **truncates the title at the first backtick**, displaying incomplete text (e.g. `Tarefa 2. Instalar o`).
+* **Enforcement:** Always use plain text for tool names, CLIs, commands, and options inside headings and subheadings (e.g. `## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente` and `### Alinhar e estruturar o agente com o comando /grill-me`). Keep backtick code formatting strictly inside regular body paragraphs.
+
 ---
 
 ## 3. Dynamic Variable Resolution Strategy in Cloud Shell

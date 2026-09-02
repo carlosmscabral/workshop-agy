@@ -192,7 +192,7 @@ Clique em **Verificar meu progresso** para conferir o objetivo.
 
 ---
 
-## Tarefa 2. Instalar o `agents-cli`, habilitar skills e criar o agente
+## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
 
 Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, configura as variáveis de ambiente do projeto e utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence.
 
@@ -233,7 +233,7 @@ MODEL=gemini-2.5-flash
 EOF
 ```
 
-### Alinhar e estruturar o agente com `/grill-me`
+### Alinhar e estruturar o agente com o comando /grill-me
 
 1. Inicie o `agy`:
 
@@ -338,7 +338,7 @@ Clique em **Verificar meu progresso** para conferir o objetivo.
 
 Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compilação, containerização e implantação do agente no **Google Cloud Agent Runtime** através das skills integradas do `agents-cli`.
 
-### Orquestrar o deployment com `agy`
+### Orquestrar o deployment com o Antigravity CLI
 
 1. No terminal do Cloud Shell, inicie o `agy`:
 
