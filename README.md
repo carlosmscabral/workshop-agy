@@ -133,12 +133,6 @@ agy
 - **Passo 9:** Em **Do you trust the contents of this project?**, selecione `Yes, I trust this folder`  
   ![Passo 9 - Confiança no Workspace](assets/imgs/agy_auth_9.png)
 
-8. Execute o validador de progresso para a Tarefa 1:
-
-```bash
-./scripts/check_progress.sh 1
-```
-
 ---
 
 ## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
@@ -184,12 +178,6 @@ cd ~/workshop-agy
 uv sync
 ```
 
-7. Valide seu progresso:
-
-```bash
-./scripts/check_progress.sh 2
-```
-
 ---
 
 ## Tarefa 3. Testar e refinar o agente localmente com ADK Web
@@ -205,11 +193,7 @@ uv run adk web
 2. No Cloud Shell, clique em **Visualização na Web** (*Web Preview*) e selecione a porta **8000**.
 3. Teste a regra de gating e a auditoria de contrato enviando o arquivo `docs/sample_contract.pdf`.
 4. Refine prompts com o `agy` caso deseje ajustar o relatório.
-5. Encerre o servidor com `CTRL+C` e valide seu progresso:
-
-```bash
-./scripts/check_progress.sh 3
-```
+5. Quando concluir a validação, pressione `CTRL+C` no terminal para encerrar o servidor do ADK Web.
 
 ---
 
@@ -218,14 +202,10 @@ uv run adk web
 Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compilação, containerização e implantação do agente no **Google Cloud Agent Runtime** através das skills integradas do `agents-cli`.
 
 1. Inicie o `agy` e solicite a implantação:
-   > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto `"$(echo $PROJECT_ID)"` na região `"$(echo $REGION)"`."*
+   > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto $PROJECT_ID na região $REGION."*
 
 2. Aguarde a finalização (3 a 7 minutos) e anote o **Resource Name** gerado (`projects/.../locations/.../agents/...`).
-3. Valide o agente remoto e execute o validador:
-
-```bash
-./scripts/check_progress.sh 4
-```
+3. Valide a prontidão do agente remoto executando uma consulta de teste no `agy` e saia com `exit`.
 
 ---
 
@@ -243,11 +223,7 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
    ![Adicionar Agente no GE App](assets/imgs/ge_app_add_agent.png)
 6. Selecione **Agentes do Agent Runtime** e cole o **Resource Name** obtido na Tarefa 4:  
    ![Apontar para o Agent Runtime](assets/imgs/ge_app_runtime.png)
-7. Inicie uma conversa de teste no Gemini Enterprise enviando trechos do contrato e valide seu progresso:
-
-```bash
-./scripts/check_progress.sh 5
-```
+7. Inicie uma conversa de teste no Gemini Enterprise enviando trechos do contrato para validar a geração do relatório em ambiente corporativo.
 
 ---
 

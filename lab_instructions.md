@@ -197,15 +197,6 @@ agy
 > ⚠️ **Solução de Problemas de Autenticação no Antigravity CLI:**  
 > Se o assistente apresentar erros como `Permission 'aiplatform.endpoints.predict' denied` ou `Agent terminated due to error`, execute `agy auth logout` no terminal e reinicie o assistente com `agy`, garantindo o login com a conta temporária <ql-variable key="user_0.username"></ql-variable>.
 
-5. No Cloud Shell, execute o validador de progresso para confirmar a configuração da Tarefa 1:
-
-```bash
-./scripts/check_progress.sh 1
-```
-
-Clique em **Verificar meu progresso** para conferir o objetivo.
-*Configurar e ativar o Antigravity CLI.*
-
 ---
 
 ## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
@@ -285,15 +276,6 @@ cd ~/workshop-agy
 uv sync
 ```
 
-5. Execute o validador de progresso para a Tarefa 2:
-
-```bash
-./scripts/check_progress.sh 2
-```
-
-Clique em **Verificar meu progresso** para conferir o objetivo.
-*Instalar ferramentas, verificar skills e criar o agente ADK com a skill de Due Diligence.*
-
 ---
 
 ## Tarefa 3. Testar e refinar o agente localmente com ADK Web
@@ -340,15 +322,6 @@ Recomenda-se colher anuência expressa de ambos os sócios administradores em ca
 
 5. Quando concluir a validação, pressione `CTRL+C` no terminal para encerrar o servidor do ADK Web.
 
-6. Execute o validador de progresso para a Tarefa 3:
-
-```bash
-./scripts/check_progress.sh 3
-```
-
-Clique em **Verificar meu progresso** para conferir o objetivo.
-*Testar, depurar e refinar o agente localmente com ADK Web e Antigravity CLI.*
-
 ---
 
 ## Tarefa 4. Fazer o deploy do agente no Google Cloud Agent Runtime
@@ -373,14 +346,7 @@ agy
 
 4. Valide a prontidão do agente remoto executando uma consulta de teste diretamente através do `agy`.
 
-5. Saia do assistente digitando `exit` e execute o validador de progresso:
-
-```bash
-./scripts/check_progress.sh 4
-```
-
-Clique em **Verificar meu progresso** para conferir o objetivo.
-*Implantar o agente no Google Cloud Agent Runtime utilizando o Antigravity CLI.*
+5. Quando concluir os testes, saia do assistente digitando `exit` no prompt do `agy`.
 
 ---
 
@@ -412,15 +378,6 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
    ![Apontar para o Agent Runtime](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_runtime.png)
 
 7. **Teste de Produção:** Inicie uma conversa com o agente no Gemini Enterprise App, envie um trecho do contrato de teste e valide a geração do relatório de Due Diligence em ambiente corporativo.
-
-8. Execute o validador de progresso final:
-
-```bash
-./scripts/check_progress.sh 5
-```
-
-Clique em **Verificar meu progresso** para conferir o objetivo.
-*Publicar e conectar o agente ao Gemini Enterprise App.*
 
 ---
 
