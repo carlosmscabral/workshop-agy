@@ -296,11 +296,13 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
 
 ### Executar e testar a interface ADK Web
 
-1. No Cloud Shell, inicie o servidor visual do ADK Web:
+1. No Cloud Shell, inicie o servidor visual do ADK Web liberando as requisições do proxy reverso:
 
 ```bash
-uv run adk web
+uv run adk web --allow_origins="*"
 ```
+
+> 💡 **Nota sobre o Web Preview:** A flag `--allow_origins="*"` é necessária para que o servidor ASGI local do ADK permita requisições originadas do proxy reverso de visualização na web do Cloud Shell (`*.cloudshell.dev`). Mantenha as aspas duplas no comando para evitar que o shell execute expansão de curinga (*globbing*) com arquivos do diretório.
 
 2. No canto superior direito do Cloud Shell, clique no botão **Visualização na Web** (*Web Preview*) e selecione **Visualizar na porta 8000** (*Preview on port 8000*).
 

@@ -107,6 +107,11 @@ gcloud auth list
   gcloud services list --enabled \
     --filter="name:(aiplatform.googleapis.com OR discoveryengine.googleapis.com)"
   ```
+* **ADK Web Server CORS in Cloud Shell Web Preview (`--allow_origins="*"`):** When running `adk web` inside Google Cloud Shell, the user accesses the Dev UI via Cloud Shell's Web Preview reverse proxy (`https://<port>-cs-*.cloudshell.dev`). By default, ADK's ASGI middleware (`_OriginCheckMiddleware` in `api_server.py`) strictly rejects cross-origin requests from non-loopback hosts. Because Angular/Vite loads JavaScript bundles as ES modules (`<script type="module">`), the browser attaches an `Origin` header pointing to `cloudshell.dev`, which causes ADK to reject all `.js` bundles with `403 Forbidden: origin not allowed`, rendering a black screen. Always run ADK Web with the origin bypass flag in quotes:
+  ```bash
+  uv run adk web --allow_origins="*"
+  ```
+  *(Note: Quotes around `"*"` are mandatory in Bash to prevent shell globbing expansion to local filenames).*
 
 ### Rule 5: No Backticks or Code Formatting in Headings (`#`, `##`, `###`)
 * **TOC Parser Truncation Bug:** The Qwiklabs navigation panel / Table of Contents (TOC) builder extracts markdown headings to generate the student sidebar index. When it encounters backticks (e.g. `## Tarefa 2. Instalar o `agents-cli`, habilitar skills...`), the TOC parser fails on inline code tags and **truncates the title at the first backtick**, displaying incomplete text (e.g. `Tarefa 2. Instalar o`).

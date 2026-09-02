@@ -192,10 +192,10 @@ uv sync
 
 Nesta tarefa, você valida o comportamento do agente e suas regras de gating através da interface visual do ADK Web, utilizando o `agy` para depurar e refinar qualquer resposta conforme necessário.
 
-1. Inicie a interface Web do ADK:
+1. Inicie a interface Web do ADK liberando as conexões do proxy do Cloud Shell:
 
 ```bash
-uv run adk web
+uv run adk web --allow_origins="*"
 ```
 
 2. No Cloud Shell, clique em **Visualização na Web** (*Web Preview*) e selecione a porta **8000**.
