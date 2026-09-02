@@ -281,10 +281,11 @@ agy
 
    ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
 
-5. Saia do `agy` digitando `/exit` e sincronize as dependências do agente gerado:
+5. Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado, garanta as variáveis de ambiente e sincronize as dependências:
 
 ```bash
-cd ~/workshop-agy
+cd ~/workshop-agy/due-diligence-agent
+cp ~/workshop-agy/.env .env 2>/dev/null || true
 uv sync
 ```
 
@@ -296,13 +297,16 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
 
 ### Executar e testar a interface ADK Web
 
-1. No Cloud Shell, inicie o servidor visual do ADK Web liberando as requisições do proxy reverso:
+1. No Cloud Shell, certifique-se de estar no diretório do agente e inicie o servidor visual do ADK Web liberando as requisições do proxy reverso:
 
 ```bash
+cd ~/workshop-agy/due-diligence-agent
 uv run adk web --allow_origins="*"
 ```
 
-> 💡 **Nota sobre o Web Preview:** A flag `--allow_origins="*"` é necessária para que o servidor ASGI local do ADK permita requisições originadas do proxy reverso de visualização na web do Cloud Shell (`*.cloudshell.dev`). Mantenha as aspas duplas no comando para evitar que o shell execute expansão de curinga (*globbing*) com arquivos do diretório.
+> 💡 **Nota sobre o Web Preview e Diretório de Execução:**  
+> - A flag `--allow_origins="*"` é mandatória para que o servidor ASGI local do ADK permita requisições originadas do proxy reverso de visualização na web do Cloud Shell (`*.cloudshell.dev`). Mantenha as aspas duplas no comando para evitar expansão de curinga (*globbing*) pelo shell.  
+> - Executar o comando de dentro de `~/workshop-agy/due-diligence-agent` garante que o ADK descubra o agente diretamente como `app` (ou `root_agent`), evitando erros de validação de identificadores Python (`isidentifier()`) causados por pastas com hífen.
 
 2. No canto superior direito do Cloud Shell, clique no botão **Visualização na Web** (*Web Preview*) e selecione **Visualizar na porta 8000** (*Preview on port 8000*).
 
@@ -344,9 +348,10 @@ Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compi
 
 ### Orquestrar o deployment com o Antigravity CLI
 
-1. No terminal do Cloud Shell, inicie o `agy`:
+1. No terminal do Cloud Shell, acesse a pasta do agente e inicie o `agy`:
 
 ```bash
+cd ~/workshop-agy/due-diligence-agent
 agy
 ```
 

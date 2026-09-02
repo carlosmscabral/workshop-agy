@@ -112,6 +112,7 @@ gcloud auth list
   uv run adk web --allow_origins="*"
   ```
   *(Note: Quotes around `"*"` are mandatory in Bash to prevent shell globbing expansion to local filenames).*
+* **Agent Project Working Directory Invariant (`cd <agent-project-dir>`):** Always navigate directly into the generated agent directory (e.g. `cd ~/workshop-agy/due-diligence-agent`) before running `uv sync`, `adk web`, or deployment commands. When `adk web` is executed from a parent workspace directory, ADK's `NestedAgentLoader` constructs dot-separated namespaces from the relative path (e.g. `due-diligence-agent.app`). Because Python identifiers cannot contain hyphens (`-`), ADK's `_validate_agent_name` fails on `part.isidentifier()`, returning `404 Not Found: Invalid agent name: 'due-diligence-agent.app'` on every `/run_sse` stream request. Running directly inside the agent folder avoids this by exposing the agent as `app` (a valid Python identifier).
 
 ### Rule 5: No Backticks or Code Formatting in Headings (`#`, `##`, `###`)
 * **TOC Parser Truncation Bug:** The Qwiklabs navigation panel / Table of Contents (TOC) builder extracts markdown headings to generate the student sidebar index. When it encounters backticks (e.g. `## Tarefa 2. Instalar o `agents-cli`, habilitar skills...`), the TOC parser fails on inline code tags and **truncates the title at the first backtick**, displaying incomplete text (e.g. `Tarefa 2. Instalar o`).

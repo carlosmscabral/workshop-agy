@@ -179,10 +179,11 @@ EOF
    - Pressione `ESC` para sair das configurações.  
    ![Configuração de Permissão de Ferramentas](assets/imgs/agy_config_tool_permission.png)
 
-7. Saia do `agy` digitando `/exit` e sincronize as dependências do agente gerado:
+7. Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado, garanta o `.env` e sincronize as dependências:
 
 ```bash
-cd ~/workshop-agy
+cd ~/workshop-agy/due-diligence-agent
+cp ~/workshop-agy/.env .env 2>/dev/null || true
 uv sync
 ```
 
@@ -192,9 +193,10 @@ uv sync
 
 Nesta tarefa, você valida o comportamento do agente e suas regras de gating através da interface visual do ADK Web, utilizando o `agy` para depurar e refinar qualquer resposta conforme necessário.
 
-1. Inicie a interface Web do ADK liberando as conexões do proxy do Cloud Shell:
+1. Acesse o diretório do agente e inicie a interface Web do ADK liberando as conexões do proxy do Cloud Shell:
 
 ```bash
+cd ~/workshop-agy/due-diligence-agent
 uv run adk web --allow_origins="*"
 ```
 
@@ -209,8 +211,14 @@ uv run adk web --allow_origins="*"
 
 Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compilação, containerização e implantação do agente no **Google Cloud Agent Runtime** através das skills integradas do `agents-cli`.
 
-1. Inicie o `agy` e solicite a implantação:
-   > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto $PROJECT_ID na região $REGION."*
+1. Acesse a pasta do agente, inicie o `agy` e solicite a implantação:
+
+```bash
+cd ~/workshop-agy/due-diligence-agent
+agy
+```
+
+> *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto $PROJECT_ID na região $REGION."*
 
 2. Aguarde a finalização (3 a 7 minutos) e anote o **Resource Name** gerado (`projects/.../locations/.../agents/...`).
 3. Valide a prontidão do agente remoto executando uma consulta de teste no `agy` e saia com `/exit`.
