@@ -201,7 +201,7 @@ uv run adk web --allow_origins="*"
 ```
 
 2. No Cloud Shell, clique em **Visualização na Web** (*Web Preview*) e selecione a porta **8000**.
-3. Teste a regra de gating e a auditoria de contrato enviando o arquivo `docs/sample_contract.pdf`.
+3. Consulte a minuta do contrato de amostra [sample_contract.pdf](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf) e teste a regra de gating e a auditoria enviando o documento no chat.
 4. Refine prompts com o `agy` caso deseje ajustar o relatório.
 5. Quando concluir a validação, pressione `CTRL+C` no terminal para encerrar o servidor do ADK Web.
 

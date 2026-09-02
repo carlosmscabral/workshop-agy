@@ -312,6 +312,11 @@ uv run adk web --allow_origins="*"
 
 3. Execute os seguintes cenários de validação no chat da interface web:
 
+> 📄 **Acesso ao Contrato de Amostra:**  
+> Para consultar a minuta utilizada no teste de auditoria (*Contrato Social Consolidado — Nexus Tecnologia Ltda.*), você pode abrir e inspecionar o documento diretamente pelo Cloud Storage:  
+> 🔗 **[Visualizar sample_contract.pdf no navegador](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf)**  
+> *(O arquivo também está disponível localmente no seu ambiente em `docs/sample_contract.pdf`).*
+
 | Cenário de Teste | Entrada do Usuário | Comportamento Esperado do Agente |
 | :--- | :--- | :--- |
 | **Teste de Gating Rule** | `Olá, você pode analisar um contrato para mim?` | O agente responde cordialmente solicitando o envio ou texto do contrato antes de carregar instruções adicionais (*Gating Rule*). |
