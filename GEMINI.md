@@ -23,7 +23,15 @@ workshop-agy/
 │           ├── checklist.md       # 10-category legal compliance checklist
 │           └── workflow.md        # Step-by-step audit workflow & risk matrix definition
 │
+├── scripts/
+│   └── check_progress.sh          # Student self-check CLI progress validator for Cloud Shell
+│
+├── workshop_utils/
+│   ├── __init__.py
+│   └── plugins.py                 # Graceful429Plugin quota resilience interceptor for Google ADK
+│
 ├── docs/
+│   ├── IDEIAS_E_MELHORIAS.md      # Benchmarking and canonical blurbs from CloudVLab/gcp-spl-content
 │   ├── GEAP_PATTERNS.md           # Deep dive into Discovery Engine and Vertex AI Agent Engine patterns
 │   ├── Contrato Social Consolidado - Nexus Tecnologia Ltda..pdf  # Sample contract for student testing
 │   └── sample_contract.pdf        # Bash-friendly alias without spaces for terminal commands

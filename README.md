@@ -1,47 +1,60 @@
-# Implantação de um Agente de Due Diligence com Antigravity CLI e ADK: laboratório com desafio
+# Implantação de um Agente de Due Diligence com Antigravity CLI e ADK: Laboratório com Desafio
 
 ## Informações do Laboratório
-* **Tempo estimado:** 1 hora 30 minutos
-* **Nível:** `Foundational`
+
+- **Tempo estimado:** 1 hora 30 minutos
+- **Nível:** `Foundational` / `Intermediate`
 
 ---
 
-## Visão geral
+## Visão Geral
 
-Neste laboratório, você vai demonstrar sua capacidade de usar o **Antigravity CLI (`agy`)** como copiloto de desenvolvimento em terminal para construir um agente inteligente com o **Kit de Desenvolvimento de Agente (ADK)** aproveitando o ecossistema de **Skills** do `agents-cli`. Você vai integrar uma skill especializada de Due Diligence, testar e refinar localmente com a interface **ADK Web**, orquestrar o deploy no **Google Cloud Agent Runtime** diretamente através do `agy` e publicá-lo no **Gemini Enterprise App**.
+Neste laboratório prático com desafio, você vai demonstrar sua capacidade de usar o **Antigravity CLI (`agy`)** como copiloto de desenvolvimento em terminal para construir um agente inteligente com o **Kit de Desenvolvimento de Agente (ADK)** aproveitando o ecossistema de **Skills** do `agents-cli`.
 
-## Objetivo
+Você vai integrar uma skill especializada de Due Diligence, testar e refinar o comportamento localmente com a interface **ADK Web**, orquestrar a implantação no **Google Cloud Agent Runtime** diretamente através do assistente `agy` e publicá-lo no **Gemini Enterprise App**.
 
-Neste laboratório, você vai:
+### Objetivos do Laboratório
 
-* Configurar e autenticar o Antigravity CLI (`agy`) no ambiente de terminal
-* Instalar o `agents-cli` e habilitar a suíte de skills do ADK para uso no `agy`
-* Criar e estruturar um agente ADK de Due Diligence integrado a skills usando o comando interativo `/grill-me` no `agy`
-* Executar, validar e depurar o fluxo do agente localmente com a interface ADK Web e assistência do `agy`
-* Fazer a implantação do agente no Google Cloud Agent Runtime utilizando o `agy` e as skills do `agents-cli`
-* Publicar e disponibilizar o agente no Gemini Enterprise App conectando o resource name do Agent Runtime
+Neste laboratório, você aprende a realizar as seguintes tarefas:
 
----
-
-## Configuração e requisitos
-
-### Antes de clicar no botão "Começar o Laboratório"
-Leia estas instruções. Os laboratórios são cronometrados e não podem ser pausados. O timer é ativado quando você clica em **Iniciar laboratório** e mostra por quanto tempo os recursos do Google Cloud vão ficar disponíveis.
-
-Este laboratório prático permite que você realize as atividades em um ambiente real de nuvem. Você vai receber credenciais temporárias para fazer login e acessar o Google Cloud e o terminal durante o laboratório.
-
-Confira os requisitos para concluir o laboratório:
-* Acesso a um navegador de Internet padrão (recomendamos o Chrome em janela anônima).
-* Acesso ao terminal do Cloud Shell ou terminal local autenticado com o Google Cloud SDK (`gcloud`).
-
-### Como iniciar seu laboratório e fazer login no console do Google Cloud
-1. Clique no botão **Começar o laboratório**.
-2. No painel **Detalhes do Laboratório**, utilize o nome de usuário e senha fornecidos para autenticar no Console do Google Cloud.
-3. Aceite os Termos e Condições do ambiente temporário.
+- Configurar o ambiente do Cloud Shell e inicializar o assistente **Antigravity CLI (`agy`)**.
+- Instalar o `agents-cli` e habilitar a suíte de skills do ADK para uso no `agy`.
+- Criar e estruturar um agente ADK de Due Diligence integrado a skills usando o comando interativo `/grill-me` no `agy`.
+- Executar, validar e depurar o fluxo do agente localmente com a interface **ADK Web** com assistência do `agy`.
+- Fazer a implantação do agente no **Google Cloud Agent Runtime** utilizando o `agy` e as skills do `agents-cli`.
+- Publicar e disponibilizar o agente no **Gemini Enterprise App** conectando o resource name do Agent Runtime.
 
 ---
 
-## Cenário do desafio
+## Configuração e Requisitos
+
+### Antes de clicar no botão Iniciar laboratório
+
+Leia atentamente estas instruções. Os laboratórios são cronometrados e não podem ser pausados. O temporizador é iniciado assim que você clica em **Iniciar laboratório** e indica por quanto tempo os recursos do Google Cloud permanecerão disponíveis para você.
+
+Este laboratório prático permite realizar as atividades em um ambiente real de nuvem, e não em uma simulação ou demonstração. Você receberá novas credenciais temporárias para fazer login e acessar o Google Cloud durante a sessão.
+
+Para concluir este laboratório, você precisa de:
+
+- Acesso a um navegador de internet padrão (recomendamos o Google Chrome).
+- Tempo suficiente para concluir o roteiro — lembre-se de que não é possível pausar um laboratório em andamento.
+
+> ⚠️ **MUITO IMPORTANTE — Janela Anônima Obrigatória:**  
+> Utilize sempre uma **Janela Anônima (Incognito)** ou privada do navegador Google Chrome para executar este laboratório. Isso evita conflitos de autenticação entre sua conta pessoal/corporativa e a conta de estudante temporária, prevenindo cobranças indevidas em sua conta pessoal.
+
+> 🔒 **Uso Exclusivo da Conta de Estudante:**  
+> Utilize estritamente as credenciais fornecidas no painel do laboratório. Se você utilizar sua conta pessoal do Google Cloud, cobranças poderão ser geradas diretamente nela.
+
+### Fazer login no Console do Google Cloud
+
+1. No painel lateral esquerdo do laboratório, clique com o botão direito no botão **Abrir console do Google Cloud** e selecione **Abrir link em janela anônima**.
+2. Na tela de login do Google, cole o **Nome de usuário** temporário fornecido pelo painel e clique em **Avançar**.
+3. Cole a **Senha** temporária fornecida e clique em **Avançar**.
+4. Conclua as telas seguintes aceitando os termos e **NÃO** adicionando telefone de recuperação ou 2FA nesta conta temporária.
+
+---
+
+## Cenário do Desafio
 
 A **Cymbal Technologies** é uma empresa líder em soluções corporativas de tecnologia em nuvem e inteligência artificial sediada no Vale do Silício, em franca expansão global. Com uma estratégia agressiva de fusões, aquisições (M&A) e contratação massiva de fornecedores de tecnologia, os times jurídico e de compliance da Cymbal Technologies estão sobrecarregados com o volume de contratos sociais, termos de confidencialidade e instrumentos societários que precisam ser auditados minuciosamente todos os dias.
 
@@ -53,174 +66,194 @@ Você será responsável por configurar o assistente **Antigravity CLI (`agy`)**
 
 ---
 
-## Tarefa 1: Configurar e ativar o Antigravity CLI (`agy`)
+## Tarefa 1. Configurar o ambiente e inicializar o Antigravity CLI
 
-O **Antigravity CLI (`agy`)** é o seu assistente de inteligência artificial em linha de comando. Para iniciar a configuração inicial:
+Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos do workshop, instala as ferramentas CLI (`uv` e `agy`) e autentica o assistente de desenvolvimento no seu projeto Google Cloud.
 
-1. No terminal, execute o comando de ativação:
-   ```bash
-   agy
-   ```
+1. No Console do Google Cloud, clique em **Ativar o Cloud Shell** (ícone `>_`).
+2. Quando for exibida a janela pop-up solicitando **"Autorizar o Cloud Shell a fazer chamadas de API do GCP"**, clique obrigatoriamente em **Autorizar** (*Authorize*).
+3. Inicialize as variáveis de ambiente com o projeto sandbox ativo:
 
-2. Siga as 4 etapas interativas de autenticação e consentimento exibidas no console:
+```bash
+export PROJECT_ID=$DEVSHELL_PROJECT_ID
 
-### Passo 1: Inicialização do setup interativo
-![Passo 1 - Inicialização](assets/imgs/agy_auth_1.png)
+# Obter dinamicamente a região e zona atribuídas ao sandbox pelo Qwiklabs:
+export REGION=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-region])" 2>/dev/null)
+export REGION=${REGION:-$(gcloud config get-value compute/region 2>/dev/null)}
+export REGION=${REGION:-us-central1}
 
-### Passo 2: Autenticação da conta Google Cloud
-![Passo 2 - Autenticação](assets/imgs/agy_auth_2.png)
+export ZONE=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-zone])" 2>/dev/null)
+export ZONE=${ZONE:-${REGION}-a}
 
-### Passo 3: Autorização de permissões de acesso
-![Passo 3 - Permissões](assets/imgs/agy_auth_3.png)
+gcloud config set project $PROJECT_ID
+gcloud config set compute/region $REGION
+gcloud config set compute/zone $ZONE
+```
 
-### Passo 4: Conclusão do setup e ativação do prompt
-![Passo 4 - Pronto para Uso](assets/imgs/agy_auth_4.png)
+4. Clone o repositório do workshop:
 
-Clique em **Verificar meu progresso** para conferir o objetivo.
-*Configurar e ativar o Antigravity CLI.*
+```bash
+git clone https://github.com/carlosmscabral/workshop-agy.git ~/workshop-agy
+cd ~/workshop-agy
+```
+
+5. Instale o gerenciador de pacotes `uv` e a CLI do Antigravity (`agy`):
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+source $HOME/.local/bin/env
+
+curl -fsSL https://antigravity.google/cli/install.sh | bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+6. Inicie o setup interativo do **Antigravity CLI**:
+
+```bash
+agy
+```
+
+7. Siga as 4 etapas de autenticação exibidas no terminal:
+- **Passo 1:** Selecione `2. Use a Google Cloud project`  
+  ![Passo 1 - Inicialização](assets/imgs/agy_auth_1.png)
+- **Passo 2:** Selecione `1. Continue with Google Cloud`  
+  ![Passo 2 - Autenticação](assets/imgs/agy_auth_2.png)
+- **Passo 3:** Conceda as permissões de acesso na Janela Anônima  
+  ![Passo 3 - Permissões](assets/imgs/agy_auth_3.png)
+- **Passo 4:** Cole o ID do seu projeto sandbox (`echo $PROJECT_ID`)  
+  ![Passo 4 - Pronto para Uso](assets/imgs/agy_auth_4.png)
+
+8. Execute o validador de progresso para a Tarefa 1:
+
+```bash
+./scripts/check_progress.sh 1
+```
 
 ---
 
-## Tarefa 2: Instalar o `agents-cli`, habilitar as Skills no `agy` e criar o agente
+## Tarefa 2. Instalar o `agents-cli`, habilitar skills e criar o agente
 
-O `agents-cli` pode ser utilizado de forma autônoma (*standalone*) na linha de comando, mas seu principal diferencial neste fluxo é fornecer um ecossistema completo de **Skills especializadas do Google ADK** diretamente para o Antigravity CLI (`agy`).
+Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, configura as variáveis de ambiente do projeto e utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence.
 
-1. No terminal, execute a instalação e setup do `agents-cli` utilizando o `uvx`:
-   ```bash
-   uvx google-agents-cli setup
-   ```
+1. Instale e configure o `agents-cli`:
 
-   Ao concluir o setup, tanto a CLI quanto as **skills do agents-cli** serão instaladas e configuradas automaticamente no seu ambiente:
-   ![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
+```bash
+uvx google-agents-cli setup
+export PATH=$PATH:"$HOME/.local/bin"
+```
+![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
 
-2. Atualize o `PATH` do ambiente:
-   ```bash
-   export PATH=$PATH:"/home/${USER}/.local/bin"
-   ```
+2. Inicie o `agy` e verifique as skills disponíveis digitando `/skills`:
 
-3. Inicie o `agy` e digite o comando `/skills` para verificar as skills do ADK carregadas e disponíveis para o assistente:
-   ```bash
-   agy
-   ```
-   > Digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas.
-   ![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
+```bash
+agy
+```
+![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
 
-4. Crie o arquivo de variáveis de ambiente `.env` com as configurações do seu projeto Google Cloud:
-   ```bash
-   cat << EOF > .env
-   GOOGLE_GENAI_USE_VERTEXAI=TRUE
-   GOOGLE_CLOUD_PROJECT=YOUR_GCP_PROJECT_ID
-   GOOGLE_CLOUD_LOCATION=us-central1
-   MODEL=gemini-2.5-flash
-   EOF
-   ```
+3. Crie o arquivo de variáveis de ambiente `.env`:
 
-5. No prompt do `agy`, execute o comando `/grill-me` para fazer o alinhamento interativo do design e arquitetura do agente:
-   > Digite `/grill-me` e responda às perguntas de alinhamento com base na skill em `skills/due-diligence-contract/SKILL.md`.
+```bash
+cat << EOF > .env
+GOOGLE_GENAI_USE_VERTEXAI=TRUE
+GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
+GOOGLE_CLOUD_LOCATION=${REGION}
+MODEL=gemini-2.5-flash
+EOF
+```
 
-6. Solicite ao `agy` para criar a estrutura do agente de Due Diligence:
+4. No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
+   - Responda às perguntas com foco na auditoria societária (veja tabela de suporte no arquivo `lab_instructions.md`).
+
+5. Solicite ao `agy` para criar a estrutura do agente:
    > *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
 
-7. Instale as dependências do agente gerado:
-   ```bash
-   uv sync
-   ```
+6. Sincronize as dependências do agente gerado:
 
-Clique em **Verificar meu progresso** para conferir o objetivo.
-*Instalar ferramentas, verificar skills e criar o agente ADK com a skill de Due Diligence.*
+```bash
+cd ~/workshop-agy
+uv sync
+```
+
+7. Valide seu progresso:
+
+```bash
+./scripts/check_progress.sh 2
+```
 
 ---
 
-## Tarefa 3: Testar e refinar o agente localmente com ADK Web e `agy`
+## Tarefa 3. Testar e refinar o agente localmente com ADK Web
 
-Nesta tarefa, você vai validar o comportamento do agente e suas regras de gating através da interface visual do ADK, utilizando o `agy` para ajustar e refinar qualquer comportamento conforme necessário.
+Nesta tarefa, você valida o comportamento do agente e suas regras de gating através da interface visual do ADK Web, utilizando o `agy` para depurar e refinar qualquer resposta conforme necessário.
 
 1. Inicie a interface Web do ADK:
-   ```bash
-   uv run adk web
-   ```
 
-2. Acesse a URL fornecida no navegador (por padrão `http://localhost:8000`).
+```bash
+uv run adk web
+```
 
-3. Execute os seguintes testes de validação:
+2. No Cloud Shell, clique em **Visualização na Web** (*Web Preview*) e selecione a porta **8000**.
+3. Teste a regra de gating e a auditoria de contrato enviando o arquivo `docs/sample_contract.pdf`.
+4. Refine prompts com o `agy` caso deseje ajustar o relatório.
+5. Encerre o servidor com `CTRL+C` e valide seu progresso:
 
-| Cenário de Teste | Entrada do Usuário | Comportamento Esperado do Agente |
-| :--- | :--- | :--- |
-| **Teste de Gating Rule** | `Olá, você pode analisar um contrato para mim?` | O agente responde cordialmente solicitando o envio ou texto do contrato antes de carregar instruções adicionais (*Gating Rule*). |
-| **Auditoria de Contrato** | *(Enviar o conteúdo ou arquivo do documento `docs/Contrato Social Consolidado - Nexus Tecnologia Ltda..pdf`)* | O agente carrega as instruções de `references/workflow.md`, analisa cláusulas societárias, administração, quotas e gera o relatório completo de Due Diligence. |
-
-4. **Refinamento e Depuração com `agy`**:
-   Após realizar os testes, utilize o `agy` livremente no terminal para investigar comportamentos inesperados, ajustar prompts, corrigir regras de gating ou melhorar a formatação do relatório de auditoria gerado até obter o resultado ideal.
-
-5. Quando concluir os testes, pressione `CTRL+C` no terminal para encerrar o servidor do ADK Web.
-
-Clique em **Verificar meu progresso** para conferir o objetivo.
-*Testar, depurar e refinar o agente localmente com ADK Web e Antigravity CLI.*
+```bash
+./scripts/check_progress.sh 3
+```
 
 ---
 
-## Tarefa 4: Fazer o deploy do agente no Agent Runtime usando o `agy`
+## Tarefa 4. Fazer o deploy do agente no Google Cloud Agent Runtime
 
-Nesta tarefa, em vez de executar comandos manuais de deploy, você vai solicitar diretamente ao **Antigravity CLI (`agy`)** que utilize suas skills integradas do `agents-cli` (como a skill `google-agents-cli-deploy`) para realizar a implantação do agente no **Google Cloud Agent Runtime**.
+Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compilação, containerização e implantação do agente no **Google Cloud Agent Runtime** através das skills integradas do `agents-cli`.
 
-1. No terminal, inicie o `agy`:
-   ```bash
-   agy
-   ```
+1. Inicie o `agy` e solicite a implantação:
+   > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto `"$(echo $PROJECT_ID)"` na região `"$(echo $REGION)"`."*
 
-2. Peça ao `agy` para realizar o deployment do agente no Agent Runtime do seu projeto:
-   > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto `<YOUR_GCP_PROJECT_ID>` na região `us-central1`."*
+2. Aguarde a finalização (3 a 7 minutos) e anote o **Resource Name** gerado (`projects/.../locations/.../agents/...`).
+3. Valide o agente remoto e execute o validador:
 
-   > **Observação:** O `agy` utilizará as ferramentas e skills do `agents-cli` para orquestrar a compilação e a implantação no Agent Runtime. Esse processo pode levar de 3 a 7 minutos.
-
-3. Ao término do deployment, anote o **Resource Name** do agente implantado retornado pelo `agy` (formato: `projects/<PROJECT_ID>/locations/<REGION>/agents/<AGENT_ID>`).
-
-4. Valide a prontidão do agente remoto executando uma consulta de teste diretamente com o `agy`.
-
-Clique em **Verificar meu progresso** para conferir o objetivo.
-*Implantar o agente no Google Cloud Agent Runtime utilizando o Antigravity CLI.*
+```bash
+./scripts/check_progress.sh 4
+```
 
 ---
 
-## Tarefa 5: Conectar e publicar o agente no Gemini Enterprise App
+## Tarefa 5. Conectar e publicar o agente no Gemini Enterprise App
 
-Nesta tarefa final, você disponibilizará o agente de Due Diligence para os colaboradores da Cymbal Technologies dentro do **Gemini Enterprise**.
+Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterprise App** para disponibilizar o assistente de Due Diligence para os colaboradores corporativos da Cymbal Technologies.
 
-1. No Console do Google Cloud, acesse o **Gemini Enterprise**.
-
-2. **Ativação da Licença / Habilitação do GE App:** Certifique-se de que o Gemini Enterprise App está habilitado no seu ambiente:
+1. No Console do Google Cloud, pesquise por **Gemini Enterprise** ou **Agent Builder**.
+2. Habilite o Gemini Enterprise App:  
    ![Habilitar Gemini Enterprise App](assets/imgs/ge_app_enable.png)
-
-3. **Criar uma Instância do App:** Crie um novo aplicativo corporativo (por exemplo, `Cymbal Compliance & Legal Hub`):
+3. Crie um aplicativo corporativo chamado **Cymbal Compliance & Legal Hub**:  
    ![Criar Instância do GE App](assets/imgs/ge_app_create.png)
-
-4. **Habilitar Recursos de Agentes:**
-   * Navegue até a aba **Features** (Recursos) nas configurações do app;
-   * Ative a funcionalidade de **Agentes**.
-
-5. **Adicionar Agente:**
-   * Retorne para o menu de **Agentes** do aplicativo e clique em **Criar Novo Agente** / **Adicionar Agente**:
+4. Na aba **Features**, ative a opção **Agentes** (*Agents*).
+5. No menu **Agentes**, clique em **Adicionar Agente** (*Add Agent*):  
    ![Adicionar Agente no GE App](assets/imgs/ge_app_add_agent.png)
-
-6. **Apontar para o Agent Runtime:**
-   * Selecione a opção **"Agentes do Agent Runtime"**;
-   * Cole o **Resource Name** do agente obtido na Tarefa 4:
+6. Selecione **Agentes do Agent Runtime** e cole o **Resource Name** obtido na Tarefa 4:  
    ![Apontar para o Agent Runtime](assets/imgs/ge_app_runtime.png)
+7. Inicie uma conversa de teste no Gemini Enterprise enviando trechos do contrato e valide seu progresso:
 
-7. **Teste de Produção:** Inicie uma conversa com o agente no Gemini Enterprise App, envie um trecho do contrato de teste e valide a geração do relatório de Due Diligence.
+```bash
+./scripts/check_progress.sh 5
+```
 
-Clique em **Verificar meu progresso** para conferir o objetivo.
-*Publicar e conectar o agente ao Gemini Enterprise App.*
+---
+
+## Encerrar o Laboratório
+
+1. Ao concluir todas as atividades, clique no botão vermelho **Terminar o laboratório** (*End Lab*).
+2. Na janela de confirmação, clique em **Enviar** (*Submit*).
+3. Avalie sua experiência com o laboratório selecionando de 1 a 5 estrelas.
 
 ---
 
 ## Parabéns!
 
-Neste laboratório com desafio, você:
+Você concluiu com sucesso o laboratório com desafio de **Implantação de Agente de Due Diligence com Antigravity CLI e ADK**!
 
-- Configurou e utilizou o **Antigravity CLI (`agy`)** para acelerar o desenvolvimento de agentes em terminal;
-- Habilitou e visualizou o catálogo de **Skills** do `agents-cli` integradas ao assistente `agy`;
-- Criou um agente inteligente com o **Google ADK** integrado à skill de Due Diligence utilizando o comando `/grill-me`;
-- Validou e refinou o comportamento do agente localmente através da interface **ADK Web** com assistência do `agy`;
-- Orquestrou o deployment no **Google Cloud Agent Runtime** diretamente através do `agy`;
-- Publicou e integrou o agente corporativo no **Gemini Enterprise App** para a **Cymbal Technologies**.
+**Manual Last Updated: September 1, 2026**  
+**Lab Last Tested: September 1, 2026**
+
+Copyright 2026 Google LLC. Todos os direitos reservados.

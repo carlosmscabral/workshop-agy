@@ -348,3 +348,50 @@ When building labs that involve specialized or non-standard Google Cloud APIs (s
 
 * For **Discovery Engine / GEAP / Vertex AI Agent Engine** specifics (such as bare-bones `APP_TYPE_INTRANET` creation without Data Stores, avoiding the legacy Dialogflow `timeZone` requirement, and Model Armor integration), see:
   👉 **[`docs/GEAP_PATTERNS.md`](./docs/GEAP_PATTERNS.md)**
+
+---
+
+## 7. CLS Instructional Standards, Quota Resilience & Progress Validation
+
+Benchmarked directly against the official Google Cloud Learning Services (CLS) Lab Architect repository (`CloudVLab/gcp-spl-content`), our lab incorporates these high-leverage standards:
+
+### 1. CLS Writing Style Standards (`.gemini/styleguide.md`)
+- **Imperative Task Titles:** Numbered tasks must use imperative verbs without trailing punctuation (`Task 1. Configure...` or `Tarefa 1. Configurar...`). Do not use colons in headings.
+- **Task Summaries:** Follow each task heading with 1-2 sentences in simple present tense summarizing the goal.
+- **Single Action per Numbered Step:** Sighted learners and screen readers benefit from atomic actions. Avoid combining multiple setup commands into a single step.
+- **UI Element Precedence:** Always bold exact UI labels and place them before the action (e.g. `No campo **Nome**, digite...`; `No menu superior, clique em **Cloud Shell**`).
+- **Second Person Direct Address:** Write directly to the student as "you" (*você*). Avoid first-person plural (*nós/vamos fazer*).
+- **Governance Stamps:** Include canonical timestamps and copyright at the end:
+  ```markdown
+  **Manual Last Updated: September 1, 2026**
+  **Lab Last Tested: September 1, 2026**
+  ```
+
+### 2. Canonical Blurbs for Manual Deploy
+Because private manual labs on `explore.qwiklabs.com` do not run the Alexandria compiler macro pipeline (`![[/fragments/...]]`), standard boilerplate must be embedded inline:
+- **Mandatory Incognito Window Warning:** Explicit warning preventing cross-account auth leaks with personal accounts.
+- **Google Cloud Console Sign-in Flow:** Temporary username/password, terms acceptance, declining 2FA/recovery phone.
+- **Cloud Shell Activation:** Instructions to click the **Authorize** pop-up for API calls.
+- **Dynamic Region & Zone Setup:** Tri-tier resolution using `commonInstanceMetadata`.
+- **Cached Response / Quota Notice:** Informs students that fallback responses may be returned during high traffic.
+- **Lab Clean-up & Rating:** Step-by-step instructions for clicking **End Lab** and providing 1-5 star ratings.
+
+### 3. Quota Resilience Plugin (`workshop_utils/plugins.py`)
+To prevent classroom workshops from crashing when 30+ students simultaneously hit Vertex AI Gemini API rate limits (`429 RESOURCE_EXHAUSTED`), use the modular `Graceful429Plugin`:
+```python
+from workshop_utils.plugins import Graceful429Plugin
+
+plugin = Graceful429Plugin()
+plugin.apply_429_interceptor(root_agent)
+```
+The plugin catches `RESOURCE_EXHAUSTED` in async streams and returns realistic pre-cached fallback responses matching the due diligence audit contract, preventing students from getting blocked.
+
+### 4. Student Self-Check CLI (`scripts/check_progress.sh`)
+Students can run the interactive progress checker directly in Cloud Shell at any point:
+```bash
+./scripts/check_progress.sh 1   # Validate Task 1
+./scripts/check_progress.sh 2   # Validate Task 2
+./scripts/check_progress.sh all # Validate all tasks
+```
+The script provides colorized `[PASS]`, `[FAIL]`, `[WARN]` outputs with actionable troubleshooting hints.
+
