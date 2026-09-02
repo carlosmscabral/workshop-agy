@@ -139,7 +139,7 @@ agy
 
 Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, configura as variáveis de ambiente do projeto e utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence.
 
-> 💡 **Atenção:** Ao concluir o setup na Tarefa 1, o `agy` permanece ativo no terminal. Digite `/exit` (ou `exit`) e pressione `ENTER` para retornar ao terminal bash antes de executar os comandos a seguir.
+> 💡 **Atenção:** Ao concluir o setup na Tarefa 1, o `agy` permanece ativo no terminal. Digite `/exit` e pressione `ENTER` para retornar ao terminal bash antes de executar os comandos a seguir.
 
 1. Instale e configure o `agents-cli`:
 
