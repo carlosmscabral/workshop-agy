@@ -203,9 +203,12 @@ agy
 
 Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, configura as variáveis de ambiente do projeto e utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence.
 
+> ℹ️ **Atenção — Retornar ao terminal bash (sair do `agy`):**  
+> Ao concluir o setup interativo na Tarefa 1, o assistente `agy` é iniciado automaticamente e permanece ativo no seu terminal. Para executar os comandos de instalação e ambiente a seguir (`uvx`, `export`, `.env`), certifique-se de sair do assistente digitando `/exit` (ou `exit`) e pressionando `ENTER` para retornar ao prompt de comando do Cloud Shell (`$`).
+
 ### Habilitar skills e configurar ambiente
 
-1. No terminal do Cloud Shell, instale e configure o `agents-cli` utilizando o `uvx`:
+1. No terminal do Cloud Shell (fora do `agy`), instale e configure o `agents-cli` utilizando o `uvx`:
 
 ```bash
 uvx google-agents-cli setup
