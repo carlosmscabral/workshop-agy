@@ -207,7 +207,7 @@ Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compi
    > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto $PROJECT_ID na região $REGION."*
 
 2. Aguarde a finalização (3 a 7 minutos) e anote o **Resource Name** gerado (`projects/.../locations/.../agents/...`).
-3. Valide a prontidão do agente remoto executando uma consulta de teste no `agy` e saia com `exit`.
+3. Valide a prontidão do agente remoto executando uma consulta de teste no `agy` e saia com `/exit`.
 
 ---
 

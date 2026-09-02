@@ -192,7 +192,7 @@ agy
 > | `/skills` | Lista todas as skills instaladas e ativas no ambiente |
 > | `/grill-me` | Inicia o alinhamento interativo do design e arquitetura do plano |
 > | `/clear` | Limpa o histórico da conversa atual no terminal |
-> | `CTRL+C` / `exit` | Sai do prompt do `agy` e retorna para o shell |
+> | `/exit` / `CTRL+C` | Sai do prompt do `agy` e retorna para o shell |
 
 > ⚠️ **Solução de Problemas de Autenticação no Antigravity CLI:**  
 > Se o assistente apresentar erros como `Permission 'aiplatform.endpoints.predict' denied` ou `Agent terminated due to error`, execute `agy auth logout` no terminal e reinicie o assistente com `agy`, garantindo o login com a conta temporária <ql-variable key="user_0.username"></ql-variable>.
@@ -204,7 +204,7 @@ agy
 Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, configura as variáveis de ambiente do projeto e utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence.
 
 > ℹ️ **Atenção — Retornar ao terminal bash (sair do `agy`):**  
-> Ao concluir o setup interativo na Tarefa 1, o assistente `agy` é iniciado automaticamente e permanece ativo no seu terminal. Para executar os comandos de instalação e ambiente a seguir (`uvx`, `export`, `.env`), certifique-se de sair do assistente digitando `/exit` (ou `exit`) e pressionando `ENTER` para retornar ao prompt de comando do Cloud Shell (`$`).
+> Ao concluir o setup interativo na Tarefa 1, o assistente `agy` é iniciado automaticamente e permanece ativo no seu terminal. Para executar os comandos de instalação e ambiente a seguir (`uvx`, `export`, `.env`), certifique-se de sair do assistente digitando `/exit` e pressionando `ENTER` para retornar ao prompt de comando do Cloud Shell (`$`).
 
 ### Habilitar skills e configurar ambiente
 
@@ -229,7 +229,7 @@ export PATH=$PATH:"$HOME/.local/bin"
 agy
 ```
 
-> Digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas. Pressione `ESC` para fechar o menu de skills e digite `exit` para retornar ao bash.
+> Digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas. Pressione `ESC` para fechar o menu de skills e digite `/exit` para retornar ao bash.
 ![Visualização das skills no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_agents_cli.png)
 
 4. Crie o arquivo de configuração `.env` contendo os parâmetros dinâmicos do seu projeto Google Cloud:
@@ -272,7 +272,7 @@ agy
 
 > *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
 
-4. Saia do `agy` (`exit`) e sincronize as dependências do agente gerado:
+4. Saia do `agy` digitando `/exit` e sincronize as dependências do agente gerado:
 
 ```bash
 cd ~/workshop-agy
@@ -349,7 +349,7 @@ agy
 
 4. Valide a prontidão do agente remoto executando uma consulta de teste diretamente através do `agy`.
 
-5. Quando concluir os testes, saia do assistente digitando `exit` no prompt do `agy`.
+5. Quando concluir os testes, saia do assistente digitando `/exit` no prompt do `agy`.
 
 ---
 
