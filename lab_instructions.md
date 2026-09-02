@@ -55,6 +55,7 @@ Para acessar os recursos fornecidos para esta sessão, utilize os valores exibid
     <li><strong>Região Atribuída:</strong> <ql-variable key="project_0.default_region"></ql-variable></li>
     <li><strong>Zona Atribuída:</strong> <ql-variable key="project_0.default_zone"></ql-variable></li>
     <li><strong>Usuário Aluno:</strong> <ql-variable key="user_0.username"></ql-variable></li>
+    <li><strong>Senha de Acesso:</strong> Consulte o campo <em>Password</em> no painel lateral esquerdo</li>
   </ul>
 </div>
 
@@ -166,7 +167,7 @@ agy
 - **Passo 3:** Abra o link de autorização exibido no terminal em uma nova aba da sua Janela Anônima, selecione a conta de estudante <ql-variable key="user_0.username"></ql-variable> e conceda o consentimento:  
   ![Passo 3 - Permissões](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_3.png)
 
-- **Passo 4:** Cole o ID do seu projeto sandbox (`echo $PROJECT_ID`) no prompt e confirme pressionando `ENTER`:  
+- **Passo 4:** Cole o ID do seu projeto sandbox (<ql-variable key="project_0.project_id"></ql-variable>) no prompt e confirme pressionando `ENTER`:  
   ![Passo 4 - Pronto para Uso](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_4.png)
 
 > 💡 **Comandos Úteis do Antigravity CLI (`agy`):**
@@ -302,21 +303,22 @@ uv run adk web
 | **Auditoria de Contrato** | *(Enviar o conteúdo ou indicar o documento `docs/sample_contract.pdf`)* | O agente carrega as instruções de `references/workflow.md`, analisa cláusulas societárias, administração, quotas e gera o relatório completo de Due Diligence. |
 
 > 📑 **Exemplo de Formatação Esperada no Relatório de Due Diligence:**
-> 
-> ```markdown
-> ### Relatório de Due Diligence Contratual — Nexus Tecnologia Ltda.
-> 
-> - **Empresa Auditada:** Nexus Tecnologia Ltda.
-> - **Classificação Geral de Risco:** MÉDIO
-> 
-> #### 1. Matriz de Riscos e Cláusulas Críticas
-> - **Cláusula de Administração (Cláusula 5ª):** Exige assinatura conjunta para obrigações superiores a R$ 50.000,00. *Risco Médio de Governança*.
-> - **Direito de Preferência (Cláusula 8ª):** Prazo estrito de 30 dias para exercício de preferência entre sócios. *Conforme*.
-> - **Não Concorrência (Cláusula 12ª):** Restrição de 24 meses em território nacional. *Atenção aos limites geográficos*.
-> 
-> #### 2. Parecer e Recomendações
-> Recomenda-se colher anuência expressa de ambos os sócios administradores em caso de celebração de contratos de vulto com a Cymbal Technologies.
-> ```
+
+```markdown
+### Relatório de Due Diligence Contratual — Nexus Tecnologia Ltda.
+
+- **Empresa Auditada:** Nexus Tecnologia Ltda.
+- **Classificação Geral de Risco:** MÉDIO
+
+#### 1. Matriz de Riscos e Cláusulas Críticas
+
+- **Cláusula de Administração (Cláusula 5ª):** Exige assinatura conjunta para obrigações superiores a R$ 50.000,00. *Risco Médio de Governança*.
+- **Direito de Preferência (Cláusula 8ª):** Prazo estrito de 30 dias para exercício de preferência entre sócios. *Conforme*.
+- **Não Concorrência (Cláusula 12ª):** Restrição de 24 meses em território nacional. *Atenção aos limites geográficos*.
+
+#### 2. Parecer e Recomendações
+Recomenda-se colher anuência expressa de ambos os sócios administradores em caso de celebração de contratos de vulto com a Cymbal Technologies.
+```
 
 4. **Refinamento e Depuração com `agy`:**  
    Caso necessite ajustar prompts, reforçar regras de gating ou melhorar a formatação do relatório, abra uma segunda aba de terminal e utilize o `agy` livremente para refinar os arquivos do agente.
@@ -348,11 +350,11 @@ agy
 
 2. Peça ao `agy` para realizar o deployment do agente no Agent Runtime do seu projeto sandbox:
 
-> *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto `"$(echo $PROJECT_ID)"` na região `"$(echo $REGION)"`."*
+> *"Faça o deploy do agente due-diligence-agent no Agent Runtime no projeto <ql-variable key="project_0.project_id"></ql-variable> na região <ql-variable key="project_0.default_region"></ql-variable>."*
 
 > ⏱️ **Tempo Estimado:** O `agy` utilizará as ferramentas da skill `google-agents-cli-deploy` para orquestrar a compilação de container e provisionamento no Agent Runtime. Este processo leva de 3 a 7 minutos.
 
-3. Ao término do deployment, anote o **Resource Name** do agente implantado retornado pelo `agy` (formato canônico: `projects/<PROJECT_ID>/locations/<REGION>/agents/<AGENT_ID>`).
+3. Ao término do deployment, anote o **Resource Name** do agente implantado retornado pelo `agy` (formato canônico: `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]`).
 
 4. Valide a prontidão do agente remoto executando uma consulta de teste diretamente através do `agy`.
 
