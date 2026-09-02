@@ -62,7 +62,7 @@ Para acessar os recursos fornecidos para esta sessão, utilize os valores exibid
 
 1. No painel lateral esquerdo do laboratório, clique com o botão direito no botão **Abrir console do Google Cloud** e selecione **Abrir link em janela anônima**.
 
-2. Na tela de login do Google, cole o **Nome de usuário** temporário (`<ql-variable key="user_0.username"></ql-variable>`) e clique em **Avançar**.
+2. Na tela de login do Google, cole o **Nome de usuário** temporário (<ql-variable key="user_0.username"></ql-variable>) e clique em **Avançar**.
 
 3. Cole a **Senha** temporária fornecida no painel e clique em **Avançar**.
 
@@ -163,7 +163,7 @@ agy
 - **Passo 2:** Selecione a opção **`1. Continue with Google Cloud`**:  
   ![Passo 2 - Autenticação](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_2.png)
 
-- **Passo 3:** Abra o link de autorização exibido no terminal em uma nova aba da sua Janela Anônima, selecione a conta de estudante `<ql-variable key="user_0.username"></ql-variable>` e conceda o consentimento:  
+- **Passo 3:** Abra o link de autorização exibido no terminal em uma nova aba da sua Janela Anônima, selecione a conta de estudante <ql-variable key="user_0.username"></ql-variable> e conceda o consentimento:  
   ![Passo 3 - Permissões](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_3.png)
 
 - **Passo 4:** Cole o ID do seu projeto sandbox (`echo $PROJECT_ID`) no prompt e confirme pressionando `ENTER`:  
@@ -179,7 +179,7 @@ agy
 > | `CTRL+C` / `exit` | Sai do prompt do `agy` e retorna para o shell |
 
 > ⚠️ **Solução de Problemas de Autenticação no Antigravity CLI:**  
-> Se o assistente apresentar erros como `Permission 'aiplatform.endpoints.predict' denied` ou `Agent terminated due to error`, execute `agy auth logout` no terminal e reinicie o assistente com `agy`, garantindo o login com a conta temporária `<ql-variable key="user_0.username"></ql-variable>`.
+> Se o assistente apresentar erros como `Permission 'aiplatform.endpoints.predict' denied` ou `Agent terminated due to error`, execute `agy auth logout` no terminal e reinicie o assistente com `agy`, garantindo o login com a conta temporária <ql-variable key="user_0.username"></ql-variable>.
 
 5. No Cloud Shell, execute o validador de progresso para confirmar a configuração da Tarefa 1:
 

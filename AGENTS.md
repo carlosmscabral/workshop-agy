@@ -66,6 +66,10 @@ gcloud auth list
   > The exact attribute names defined in the Qwiklabs specification are `default_region` and `default_zone`.  
   > Writing `key="project_0.region"` will **fail silently** and display the default fallback placeholder (`____`). Always use `default_region` and `default_zone`.
 
+  > [!CAUTION]
+  > **Never Wrap `<ql-variable>` in Backticks:**  
+  > Wrapping `<ql-variable>` in backticks (e.g. `` `<ql-variable key="user_0.username"></ql-variable>` ``) causes the Markdown parser to treat it as an inline code span (`<code>`). This escapes the HTML characters and prevents the browser's Custom Element engine from executing, leaving literal `<ql-variable>` tags visible to the student. Always place `<ql-variable>` directly in normal prose without backticks: `(<ql-variable key="user_0.username"></ql-variable>)`.
+
 ### Rule 3: Callouts, Alerts, and Lists
 * **Mandatory Blank Line Before Lists:** In CommonMark and the Qwiklabs browser markdown parser (SimpleMDE / marked.js), an unordered or ordered list **must always be preceded by an empty blank line**. If a list immediately follows a paragraph line without an empty line:
   ```markdown

@@ -220,9 +220,9 @@ Para concluir este laboratório, você precisa de:
 
    O painel **Configuração e acesso ao laboratório** disponibiliza:
    - O botão para abrir o console;
-   - O **Nome de usuário** temporário (`<ql-variable key="user_0.username"></ql-variable>`);
+   - O **Nome de usuário** temporário (<ql-variable key="user_0.username"></ql-variable>);
    - A **Senha** temporária;
-   - O **ID do projeto** atribuído (`<ql-variable key="project_0.project_id"></ql-variable>`).
+   - O **ID do projeto** atribuído (<ql-variable key="project_0.project_id"></ql-variable>).
 
 2. Se a página solicitar a seleção de conta, clique em **Usar outra conta**.
 
@@ -264,7 +264,7 @@ O Cloud Shell é uma máquina virtual equipada com ferramentas essenciais de des
 gcloud auth list
 ```
 
-*(A conta ativa exibida deve coincidir com o usuário `<ql-variable key="user_0.username"></ql-variable>` marcado com um asterisco `*`).*
+*(A conta ativa exibida deve coincidir com o usuário <ql-variable key="user_0.username"></ql-variable> marcado com um asterisco `*`).*
 
 5. (Opcional) Confirme o projeto ativo executando:
 
@@ -329,7 +329,7 @@ echo "=========================================="
 > Para restabelecer o acesso:  
 > 1. Execute o comando `agy auth logout` no terminal (ou no menu de configurações do assistente, selecione **Account > Sign Out**).  
 > 2. Reinicie o assistente digitando `agy`.  
-> 3. Selecione a opção **Use a Google Cloud project** e autentique-se com a conta de estudante `<ql-variable key="user_0.username"></ql-variable>` vinculada ao projeto `<ql-variable key="project_0.project_id"></ql-variable>`.
+> 3. Selecione a opção **Use a Google Cloud project** e autentique-se com a conta de estudante <ql-variable key="user_0.username"></ql-variable> vinculada ao projeto <ql-variable key="project_0.project_id"></ql-variable>.
 ```
 
 ---
