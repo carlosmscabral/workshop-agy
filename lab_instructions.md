@@ -272,7 +272,16 @@ agy
 
 > *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
 
-4. Saia do `agy` digitando `/exit` e sincronize as dependências do agente gerado:
+4. **Configurar Modo Permissivo de Ferramentas (`always-proceed`):**  
+   Para permitir que o assistente orquestre comandos e deployments com maior autonomia nas próximas tarefas (sem solicitar confirmação manual para cada ação executada no terminal):
+   - No prompt do `agy`, digite `/config` para abrir o menu de preferências;
+   - Navegue com as setas do teclado até a opção **Tool Permission**;
+   - Alterne o valor para **`always-proceed`** e confirme com `ENTER`;
+   - Pressione `ESC` para fechar o menu de configurações.
+
+   ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
+
+5. Saia do `agy` digitando `/exit` e sincronize as dependências do agente gerado:
 
 ```bash
 cd ~/workshop-agy

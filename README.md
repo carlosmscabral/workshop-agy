@@ -173,7 +173,13 @@ EOF
 5. Solicite ao `agy` para criar a estrutura do agente:
    > *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
 
-6. Sincronize as dependências do agente gerado:
+6. (Recomendado) Ajuste o modo de execução de ferramentas para permissivo (`always-proceed`):
+   - No prompt do `agy`, digite `/config`;
+   - Selecione a opção **Tool Permission** e altere para **`always-proceed`** para que o assistente execute comandos nas próximas tarefas sem solicitar aprovação a cada passo;
+   - Pressione `ESC` para sair das configurações.  
+   ![Configuração de Permissão de Ferramentas](assets/imgs/agy_config_tool_permission.png)
+
+7. Saia do `agy` digitando `/exit` e sincronize as dependências do agente gerado:
 
 ```bash
 cd ~/workshop-agy
