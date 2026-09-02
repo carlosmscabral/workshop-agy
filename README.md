@@ -113,7 +113,7 @@ export PATH="$HOME/.local/bin:$PATH"
 agy
 ```
 
-7. Siga as 4 etapas de autenticação exibidas no terminal:
+7. Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
 - **Passo 1:** Selecione `2. Use a Google Cloud project`  
   ![Passo 1 - Inicialização](assets/imgs/agy_auth_1.png)
 - **Passo 2:** Selecione `1. Continue with Google Cloud`  
@@ -121,7 +121,17 @@ agy
 - **Passo 3:** Conceda as permissões de acesso na Janela Anônima  
   ![Passo 3 - Permissões](assets/imgs/agy_auth_3.png)
 - **Passo 4:** Cole o ID do seu projeto sandbox (`echo $PROJECT_ID`)  
-  ![Passo 4 - Pronto para Uso](assets/imgs/agy_auth_4.png)
+  ![Passo 4 - ID do Projeto](assets/imgs/agy_auth_4.png)
+- **Passo 5:** Em **Select Google Cloud Location**, selecione a opção `global`  
+  ![Passo 5 - Região Global](assets/imgs/agy_auth_5.png)
+- **Passo 6:** Em **Select License**, selecione a opção `1. Agent Platform`  
+  ![Passo 6 - Seleção de Licença](assets/imgs/agy_auth_6.png)
+- **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de preferência (ex: `dark`)  
+  ![Passo 7 - Tema Visual](assets/imgs/agy_auth_7.png)
+- **Passo 8:** Em **Terms of Service & Data Use**, selecione `Done` para aceitar os termos  
+  ![Passo 8 - Termos de Serviço](assets/imgs/agy_auth_8.png)
+- **Passo 9:** Em **Do you trust the contents of this project?**, selecione `Yes, I trust this folder`  
+  ![Passo 9 - Confiança no Workspace](assets/imgs/agy_auth_9.png)
 
 8. Execute o validador de progresso para a Tarefa 1:
 

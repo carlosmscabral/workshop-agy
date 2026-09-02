@@ -156,7 +156,7 @@ export PATH="$HOME/.local/bin:$PATH"
 agy
 ```
 
-4. Siga as 4 etapas de autenticação e consentimento exibidas no terminal:
+4. Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
 
 - **Passo 1:** Selecione a opção **`2. Use a Google Cloud project`**:  
   ![Passo 1 - Inicialização](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_1.png)
@@ -168,7 +168,22 @@ agy
   ![Passo 3 - Permissões](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_3.png)
 
 - **Passo 4:** Cole o ID do seu projeto sandbox (<ql-variable key="project_0.project_id"></ql-variable>) no prompt e confirme pressionando `ENTER`:  
-  ![Passo 4 - Pronto para Uso](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_4.png)
+  ![Passo 4 - ID do Projeto](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_4.png)
+
+- **Passo 5:** Em **Select Google Cloud Location**, selecione a opção **`global`** e confirme pressionando `ENTER`:  
+  ![Passo 5 - Região Global](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_5.png)
+
+- **Passo 6:** Em **Select License**, selecione a opção **`1. Agent Platform`** e confirme pressionando `ENTER`:  
+  ![Passo 6 - Seleção de Licença](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_6.png)
+
+- **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de sua preferência (como **`dark`**) e confirme pressionando `ENTER`:  
+  ![Passo 7 - Tema Visual](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_7.png)
+
+- **Passo 8:** Na tela **Terms of Service & Data Use**, navegue até a opção **`Done`** e confirme pressionando `ENTER` para aceitar os termos de serviço:  
+  ![Passo 8 - Termos de Serviço](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_8.png)
+
+- **Passo 9:** Na tela de confirmação **Do you trust the contents of this project?**, selecione **`Yes, I trust this folder`** e confirme pressionando `ENTER` para liberar o acesso ao workspace:  
+  ![Passo 9 - Confiança no Workspace](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_9.png)
 
 > 💡 **Comandos Úteis do Antigravity CLI (`agy`):**
 > 
