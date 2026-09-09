@@ -1,0 +1,32 @@
+# ===================================================================
+# Antigravity CLI (agy) Workspace Ignore Rules
+# Exclui arquivos de infraestrutura, autoria e metadados de lab
+# para manter o contexto do estudante limpo e focado no agente ADK.
+# ===================================================================
+
+# Qwiklabs Infrastructure & Startup Automation
+terraform/
+qwiklabs/
+
+# Lab Authoring Playbooks & AI Rules
+AGENTS.md
+GEMINI.md
+lab_instructions.md
+
+# Internal Architecture & Authoring Documentation
+docs/authoring/
+docs/GEAP_PATTERNS.md
+docs/IDEIAS_E_MELHORIAS.md
+
+# Archived Labs
+archive/
+
+# Static Documentation Assets (Screenshots)
+assets/
+
+# Temporary files, caches & virtual environments
+*.zip
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/

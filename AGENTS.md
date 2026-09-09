@@ -361,7 +361,7 @@ In the **Lab Resources** tab, under the student panel settings, you must check t
 When building labs that involve specialized or non-standard Google Cloud APIs (such as Discovery Engine, Gemini Enterprise, Vertex AI Agent Engine, or Model Armor), separate specific operational patterns from the general lab standard.
 
 * For **Discovery Engine / GEAP / Vertex AI Agent Engine** specifics (such as bare-bones `APP_TYPE_INTRANET` creation without Data Stores, avoiding the legacy Dialogflow `timeZone` requirement, and Model Armor integration), see:
-  👉 **[`docs/GEAP_PATTERNS.md`](./docs/GEAP_PATTERNS.md)**
+  👉 **[`docs/authoring/GEAP_PATTERNS.md`](./docs/authoring/GEAP_PATTERNS.md)**
 
 ---
 

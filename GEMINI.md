@@ -8,6 +8,8 @@ Welcome to **workshop-agy**! This project contains the complete source code, aut
 
 ```
 workshop-agy/
+├── .antigravityignore              # Shields AGY student context from lab infrastructure/authoring files
+├── .geminiignore                  # Mirror ignore rules for Gemini CLI tools
 ├── GEMINI.md                      # Jetski project entrypoint and instructions (this file)
 ├── AGENTS.md                      # Authoritative engineering standard for Qwiklabs lab authoring
 ├── README.md                      # Primary GitHub repository documentation with embedded screenshots
@@ -31,10 +33,14 @@ workshop-agy/
 │   └── plugins.py                 # Graceful429Plugin quota resilience interceptor for Google ADK
 │
 ├── docs/
-│   ├── IDEIAS_E_MELHORIAS.md      # Benchmarking and canonical blurbs from CloudVLab/gcp-spl-content
-│   ├── GEAP_PATTERNS.md           # Deep dive into Discovery Engine and Vertex AI Agent Engine patterns
 │   ├── Contrato Social Consolidado - Nexus Tecnologia Ltda..pdf  # Sample contract for student testing
-│   └── sample_contract.pdf        # Bash-friendly alias without spaces for terminal commands
+│   ├── sample_contract.pdf        # Bash-friendly alias without spaces for terminal commands
+│   │
+│   └── authoring/                 # Internal engineering & authoring documentation (ignored by AGY)
+│       ├── IDEIAS_E_MELHORIAS.md  # Benchmarking and canonical blurbs from CloudVLab/gcp-spl-content
+│       ├── GEAP_PATTERNS.md       # Deep dive into Discovery Engine and Vertex AI Agent Engine patterns
+│       └── archive/               # Archived foundational GEAP & Gemini 3.7 Flash lab instructions
+│           └── foundational-geap-lab/
 │
 ├── terraform/                     # Qwiklabs startup automation bundle (Project Octopus)
 │   ├── runtime.yaml               # Engine declaration: terraform 1.4.6
@@ -44,11 +50,8 @@ workshop-agy/
 │   └── scripts/
 │       └── script.sh              # Headless provisioning: API enablement, region metadata injection
 │
-├── qwiklabs/
-│   └── Archive.zip                # Packaged zip bundle ready for upload to project_0 in Qwiklabs
-│
-└── archive/
-    └── foundational-geap-lab/     # Archived foundational GEAP & Gemini 3.7 Flash lab instructions
+└── qwiklabs/
+    └── Archive.zip                # Packaged zip bundle ready for upload to project_0 in Qwiklabs
 ```
 
 ---
