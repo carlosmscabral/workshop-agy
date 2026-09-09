@@ -137,7 +137,7 @@ agy
 
 ## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
 
-Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, configura as variáveis de ambiente do projeto e utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence.
+Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence e configura o ambiente com o modelo `gemini-flash-3.8` na região `global`.
 
 > 💡 **Atenção:** Ao concluir o setup na Tarefa 1, o `agy` permanece ativo no terminal. Digite `/exit` e pressione `ENTER` para retornar ao terminal bash antes de executar os comandos a seguir.
 
@@ -156,34 +156,34 @@ agy
 ```
 ![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
 
-3. Crie o arquivo de variáveis de ambiente `.env`:
-
-```bash
-cat << EOF > .env
-GOOGLE_GENAI_USE_VERTEXAI=TRUE
-GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
-GOOGLE_CLOUD_LOCATION=${REGION}
-MODEL=gemini-2.5-flash
-EOF
-```
-
-4. No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
+3. No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
    - Responda às perguntas com foco na auditoria societária (veja tabela de suporte no arquivo `lab_instructions.md`).
 
-5. Solicite ao `agy` para criar a estrutura do agente:
+4. Solicite ao `agy` para criar a estrutura do agente:
    > *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
 
-6. (Recomendado) Ajuste o modo de execução de ferramentas para permissivo (`always-proceed`):
+5. (Recomendado) Ajuste o modo de execução de ferramentas para permissivo (`always-proceed`):
    - No prompt do `agy`, digite `/config`;
    - Selecione a opção **Tool Permission** e altere para **`always-proceed`** para que o assistente execute comandos nas próximas tarefas sem solicitar aprovação a cada passo;
    - Pressione `ESC` para sair das configurações.  
    ![Configuração de Permissão de Ferramentas](assets/imgs/agy_config_tool_permission.png)
 
-7. Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado, garanta o `.env` e sincronize as dependências:
+6. Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
 
 ```bash
 cd ~/workshop-agy/due-diligence-agent
-cp ~/workshop-agy/.env .env 2>/dev/null || true
+
+cat << EOF > .env
+GOOGLE_GENAI_USE_VERTEXAI=TRUE
+GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
+GOOGLE_CLOUD_LOCATION=global
+MODEL=gemini-flash-3.8
+EOF
+```
+
+7. Sincronize as dependências do projeto com o `uv`:
+
+```bash
 uv sync
 ```
 

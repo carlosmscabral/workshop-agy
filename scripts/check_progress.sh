@@ -102,11 +102,16 @@ function check_task_2() {
     echo -e "${BOLD}--- Validando Tarefa 2: Instalação de Skills e Criação do Agente ---${NC}"
 
     # 1. Arquivo .env
-    local env_file=".env"
-    if [ -f "${env_file}" ] || [ -f "../${env_file}" ]; then
-        check_pass "Arquivo de configuração .env localizado."
-    else
-        check_fail "Arquivo .env ausente." "Crie o arquivo .env com GOOGLE_CLOUD_PROJECT e GOOGLE_CLOUD_LOCATION conforme Tarefa 2."
+    local env_found=0
+    for env_candidate in "due-diligence-agent/.env" ".env" "../due-diligence-agent/.env" "../.env"; do
+        if [ -f "${env_candidate}" ]; then
+            env_found=1
+            check_pass "Arquivo de configuração .env localizado em '${env_candidate}'."
+            break
+        fi
+    done
+    if [ ${env_found} -eq 0 ]; then
+        check_fail "Arquivo .env ausente." "Crie o arquivo .env em due-diligence-agent/.env com GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION=global e MODEL=gemini-flash-3.8 conforme Tarefa 2."
     fi
 
     # 2. Skill de Due Diligence

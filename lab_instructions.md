@@ -201,12 +201,12 @@ agy
 
 ## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
 
-Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, configura as variáveis de ambiente do projeto e utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence.
+Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence e configura o ambiente com o modelo `gemini-flash-3.8` na região `global`.
 
 > ℹ️ **Atenção — Retornar ao terminal bash (sair do `agy`):**  
-> Ao concluir o setup interativo na Tarefa 1, o assistente `agy` é iniciado automaticamente e permanece ativo no seu terminal. Para executar os comandos de instalação e ambiente a seguir (`uvx`, `export`, `.env`), certifique-se de sair do assistente digitando `/exit` e pressionando `ENTER` para retornar ao prompt de comando do Cloud Shell (`$`).
+> Ao concluir o setup interativo na Tarefa 1, o assistente `agy` é iniciado automaticamente e permanece ativo no seu terminal. Para executar os comandos de instalação a seguir (`uvx`, `export`), certifique-se de sair do assistente digitando `/exit` e pressionando `ENTER` para retornar ao prompt de comando do Cloud Shell (`$`).
 
-### Habilitar skills e configurar ambiente
+### Habilitar skills e alinhar o agente com /grill-me
 
 1. No terminal do Cloud Shell (fora do `agy`), instale e configure o `agents-cli` utilizando o `uvx`:
 
@@ -229,29 +229,10 @@ export PATH=$PATH:"$HOME/.local/bin"
 agy
 ```
 
-> Digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas. Pressione `ESC` para fechar o menu de skills e digite `/exit` para retornar ao bash.
+> Digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas. Pressione `ESC` para fechar o menu de skills e continuar na sessão interativa do `agy`.
 ![Visualização das skills no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_agents_cli.png)
 
-4. Crie o arquivo de configuração `.env` contendo os parâmetros dinâmicos do seu projeto Google Cloud:
-
-```bash
-cat << EOF > .env
-GOOGLE_GENAI_USE_VERTEXAI=TRUE
-GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
-GOOGLE_CLOUD_LOCATION=${REGION}
-MODEL=gemini-2.5-flash
-EOF
-```
-
-### Alinhar e estruturar o agente com o comando /grill-me
-
-1. Inicie o `agy`:
-
-```bash
-agy
-```
-
-2. No prompt do `agy`, execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente:
+4. No prompt do `agy`, execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente:
 
 ```
 /grill-me
@@ -268,11 +249,11 @@ agy
 > | **Qual é a regra de gating de entrada?** | *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.* |
 > | **Qual é o formato de saída esperado?** | *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.* |
 
-3. Concluído o alinhamento com o `/grill-me`, instrua o `agy` a gerar o projeto do agente:
+5. Concluído o alinhamento com o `/grill-me`, instrua o `agy` a gerar o projeto do agente:
 
 > *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
 
-4. **Configurar Modo Permissivo de Ferramentas (`always-proceed`):**  
+6. **Configurar Modo Permissivo de Ferramentas (`always-proceed`):**  
    Para permitir que o assistente orquestre comandos e deployments com maior autonomia nas próximas tarefas (sem solicitar confirmação manual para cada ação executada no terminal):
    - No prompt do `agy`, digite `/config` para abrir o menu de preferências;
    - Navegue com as setas do teclado até a opção **Tool Permission**;
@@ -281,11 +262,28 @@ agy
 
    ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
 
-5. Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado, garanta as variáveis de ambiente e sincronize as dependências:
+7. Saia do assistente digitando `/exit` no prompt do `agy`:
+
+```
+/exit
+```
+
+8. Acesse o diretório do agente recém-criado e crie o arquivo de configuração `.env` diretamente no seu local definitivo, definindo a região fixa como `global` e o modelo como `gemini-flash-3.8`:
 
 ```bash
 cd ~/workshop-agy/due-diligence-agent
-cp ~/workshop-agy/.env .env 2>/dev/null || true
+
+cat << EOF > .env
+GOOGLE_GENAI_USE_VERTEXAI=TRUE
+GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
+GOOGLE_CLOUD_LOCATION=global
+MODEL=gemini-flash-3.8
+EOF
+```
+
+9. Sincronize as dependências do projeto com o `uv`:
+
+```bash
 uv sync
 ```
 

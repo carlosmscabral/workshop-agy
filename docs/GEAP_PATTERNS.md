@@ -38,7 +38,7 @@ curl -s -X POST   -H "Authorization: Bearer ${ADC_TOKEN}"   -H "X-Goog-User-Proj
 
 ## 2. Vertex AI Gemini Foundation Model Inference (Global Endpoint)
 
-For labs evaluating or classifying intents using Gemini 3.7 Flash:
+For labs evaluating or classifying intents using Gemini Flash models (such as `gemini-flash-3.8`):
 
 ### Endpoint Location
 Use the **`global`** Vertex AI endpoint:
@@ -47,7 +47,7 @@ https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publ
 ```
 
 ### Model Name Fallback Architecture
-Model aliases in Vertex AI can vary between `gemini-flash-3.7` and `gemini-3.7-flash`. When executing python test scripts from Cloud Shell, always implement automatic fallback:
+Model aliases in Vertex AI can vary between `gemini-flash-3.8` and `gemini-3.8-flash`. When executing python test scripts from Cloud Shell, always implement automatic fallback:
 
 ```python
 import subprocess
@@ -58,7 +58,7 @@ import urllib.error
 token = subprocess.check_output(["gcloud", "auth", "print-access-token"]).decode("utf-8").strip()
 project_id = subprocess.check_output(["gcloud", "config", "get-value", "project"]).decode("utf-8").strip()
 
-model = "gemini-flash-3.7"
+model = "gemini-flash-3.8"
 url = f"https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publishers/google/models/{model}:generateContent"
 
 payload = {
@@ -77,7 +77,7 @@ try:
         print(resp.read().decode("utf-8"))
 except urllib.error.HTTPError as e:
     # Automatic fallback for alternative publisher ID
-    url_alt = f"https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publishers/google/models/gemini-3.7-flash:generateContent"
+    url_alt = f"https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publishers/google/models/gemini-3.8-flash:generateContent"
     req_alt = urllib.request.Request(
         url_alt,
         data=json.dumps(payload).encode("utf-8"),
