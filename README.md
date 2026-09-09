@@ -156,17 +156,17 @@ agy
 ```
 ![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
 
-3. No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
-   - Responda às perguntas com foco na auditoria societária (veja tabela de suporte no arquivo `lab_instructions.md`).
-
-4. Solicite ao `agy` para criar a estrutura do agente:
-   > *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
-
-5. (Recomendado) Ajuste o modo de execução de ferramentas para permissivo (`always-proceed`):
+3. (Recomendado) Ajuste o modo de execução de ferramentas para permissivo (`always-proceed`):
    - No prompt do `agy`, digite `/config`;
-   - Selecione a opção **Tool Permission** e altere para **`always-proceed`** para que o assistente execute comandos nas próximas tarefas sem solicitar aprovação a cada passo;
+   - Selecione a opção **Tool Permission** e altere para **`always-proceed`** para que o assistente gere arquivos e execute comandos sem solicitar aprovação manual a cada ação;
    - Pressione `ESC` para sair das configurações.  
    ![Configuração de Permissão de Ferramentas](assets/imgs/agy_config_tool_permission.png)
+
+4. No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
+   - Responda às perguntas com foco na auditoria societária (veja tabela de suporte no arquivo `lab_instructions.md`).
+
+5. Solicite ao `agy` para criar a estrutura do agente:
+   > *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
 
 6. Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
 

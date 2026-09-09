@@ -232,7 +232,16 @@ agy
 > Digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas. Pressione `ESC` para fechar o menu de skills e continuar na sessão interativa do `agy`.
 ![Visualização das skills no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_agents_cli.png)
 
-4. No prompt do `agy`, execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente:
+4. **Configurar Modo Permissivo de Ferramentas (`always-proceed`):**  
+   Antes de iniciar o alinhamento arquitetural e a geração de código, configure a execução de ferramentas como permissiva. Isso garante que o assistente crie pastas, escreva arquivos e execute comandos com autonomia durante a próxima etapa, sem solicitar confirmação manual para cada ação:
+   - No prompt do `agy`, digite `/config` para abrir o menu de preferências;
+   - Navegue com as setas do teclado até a opção **Tool Permission**;
+   - Alterne o valor para **`always-proceed`** e confirme com `ENTER`;
+   - Pressione `ESC` para fechar o menu de configurações.
+
+   ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
+
+5. No prompt do `agy`, execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente:
 
 ```
 /grill-me
@@ -249,18 +258,9 @@ agy
 > | **Qual é a regra de gating de entrada?** | *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.* |
 > | **Qual é o formato de saída esperado?** | *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.* |
 
-5. Concluído o alinhamento com o `/grill-me`, instrua o `agy` a gerar o projeto do agente:
+6. Concluído o alinhamento com o `/grill-me`, instrua o `agy` a gerar o projeto do agente:
 
 > *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
-
-6. **Configurar Modo Permissivo de Ferramentas (`always-proceed`):**  
-   Para permitir que o assistente orquestre comandos e deployments com maior autonomia nas próximas tarefas (sem solicitar confirmação manual para cada ação executada no terminal):
-   - No prompt do `agy`, digite `/config` para abrir o menu de preferências;
-   - Navegue com as setas do teclado até a opção **Tool Permission**;
-   - Alterne o valor para **`always-proceed`** e confirme com `ENTER`;
-   - Pressione `ESC` para fechar o menu de configurações.
-
-   ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
 
 7. Saia do assistente digitando `/exit` no prompt do `agy`:
 
