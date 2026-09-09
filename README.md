@@ -13,6 +13,26 @@ Neste laboratório prático com desafio, você vai demonstrar sua capacidade de 
 
 Você vai integrar uma skill especializada de Due Diligence, testar e refinar o comportamento localmente com a interface **ADK Web**, orquestrar a implantação no **Google Cloud Agent Runtime** diretamente através do assistente `agy` e publicá-lo no **Gemini Enterprise App**.
 
+### Arquitetura da Solução e Fluxo de Componentes
+
+O diagrama a seguir ilustra a jornada de ponta a ponta que você percorrerá neste laboratório, desde o desenvolvimento no Cloud Shell até a disponibilização do agente para os colaboradores corporativos no Gemini Enterprise:
+
+![Arquitetura da Solução e Fluxo de Componentes](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/architecture_overview.png)
+
+### Modelo Mental: Do Desenvolvimento Tradicional ao Mundo de Agentes
+
+Se você tem experiência com desenvolvimento de software tradicional (APIs REST, frameworks web e scripts), utilize a tabela abaixo como mapa conceitual para conectar os conceitos deste laboratório ao seu conhecimento prévio:
+
+| Conceito no Workshop | Equivalente no Desenvolvimento Tradicional | Papel no Ciclo de Vida do Agente |
+| :--- | :--- | :--- |
+| **Antigravity CLI (`agy`)** | Copiloto / Par programador no terminal | Seu assistente interativo que gera código, refina regras e orquestra comandos no terminal. |
+| **Google ADK** | Framework backend (ex: FastAPI, Express, Flask) | Kit de desenvolvimento em Python que estrutura a lógica, ciclo de vida e estado do agente. |
+| **Skills (`SKILL.md`)** | Middlewares de negócio / Manuais de compliance | Pacotes em Markdown com regras e diretrizes que o agente consulta para auditar contratos. |
+| **Comando `/grill-me`** | Refinamento de requisitos com Tech Lead | Entrevista socrática que alinha escopo, entradas, saídas e regras de segurança antes de codificar. |
+| **ADK Web** | Servidor local com UI (Swagger / Postman) | Interface web local para testar e depurar o agente no navegador antes do deploy na nuvem. |
+| **Agent Runtime** | Plataforma Serverless gerenciada (ex: Cloud Run) | Ambiente de nuvem gerenciado que hospeda o contêiner do seu agente com segurança e escala. |
+| **Gemini Enterprise App** | Portal corporativo / Frontend da empresa | Ponto de contato final onde os colaboradores da empresa conversam com o agente integrado. |
+
 ### Objetivos do Laboratório
 
 Neste laboratório, você aprende a realizar as seguintes tarefas:
@@ -114,22 +134,31 @@ agy
 ```
 
 7. Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
+
 - **Passo 1:** Selecione `2. Use a Google Cloud project`  
   ![Passo 1 - Inicialização](assets/imgs/agy_auth_1.png)
+
 - **Passo 2:** Selecione `1. Continue with Google Cloud`  
   ![Passo 2 - Autenticação](assets/imgs/agy_auth_2.png)
+
 - **Passo 3:** Conceda as permissões de acesso na Janela Anônima  
   ![Passo 3 - Permissões](assets/imgs/agy_auth_3.png)
+
 - **Passo 4:** Cole o ID do seu projeto sandbox (`echo $PROJECT_ID`)  
   ![Passo 4 - ID do Projeto](assets/imgs/agy_auth_4.png)
+
 - **Passo 5:** Em **Select Google Cloud Location**, selecione a opção `global`  
   ![Passo 5 - Região Global](assets/imgs/agy_auth_5.png)
+
 - **Passo 6:** Em **Select License**, selecione a opção `1. Agent Platform`  
   ![Passo 6 - Seleção de Licença](assets/imgs/agy_auth_6.png)
+
 - **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de preferência (ex: `dark`)  
   ![Passo 7 - Tema Visual](assets/imgs/agy_auth_7.png)
+
 - **Passo 8:** Em **Terms of Service & Data Use**, selecione `Done` para aceitar os termos  
   ![Passo 8 - Termos de Serviço](assets/imgs/agy_auth_8.png)
+
 - **Passo 9:** Em **Do you trust the contents of this project?**, selecione `Yes, I trust this folder`  
   ![Passo 9 - Confiança no Workspace](assets/imgs/agy_auth_9.png)
 
@@ -232,14 +261,30 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 1. No Console do Google Cloud, pesquise por **Gemini Enterprise** ou **Agent Builder**.
 2. Habilite o Gemini Enterprise App:  
    ![Habilitar Gemini Enterprise App](assets/imgs/ge_app_enable.png)
+
 3. Crie um aplicativo corporativo chamado **Cymbal Compliance & Legal Hub**:  
    ![Criar Instância do GE App](assets/imgs/ge_app_create.png)
+
 4. Na aba **Features**, ative a opção **Agentes** (*Agents*).
 5. No menu **Agentes**, clique em **Adicionar Agente** (*Add Agent*):  
    ![Adicionar Agente no GE App](assets/imgs/ge_app_add_agent.png)
-6. Selecione **Agentes do Agent Runtime** e cole o **Resource Name** obtido na Tarefa 4:  
+
+6. Selecione o card **Custom agent via Agent Runtime** e clique em **Add**:  
    ![Apontar para o Agent Runtime](assets/imgs/ge_app_runtime.png)
-7. Inicie uma conversa de teste no Gemini Enterprise enviando trechos do contrato para validar a geração do relatório em ambiente corporativo.
+
+7. Na etapa **1. Authorizations**, clique em **Skip**. Na etapa **2. Configuration**, informe o nome (`Legal Agent`), descrição (`Revisão de contratos`) e o **Resource Name** do Agent Runtime da Tarefa 4, e clique em **Create**:  
+   ![Configuração do Agente no Gemini Enterprise](assets/imgs/ge_app_agent_config.png)
+   
+   Após a criação, confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
+   ![Agente Registrado no Gemini Enterprise](assets/imgs/ge_app_agents_table.png)
+
+8. No menu lateral do aplicativo **Cymbal Compliance & Legal Hub**, acesse **Overview** e, no card **Preview Gemini Enterprise before customizing**, clique no botão **Preview**:  
+   ![Acessar Preview do Gemini Enterprise](assets/imgs/ge_app_preview.png)
+
+9. Na janela ou pop-up de visualização que carregar, clique em **Agents** no menu lateral e selecione o agente criado anteriormente (**Legal Agent**) na seção **From your organization**:  
+   ![Selecionar Legal Agent no Gemini Enterprise](assets/imgs/ge_app_select_agent.png)
+
+10. No chat aberto do agente corporativo, envie um trecho da minuta de contrato para validar a geração do parecer de conformidade e auditoria de Due Diligence em produção.
 
 ---
 
