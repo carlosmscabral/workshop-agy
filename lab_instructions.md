@@ -304,10 +304,6 @@ cd ~/workshop-agy/due-diligence-agent
 uv run adk web --allow_origins="*"
 ```
 
-> 💡 **Nota sobre o Web Preview e Diretório de Execução:**  
-> - A flag `--allow_origins="*"` é mandatória para que o servidor ASGI local do ADK permita requisições originadas do proxy reverso de visualização na web do Cloud Shell (`*.cloudshell.dev`). Mantenha as aspas duplas no comando para evitar expansão de curinga (*globbing*) pelo shell.  
-> - Executar o comando de dentro de `~/workshop-agy/due-diligence-agent` garante que o ADK descubra o agente diretamente como `app` (ou `root_agent`), evitando erros de validação de identificadores Python (`isidentifier()`) causados por pastas com hífen.
-
 2. No canto superior direito do Cloud Shell, clique no botão **Visualização na Web** (*Web Preview*) e selecione **Visualizar na porta 8000** (*Preview on port 8000*).
 
 3. Execute os seguintes cenários de validação no chat da interface web:
