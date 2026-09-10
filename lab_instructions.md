@@ -398,30 +398,21 @@ agy
 
 > ⏱️ **Tempo Estimado:** O `agy` utilizará as ferramentas da skill `google-agents-cli-deploy` para orquestrar a compilação de container e provisionamento no Agent Runtime. Este processo leva de 3 a 7 minutos.
 
-> ℹ️ **Os Bastidores do Deploy: O que acontece durante a publicação no Agent Runtime?**  
-> Quando você solicita o deploy ao `agy`, o assistente aciona a skill `google-agents-cli-deploy` e orquestra automaticamente as seguintes etapas de infraestrutura na nuvem:  
-> 1. **Empacotamento de Contêiner:** O código Python do agente (ADK, regras de skills e dependências do `pyproject.toml`) é empacotado em uma imagem de contêiner compatível com o padrão OCI.  
-> 2. **Publicação no Artifact Registry:** A imagem do contêiner é compilada e armazenada no registro privado do seu projeto Google Cloud.  
-> 3. **Provisionamento Serverless:** O Google Cloud instancia o contêiner em infraestrutura serverless gerenciada (baseada no Cloud Run e Vertex AI Agent Engine), com segurança e autenticação nativas via Google IAM.  
-> 4. **Geração do Resource Name:** O Vertex AI registra um identificador exclusivo para o seu agente (no formato canônico `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]`). Esse identificador é o ponteiro de produção que permitirá ao Gemini Enterprise invocar o agente remotamente.
+> ℹ️ **Os Bastidores do Deploy — O que acontece durante a publicação no Agent Runtime:**  
+> 
+> - **Empacotamento de Contêiner:** O código Python do agente (ADK, regras de skills e dependências do `pyproject.toml`) é empacotado em uma imagem de contêiner compatível com o padrão OCI.  
+> - **Publicação no Artifact Registry:** A imagem do contêiner é compilada e armazenada no registro privado do seu projeto Google Cloud.  
+> - **Provisionamento Serverless:** O Google Cloud instancia o contêiner em infraestrutura serverless gerenciada (baseada no Cloud Run e Vertex AI Agent Engine), com segurança e autenticação nativas via Google IAM.  
+> - **Geração do Resource Name:** O Vertex AI registra um identificador exclusivo para o seu agente (no formato canônico `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]`). Esse identificador é o ponteiro de produção que permitirá ao Gemini Enterprise invocar o agente remotamente.
 
-3. 💻 **Terminal Cloud Shell (Segunda Aba):** **Acompanhar o Status da Operação (Polling da LRO):**  
-   Enquanto o `agy` aguarda a compilação e o provisionamento na primeira aba do terminal, você pode acompanhar o status da operação de longa duração (*Long-Running Operation - LRO*) em paralelo.  
-   Na barra superior do Cloud Shell, clique no ícone **`+`** para abrir uma nova aba de terminal e execute o comando abaixo para consultar o status da implantação:
+3. 💻 **Terminal Cloud Shell (Segunda Aba):** Enquanto o `agy` aguarda a compilação e o provisionamento na primeira aba, você pode acompanhar o status da operação de longa duração (*Long-Running Operation - LRO*) em uma segunda aba do terminal. No Cloud Shell, clique no ícone **`+`** na barra superior e execute:
 
 ```bash
 cd ~/workshop-agy/due-diligence-agent
 agents-cli deploy --status --project $DEVSHELL_PROJECT_ID
 ```
 
-> 💡 **Dica de Validação Automatizada:**  
-> Aproveite a segunda aba do terminal para executar o script de verificação de progresso das tarefas do laboratório:
-> ```bash
-> cd ~/workshop-agy
-> ./scripts/check_progress.sh 4
-> ```
-
-4. 🤖 **Prompt do Antigravity CLI (`agy >` — Primeira Aba):** Ao término do deployment, anote o **Resource Name** do agente implantado retornado pelo `agy` (formato canônico: `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]` ou `projects/[PROJECT_ID]/locations/[REGION]/reasoningEngines/[ENGINE_ID]`).
+4. 🤖 **Prompt do Antigravity CLI (`agy >`):** Ao término do deployment, retorne à primeira aba e anote o **Resource Name** do agente implantado retornado pelo `agy` (formato canônico: `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]` ou `projects/[PROJECT_ID]/locations/[REGION]/reasoningEngines/[ENGINE_ID]`).
 
 5. 🤖 **Prompt do Antigravity CLI (`agy >`):** Valide a prontidão do agente remoto executando uma consulta de teste diretamente através do `agy`.
 
