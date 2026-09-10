@@ -9,7 +9,6 @@ terraform/
 qwiklabs/
 
 # Lab Authoring Playbooks & AI Rules
-AGENTS.md
 GEMINI.md
 lab_instructions.md
 

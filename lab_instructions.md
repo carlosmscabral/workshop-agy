@@ -178,6 +178,9 @@ curl -fsSL https://antigravity.google/cli/install.sh | bash
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
+> ℹ️ **Nota sobre Avisos de Instalação:** Se o terminal informar que o `uv` ou o `agy` já estão instalados no ambiente (ou exibir mensagens como *`already installed`*), você pode desconsiderar o aviso com segurança e prosseguir normalmente.
+
+
 3. 💻 **Terminal Cloud Shell (`$`):** Inicie o setup interativo do **Antigravity CLI**:
 
 ```bash
@@ -284,15 +287,18 @@ agy
 > Durante a execução do `/grill-me`, o assistente formulará perguntas de arquitetura. Utilize as respostas recomendadas abaixo baseadas na skill em `skills/due-diligence-contract/SKILL.md`:
 > 
 > | Pergunta do Assistente | Resposta Sugerida |
-> | :--- | :--- |
-> | **Qual é o objetivo central do agente?** | *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.* |
-> | **Quais ferramentas ou skills devem ser integradas?** | *Utilizar a skill em `skills/due-diligence-contract` e os templates oficiais do `agents-cli`.* |
-> | **Qual é a regra de gating de entrada?** | *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.* |
-> | **Qual é o formato de saída esperado?** | *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.* |
+| :--- | :--- |
+| **Qual é o objetivo central do agente?** | *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.* |
+| **Quais ferramentas ou skills devem ser integradas?** | *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.* |
+| **Qual é a regra de gating de entrada?** | *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.* |
+| **Qual é o formato de saída esperado?** | *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.* |
 
 6. 🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
 
-> *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
+> *"Crie um projeto de agente ADK chamado `due-diligence-agent` seguindo a especificação oficial de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)) e as convenções do `agents-cli`. O agente deve carregar a skill especializada localizada em `../skills/due-diligence-contract/SKILL.md`, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar `references/workflow.md` para estruturar o relatório de auditoria."*
+
+> 💡 **O que são ADK Skills ([adk.dev/skills](https://adk.dev/skills/))?**  
+> As **Skills do ADK** são pacotes modulares que encapsulam diretrizes operacionais, checklists e fluxos de negócio em arquivos Markdown (`SKILL.md` e `references/`). Elas permitem que o agente opere com contexto progressivo (*progressive disclosure*), consultando conhecimentos especializados sob demanda sem sobrecarregar a janela de contexto principal.
 
 7. 🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:
 
@@ -399,11 +405,27 @@ agy
 > 3. **Provisionamento Serverless:** O Google Cloud instancia o contêiner em infraestrutura serverless gerenciada (baseada no Cloud Run e Vertex AI Agent Engine), com segurança e autenticação nativas via Google IAM.  
 > 4. **Geração do Resource Name:** O Vertex AI registra um identificador exclusivo para o seu agente (no formato canônico `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]`). Esse identificador é o ponteiro de produção que permitirá ao Gemini Enterprise invocar o agente remotamente.
 
-3. 🤖 **Prompt do Antigravity CLI (`agy >`):** Ao término do deployment, anote o **Resource Name** do agente implantado retornado pelo `agy` (formato canônico: `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]`).
+3. 💻 **Terminal Cloud Shell (Segunda Aba):** **Acompanhar o Status da Operação (Polling da LRO):**  
+   Enquanto o `agy` aguarda a compilação e o provisionamento na primeira aba do terminal, você pode acompanhar o status da operação de longa duração (*Long-Running Operation - LRO*) em paralelo.  
+   Na barra superior do Cloud Shell, clique no ícone **`+`** para abrir uma nova aba de terminal e execute o comando abaixo para consultar o status da implantação:
 
-4. 🤖 **Prompt do Antigravity CLI (`agy >`):** Valide a prontidão do agente remoto executando uma consulta de teste diretamente através do `agy`.
+```bash
+cd ~/workshop-agy/due-diligence-agent
+agents-cli deploy --status --project $DEVSHELL_PROJECT_ID
+```
 
-5. 🤖 **Prompt do Antigravity CLI (`agy >`):** Quando concluir os testes, saia do assistente digitando `/exit` no prompt do `agy` para retornar ao prompt de comando do Cloud Shell (`$`).
+> 💡 **Dica de Validação Automatizada:**  
+> Aproveite a segunda aba do terminal para executar o script de verificação de progresso das tarefas do laboratório:
+> ```bash
+> cd ~/workshop-agy
+> ./scripts/check_progress.sh 4
+> ```
+
+4. 🤖 **Prompt do Antigravity CLI (`agy >` — Primeira Aba):** Ao término do deployment, anote o **Resource Name** do agente implantado retornado pelo `agy` (formato canônico: `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]` ou `projects/[PROJECT_ID]/locations/[REGION]/reasoningEngines/[ENGINE_ID]`).
+
+5. 🤖 **Prompt do Antigravity CLI (`agy >`):** Valide a prontidão do agente remoto executando uma consulta de teste diretamente através do `agy`.
+
+6. 🤖 **Prompt do Antigravity CLI (`agy >`):** Quando concluir os testes, saia do assistente digitando `/exit` no prompt do `agy` para retornar ao prompt de comando do Cloud Shell (`$`).
 
 ---
 
@@ -445,6 +467,9 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
      - No campo **Agent Runtime reasoning engine**, cole o identificador ou **Resource Name** do agente obtido na Tarefa 4 (no formato canônico `projects/[PROJECT_ID]/locations/[REGION]/reasoningEngines/[ENGINE_ID]` ou `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]`);
    - Clique em **Create** para concluir a criação e vincular o agente ao aplicativo corporativo:  
    ![Configuração do Agente no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_agent_config.png)
+
+   > ⚠️ **Solução de Problemas — Falha ou Erro na Primeira Tentativa:**  
+   > Ao clicar em **Create**, caso a interface exiba uma mensagem de erro de permissão ou falha de comunicação com o runtime, **não se preocupe**. Trata-se do atraso natural de propagação do Google Cloud IAM para a conta de serviço interna do Gemini Enterprise (`service-<PROJECT_NUMBER>@gcp-sa-discoveryengine.iam.gserviceaccount.com`), que leva de 30 a 60 segundos para consolidar as permissões de invocação do Vertex AI em projetos recém-provisionados. Aguarde cerca de 1 minuto e clique em **Create** novamente.
 
    - Após a criação, confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
    ![Agente Registrado no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_agents_table.png)

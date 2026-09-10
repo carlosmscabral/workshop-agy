@@ -127,6 +127,8 @@ curl -fsSL https://antigravity.google/cli/install.sh | bash
 export PATH="$HOME/.local/bin:$PATH"
 ```
 
+> ℹ️ **Nota:** Se o terminal indicar que o `uv` ou o `agy` já estão instalados (mensagens *already installed*), você pode ignorar o aviso e prosseguir.
+
 6. Inicie o setup interativo do **Antigravity CLI**:
 
 ```bash
@@ -194,8 +196,8 @@ agy
 4. No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
    - Responda às perguntas com foco na auditoria societária (veja tabela de suporte no arquivo `lab_instructions.md`).
 
-5. Solicite ao `agy` para criar a estrutura do agente:
-   > *"Crie um projeto de agente ADK chamado `due-diligence-agent` utilizando as skills do `agents-cli` e integre os protocolos e regras da skill em `skills/due-diligence-contract`."*
+5. Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
+   > *"Crie um projeto de agente ADK chamado `due-diligence-agent` seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do `agents-cli`. O agente deve carregar a skill especializada localizada em `../skills/due-diligence-contract/SKILL.md`, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar `references/workflow.md` para estruturar o relatório de auditoria."*
 
 6. Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
 
@@ -249,8 +251,15 @@ agy
 
 > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto $PROJECT_ID na região $REGION."*
 
-2. Aguarde a finalização (3 a 7 minutos) e anote o **Resource Name** gerado (`projects/.../locations/.../agents/...`).
-3. Valide a prontidão do agente remoto executando uma consulta de teste no `agy` e saia com `/exit`.
+2. Em uma segunda aba do Cloud Shell (`+`), você pode acompanhar o status da operação de longa duração (LRO) em paralelo:
+
+```bash
+cd ~/workshop-agy/due-diligence-agent
+agents-cli deploy --status --project $PROJECT_ID
+```
+
+3. Ao término do deploy (3 a 7 minutos), anote o **Resource Name** gerado (`projects/.../locations/.../agents/...`).
+4. Valide a prontidão do agente remoto executando uma consulta de teste no `agy` e saia com `/exit`.
 
 ---
 
@@ -275,6 +284,8 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 7. Na etapa **1. Authorizations**, clique em **Skip**. Na etapa **2. Configuration**, informe o nome (`Legal Agent`), descrição (`Revisão de contratos`) e o **Resource Name** do Agent Runtime da Tarefa 4, e clique em **Create**:  
    ![Configuração do Agente no Gemini Enterprise](assets/imgs/ge_app_agent_config.png)
    
+   > ℹ️ **Nota de Troubleshooting:** Caso ocorra erro de permissão ou falha na primeira tentativa, aguarde cerca de 1 minuto para a propagação das permissões do Service Agent do Gemini Enterprise no IAM e clique novamente em **Create**.
+
    Após a criação, confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
    ![Agente Registrado no Gemini Enterprise](assets/imgs/ge_app_agents_table.png)
 
