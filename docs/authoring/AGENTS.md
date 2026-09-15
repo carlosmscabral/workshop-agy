@@ -51,7 +51,8 @@ gcloud auth list
   * **Broken Interpolation:** Triple curly braces `{{{project_0.project_id}}}` are **not** evaluated and remain as literal text.
 
 ### Rule 2: Dynamic Variable Placement
-* **Inside Code Blocks:** Use shell environment variables (`$DEVSHELL_PROJECT_ID`, `$REGION`, `${PROJECT_ID}`).
+* **Inside Code Blocks:** Use shell environment variables (`$DEVSHELL_PROJECT_ID`, `$REGION`, `${PROJECT_ID}`). `<ql-variable>` is a Custom Element that only upgrades in live DOM, so inside a `<pre><code>` block it is escaped and shown to the student as raw `<ql-variable key="...">` text.
+* **Non-Shell Code Blocks (Prompts Pasted into an Agent):** Blocks holding natural-language prompts (e.g. text typed at the `agy >` prompt) cannot rely on `<ql-variable>` **nor** on shell expansion, since nothing interpolates them. Write the prompt so the agent resolves the values itself (e.g. *"use o projeto e a região já configurados neste Cloud Shell, obtendo os valores com `gcloud config get-value project`"*) and, if the student needs to see the concrete values, put them in the prose **above** the block with `<ql-variable>`.
 * **Outside Code Blocks (Informational Cards/Text):** Use the official `<ql-variable>` Custom Element:
   ```html
   <ql-variable key="project_0.project_id"></ql-variable>

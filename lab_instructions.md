@@ -371,10 +371,10 @@ Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compi
    agy
    ```
 
-2. 🤖 **Prompt do Antigravity CLI (`agy >`):** No prompt do `agy`, solicite a implantação do agente no Agent Runtime executando a seguinte instrução:
+2. 🤖 **Prompt do Antigravity CLI (`agy >`):** No prompt do `agy`, solicite a implantação do agente no Agent Runtime. O deploy usará o projeto <ql-variable key="project_0.project_id"></ql-variable> e a região <ql-variable key="project_0.default_region"></ql-variable>, que o próprio assistente descobre a partir da configuração do `gcloud` feita na Tarefa 1:
 
-   ```
-   Faça o deploy do agente due-diligence-agent no Agent Runtime no projeto <ql-variable key="project_0.project_id"></ql-variable> na região <ql-variable key="project_0.default_region"></ql-variable>.
+   ```text
+   Faça o deploy do agente due-diligence-agent no Agent Runtime. Use o projeto e a região já configurados neste Cloud Shell, obtendo os valores com "gcloud config get-value project" e "gcloud config get-value compute/region".
    ```
 
 3. 💻 **Terminal Cloud Shell (Segunda Aba):** Enquanto o `agy` aguarda a compilação e o provisionamento na primeira aba, você pode acompanhar o status da operação de longa duração (*Long-Running Operation - LRO*) em uma segunda aba do terminal. No Cloud Shell, clique no ícone **`+`** na barra superior e execute:
