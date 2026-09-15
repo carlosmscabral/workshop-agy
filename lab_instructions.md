@@ -131,36 +131,36 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 3. 💻 **Terminal Cloud Shell (`$`):** Inicialize as variáveis de ambiente com o projeto sandbox ativo e a região atribuída executando o bloco abaixo:
 
-```bash
-export PROJECT_ID=$DEVSHELL_PROJECT_ID
+   ```bash
+   export PROJECT_ID=$DEVSHELL_PROJECT_ID
 
-# Obter dinamicamente a região e zona atribuídas ao sandbox pelo Qwiklabs:
-export REGION=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-region])" 2>/dev/null)
-export REGION=${REGION:-$(gcloud config get-value compute/region 2>/dev/null)}
-export REGION=${REGION:-us-central1}
+   # Obter dinamicamente a região e zona atribuídas ao sandbox pelo Qwiklabs:
+   export REGION=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-region])" 2>/dev/null)
+   export REGION=${REGION:-$(gcloud config get-value compute/region 2>/dev/null)}
+   export REGION=${REGION:-us-central1}
 
-export ZONE=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-zone])" 2>/dev/null)
-export ZONE=${ZONE:-${REGION}-a}
+   export ZONE=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-zone])" 2>/dev/null)
+   export ZONE=${ZONE:-${REGION}-a}
 
-gcloud config set project $PROJECT_ID
-gcloud config set compute/region $REGION
-gcloud config set compute/zone $ZONE
+   gcloud config set project $PROJECT_ID
+   gcloud config set compute/region $REGION
+   gcloud config set compute/zone $ZONE
 
-echo "=========================================="
-echo "Projeto Sandbox Ativo: ${PROJECT_ID}"
-echo "Região Ativa:          ${REGION}"
-echo "Zona Ativa:            ${ZONE}"
-echo "=========================================="
-```
+   echo "=========================================="
+   echo "Projeto Sandbox Ativo: ${PROJECT_ID}"
+   echo "Região Ativa:          ${REGION}"
+   echo "Zona Ativa:            ${ZONE}"
+   echo "=========================================="
+   ```
 
 4. 💻 **Terminal Cloud Shell (`$`):** Quando for exibida a janela pop-up solicitando **"Autorizar o Cloud Shell a fazer chamadas de API do GCP"** (*Authorize Cloud Shell to make GCP API calls*), clique obrigatoriamente em **Autorizar** (*Authorize*).
 
 5. 💻 **Terminal Cloud Shell (`$`):** Clone o repositório do workshop para obter o contrato de amostra e a skill de Due Diligence:
 
-```bash
-git clone https://github.com/carlosmscabral/workshop-agy.git ~/workshop-agy
-cd ~/workshop-agy
-```
+   ```bash
+   git clone https://github.com/carlosmscabral/workshop-agy.git ~/workshop-agy
+   cd ~/workshop-agy
+   ```
 
 ### Instalar ferramentas e autenticar o Antigravity CLI
 
@@ -168,23 +168,23 @@ cd ~/workshop-agy
 
 1. 💻 **Terminal Cloud Shell (`$`):** Instale o gerenciador de pacotes moderno `uv`:
 
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-source $HOME/.local/bin/env
-```
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   source $HOME/.local/bin/env
+   ```
 
 2. 💻 **Terminal Cloud Shell (`$`):** Instale a ferramenta de linha de comando do Antigravity (`agy`):
 
-```bash
-curl -fsSL https://antigravity.google/cli/install.sh | bash
-export PATH="$HOME/.local/bin:$PATH"
-```
+   ```bash
+   curl -fsSL https://antigravity.google/cli/install.sh | bash
+   export PATH="$HOME/.local/bin:$PATH"
+   ```
 
 3. 💻 **Terminal Cloud Shell (`$`):** Inicie o setup interativo do **Antigravity CLI**:
 
-```bash
-agy
-```
+   ```bash
+   agy
+   ```
 
 4. 🤖 **Setup Interativo do Antigravity CLI (`agy`):** Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
 
@@ -246,24 +246,24 @@ Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do AD
 
 1. 💻 **Terminal Cloud Shell (`$`):** No terminal do Cloud Shell (fora do `agy`), instale e configure o `agents-cli` utilizando o `uvx`:
 
-```bash
-uvx google-agents-cli setup
-```
+   ```bash
+   uvx google-agents-cli setup
+   ```
 
    Ao concluir o setup, tanto a CLI quanto as **skills do agents-cli** estarão instaladas e vinculadas automaticamente:  
    ![Instalação do agents-cli e skills](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agents_cli_install.png)
 
 2. 💻 **Terminal Cloud Shell (`$`):** Atualize o `PATH` da sessão atual:
 
-```bash
-export PATH=$PATH:"$HOME/.local/bin"
-```
+   ```bash
+   export PATH=$PATH:"$HOME/.local/bin"
+   ```
 
 3. 💻 **Terminal Cloud Shell (`$`):** Inicie o assistente `agy` no terminal:
 
-```bash
-agy
-```
+   ```bash
+   agy
+   ```
 
    *(Opcional: digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas; pressione `ESC` para fechar o menu)*:  
    ![Visualização das skills no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_agents_cli.png)
@@ -273,11 +273,12 @@ agy
 
 5. 🤖 **Prompt do Antigravity CLI (`agy >`):** Execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente:
 
-```
-/grill-me
-```
+   ```
+   /grill-me
+   ```
 
    Durante a execução do `/grill-me`, utilize as seguintes respostas recomendadas baseadas na skill em `skills/due-diligence-contract/SKILL.md`:
+
    - **Objetivo central:** *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.*
    - **Ferramentas e skills:** *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.*
    - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
@@ -285,34 +286,34 @@ agy
 
 6. 🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
 
-```
-Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
-```
+   ```
+   Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
+   ```
 
 7. 🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:
 
-```
-/exit
-```
+   ```
+   /exit
+   ```
 
 8. 💻 **Terminal Cloud Shell (`$`):** Acesse o diretório do agente recém-criado e crie o arquivo de configuração `.env` diretamente no seu local definitivo, definindo a região fixa como `global` e o modelo como `gemini-flash-3.8`:
 
-```bash
-cd ~/workshop-agy/due-diligence-agent
+   ```bash
+   cd ~/workshop-agy/due-diligence-agent
 
-cat << EOF > .env
-GOOGLE_GENAI_USE_VERTEXAI=TRUE
-GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
-GOOGLE_CLOUD_LOCATION=global
-MODEL=gemini-flash-3.8
-EOF
-```
+   cat << EOF > .env
+   GOOGLE_GENAI_USE_VERTEXAI=TRUE
+   GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
+   GOOGLE_CLOUD_LOCATION=global
+   MODEL=gemini-flash-3.8
+   EOF
+   ```
 
 9. 💻 **Terminal Cloud Shell (`$`):** Sincronize as dependências do projeto com o `uv`:
 
-```bash
-uv sync
-```
+   ```bash
+   uv sync
+   ```
 
 ---
 
@@ -331,14 +332,15 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
 
 1. 💻 **Terminal Cloud Shell (`$`):** No Cloud Shell, certifique-se de estar no diretório do agente e inicie o servidor visual do ADK Web liberando as requisições do proxy reverso:
 
-```bash
-cd ~/workshop-agy/due-diligence-agent
-uv run adk web --allow_origins="*"
-```
+   ```bash
+   cd ~/workshop-agy/due-diligence-agent
+   uv run adk web --allow_origins="*"
+   ```
 
 2. 🌐 **Navegador (Cloud Shell Web Preview):** No canto superior direito do Cloud Shell, clique no botão **Visualização na Web** (*Web Preview*) e selecione **Visualizar na porta 8000** (*Preview on port 8000*).
 
 3. 🌐 **Chat do ADK Web (Navegador):** No chat da interface web, execute os dois cenários de validação:
+
    - **Cenário 1 — Teste de Gating Rule:** Envie `Olá, você pode analisar um contrato para mim?`. Valide que o agente responde cordialmente solicitando o envio ou texto do contrato antes de carregar instruções adicionais (*Gating Rule*).
    - **Cenário 2 — Auditoria de Contrato:** Envie o texto do contrato (ou indique o arquivo `docs/sample_contract.pdf`). Valide que o agente carrega as instruções de `references/workflow.md`, analisa cláusulas societárias, administração, quotas e gera o relatório completo de Due Diligence estruturado com classificação de risco e parecer.
 
@@ -358,31 +360,39 @@ Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compi
 > - **Empacotamento de Contêiner:** O código Python do agente (ADK, regras de skills e dependências do `pyproject.toml`) é empacotado em uma imagem OCI compatível.  
 > - **Publicação no Artifact Registry:** A imagem do contêiner é compilada e armazenada no registro privado do seu projeto Google Cloud.  
 > - **Provisionamento Serverless:** O Google Cloud instancia o contêiner em infraestrutura serverless gerenciada (baseada no Cloud Run e Vertex AI Agent Engine), com segurança nativa via IAM.  
-> - **Geração do Resource Name:** O Vertex AI registra um identificador exclusivo para o seu agente (`projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]` ou `reasoningEngines/[ENGINE_ID]`). Esse identificador é o ponteiro de produção que permitirá ao Gemini Enterprise invocar o agente remotamente.
+> - **Geração do Resource Name:** O Vertex AI registra um identificador exclusivo para o seu agente, no formato `projects/.../locations/.../reasoningEngines/...`. Esse identificador é o ponteiro de produção que permitirá ao Gemini Enterprise invocar o agente remotamente; você irá copiá-lo ao final desta tarefa.
 
 ### Orquestrar o deployment com o Antigravity CLI
 
 1. 💻 **Terminal Cloud Shell (`$`):** No terminal do Cloud Shell, acesse a pasta do agente e inicie o `agy`:
 
-```bash
-cd ~/workshop-agy/due-diligence-agent
-agy
-```
+   ```bash
+   cd ~/workshop-agy/due-diligence-agent
+   agy
+   ```
 
 2. 🤖 **Prompt do Antigravity CLI (`agy >`):** No prompt do `agy`, solicite a implantação do agente no Agent Runtime executando a seguinte instrução:
 
-```
-Faça o deploy do agente due-diligence-agent no Agent Runtime no projeto <ql-variable key="project_0.project_id"></ql-variable> na região <ql-variable key="project_0.default_region"></ql-variable>.
-```
+   ```
+   Faça o deploy do agente due-diligence-agent no Agent Runtime no projeto <ql-variable key="project_0.project_id"></ql-variable> na região <ql-variable key="project_0.default_region"></ql-variable>.
+   ```
 
 3. 💻 **Terminal Cloud Shell (Segunda Aba):** Enquanto o `agy` aguarda a compilação e o provisionamento na primeira aba, você pode acompanhar o status da operação de longa duração (*Long-Running Operation - LRO*) em uma segunda aba do terminal. No Cloud Shell, clique no ícone **`+`** na barra superior e execute:
 
-```bash
-cd ~/workshop-agy/due-diligence-agent
-agents-cli deploy --status --project $DEVSHELL_PROJECT_ID
-```
+   ```bash
+   cd ~/workshop-agy/due-diligence-agent
+   agents-cli deploy --status --project $DEVSHELL_PROJECT_ID
+   ```
 
-4. 🤖 **Prompt do Antigravity CLI (`agy >`):** Ao término do deployment, retorne à primeira aba e anote o **Resource Name** do agente implantado retornado pelo `agy` (formato canônico: `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]` ou `projects/[PROJECT_ID]/locations/[REGION]/reasoningEngines/[ENGINE_ID]`).
+4. 🤖 **Prompt do Antigravity CLI (`agy >`):** Ao término do deployment, retorne à primeira aba e **copie o Resource Name** do agente implantado exibido pelo `agy`. Esse mesmo valor também aparece na saída do comando `agents-cli deploy --status` executado na etapa anterior.
+
+   O Resource Name é uma linha única que começa com `projects/` e termina em um identificador numérico longo. Exemplo **meramente ilustrativo** (não copie este valor):
+
+   ```text
+   projects/123456789012/locations/us-central1/reasoningEngines/4857320192387645440
+   ```
+
+   ⚠️ **Importante:** guarde o valor real retornado pelo seu deploy, pois ele será colado no Gemini Enterprise na Tarefa 5. Nunca digite trechos entre colchetes como `[PROJECT_ID]`, `[REGION]` ou `[ENGINE_ID]` — eles representam apenas o formato do recurso.
 
 5. 🤖 **Prompt do Antigravity CLI (`agy >`):** Valide a prontidão do agente remoto executando uma consulta de teste diretamente através do `agy`.
 
@@ -415,13 +425,23 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 6. ☁️ **Console Google Cloud (Gemini Enterprise):** **Selecionar o Tipo de Agente:** Na tela **Choose an agent type**, localize o card **Custom agent via Agent Runtime** e clique em **Add**:  
    ![Selecionar Custom agent via Agent Runtime](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_runtime.png)
 
-7. ☁️ **Console Google Cloud (Gemini Enterprise):** **Configurar e Vincular o Agente:**
-   - Na etapa **1. Authorizations**, clique em **Skip** (pular);
-   - Na etapa **2. Configuration**, preencha os campos obrigatórios:
-     - **Agent name:** `Legal Agent` (ou `Due Diligence Agent`)
-     - **Agent description:** `Revisão de contratos e auditoria de conformidade societária`
-     - **Agent Runtime reasoning engine:** Cole o Resource Name obtido na Tarefa 4 (`projects/[PROJECT_ID]/locations/[REGION]/reasoningEngines/[ENGINE_ID]` ou `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]`)
-   - Clique em **Create** para vincular o agente ao aplicativo corporativo:  
+7. ☁️ **Console Google Cloud (Gemini Enterprise):** **Configurar e Vincular o Agente:** Na etapa **1. Authorizations**, clique em **Skip** (pular). Em seguida, na etapa **2. Configuration**, preencha os campos obrigatórios utilizando o botão de copiar de cada bloco abaixo.
+
+   **Agent name:**
+
+   ```text
+   Legal Agent
+   ```
+
+   **Agent description:**
+
+   ```text
+   Revisão de contratos e auditoria de conformidade societária
+   ```
+
+   **Agent Runtime reasoning engine:** cole o **Resource Name** real copiado no final da Tarefa 4 (a linha única que começa com `projects/`).
+
+   Clique em **Create** para vincular o agente ao aplicativo corporativo:  
    ![Configuração do Agente no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_agent_config.png)
 
 8. ☁️ **Console Google Cloud (Gemini Enterprise):** **Confirmar Status do Agente:** Após a criação, confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
@@ -436,11 +456,11 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 11. 🌐 **Chat do Gemini Enterprise App (Produção):** **Executar a Auditoria de Contrato em Produção:**
     Com o chat do **Legal Agent** aberto, envie o seguinte trecho contratual para validação em produção:
 
-```text
-Por favor, audite a seguinte cláusula do Contrato Social da Nexus Tecnologia Ltda.:
-"A administração da sociedade caberá exclusivamente aos sócios Fulano e Beltrano, sendo necessária a assinatura conjunta para qualquer operação bancária ou alienação de ativos que supere o montante de R$ 50.000,00."
-Qual o parecer e classificação de risco para a Cymbal Technologies?
-```
+    ```text
+    Por favor, audite a seguinte cláusula do Contrato Social da Nexus Tecnologia Ltda.:
+    "A administração da sociedade caberá exclusivamente aos sócios Fulano e Beltrano, sendo necessária a assinatura conjunta para qualquer operação bancária ou alienação de ativos que supere o montante de R$ 50.000,00."
+    Qual o parecer e classificação de risco para a Cymbal Technologies?
+    ```
 
     Valide que o agente invoca o **Agent Runtime** na nuvem, processa os protocolos de Due Diligence estabelecidos na skill e retorna o parecer jurídico estruturado com classificação de risco e recomendações para a Cymbal Technologies.
 

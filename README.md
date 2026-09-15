@@ -94,46 +94,46 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 2. Quando for exibida a janela pop-up solicitando **"Autorizar o Cloud Shell a fazer chamadas de API do GCP"**, clique obrigatoriamente em **Autorizar** (*Authorize*).
 3. Inicialize as variáveis de ambiente com o projeto sandbox ativo:
 
-```bash
-export PROJECT_ID=$DEVSHELL_PROJECT_ID
+   ```bash
+   export PROJECT_ID=$DEVSHELL_PROJECT_ID
 
-# Obter dinamicamente a região e zona atribuídas ao sandbox pelo Qwiklabs:
-export REGION=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-region])" 2>/dev/null)
-export REGION=${REGION:-$(gcloud config get-value compute/region 2>/dev/null)}
-export REGION=${REGION:-us-central1}
+   # Obter dinamicamente a região e zona atribuídas ao sandbox pelo Qwiklabs:
+   export REGION=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-region])" 2>/dev/null)
+   export REGION=${REGION:-$(gcloud config get-value compute/region 2>/dev/null)}
+   export REGION=${REGION:-us-central1}
 
-export ZONE=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-zone])" 2>/dev/null)
-export ZONE=${ZONE:-${REGION}-a}
+   export ZONE=$(gcloud compute project-info describe --format="value(commonInstanceMetadata[google-compute-default-zone])" 2>/dev/null)
+   export ZONE=${ZONE:-${REGION}-a}
 
-gcloud config set project $PROJECT_ID
-gcloud config set compute/region $REGION
-gcloud config set compute/zone $ZONE
-```
+   gcloud config set project $PROJECT_ID
+   gcloud config set compute/region $REGION
+   gcloud config set compute/zone $ZONE
+   ```
 
 4. Clone o repositório do workshop:
 
-```bash
-git clone https://github.com/carlosmscabral/workshop-agy.git ~/workshop-agy
-cd ~/workshop-agy
-```
+   ```bash
+   git clone https://github.com/carlosmscabral/workshop-agy.git ~/workshop-agy
+   cd ~/workshop-agy
+   ```
 
 5. Instale o gerenciador de pacotes `uv` e a CLI do Antigravity (`agy`):
 
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-source $HOME/.local/bin/env
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   source $HOME/.local/bin/env
 
-curl -fsSL https://antigravity.google/cli/install.sh | bash
-export PATH="$HOME/.local/bin:$PATH"
-```
+   curl -fsSL https://antigravity.google/cli/install.sh | bash
+   export PATH="$HOME/.local/bin:$PATH"
+   ```
 
-> ℹ️ **Nota:** Se o terminal indicar que o `uv` ou o `agy` já estão instalados (mensagens *already installed*), você pode ignorar o aviso e prosseguir.
+   > ℹ️ **Nota:** Se o terminal indicar que o `uv` ou o `agy` já estão instalados (mensagens *already installed*), você pode ignorar o aviso e prosseguir.
 
 6. Inicie o setup interativo do **Antigravity CLI**:
 
-```bash
-agy
-```
+   ```bash
+   agy
+   ```
 
 7. Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
 
@@ -174,26 +174,28 @@ Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do AD
 
 1. Instale e configure o `agents-cli`:
 
-```bash
-uvx google-agents-cli setup
-export PATH=$PATH:"$HOME/.local/bin"
-```
-![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
+   ```bash
+   uvx google-agents-cli setup
+   export PATH=$PATH:"$HOME/.local/bin"
+   ```
+   ![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
 
 2. Inicie o `agy` e verifique as skills disponíveis digitando `/skills`:
 
-```bash
-agy
-```
-![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
+   ```bash
+   agy
+   ```
+   ![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
 
 3. (Recomendado) Ajuste o modo de execução de ferramentas para permissivo (`always-proceed`):
+
    - No prompt do `agy`, digite `/config`;
    - Selecione a opção **Tool Permission** e altere para **`always-proceed`** para que o assistente gere arquivos e execute comandos sem solicitar aprovação manual a cada ação;
    - Pressione `ESC` para sair das configurações.  
    ![Configuração de Permissão de Ferramentas](assets/imgs/agy_config_tool_permission.png)
 
 4. No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
+
    - Responda às perguntas com foco na auditoria societária (veja tabela de suporte no arquivo `lab_instructions.md`).
 
 5. Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
@@ -201,22 +203,22 @@ agy
 
 6. Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
 
-```bash
-cd ~/workshop-agy/due-diligence-agent
+   ```bash
+   cd ~/workshop-agy/due-diligence-agent
 
-cat << EOF > .env
-GOOGLE_GENAI_USE_VERTEXAI=TRUE
-GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
-GOOGLE_CLOUD_LOCATION=global
-MODEL=gemini-flash-3.8
-EOF
-```
+   cat << EOF > .env
+   GOOGLE_GENAI_USE_VERTEXAI=TRUE
+   GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
+   GOOGLE_CLOUD_LOCATION=global
+   MODEL=gemini-flash-3.8
+   EOF
+   ```
 
 7. Sincronize as dependências do projeto com o `uv`:
 
-```bash
-uv sync
-```
+   ```bash
+   uv sync
+   ```
 
 ---
 
@@ -226,10 +228,10 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
 
 1. Acesse o diretório do agente e inicie a interface Web do ADK liberando as conexões do proxy do Cloud Shell:
 
-```bash
-cd ~/workshop-agy/due-diligence-agent
-uv run adk web --allow_origins="*"
-```
+   ```bash
+   cd ~/workshop-agy/due-diligence-agent
+   uv run adk web --allow_origins="*"
+   ```
 
 2. No Cloud Shell, clique em **Visualização na Web** (*Web Preview*) e selecione a porta **8000**.
 3. Consulte a minuta do contrato de amostra [sample_contract.pdf](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf) e teste a regra de gating e a auditoria enviando o documento no chat.
@@ -244,19 +246,19 @@ Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compi
 
 1. Acesse a pasta do agente, inicie o `agy` e solicite a implantação:
 
-```bash
-cd ~/workshop-agy/due-diligence-agent
-agy
-```
+   ```bash
+   cd ~/workshop-agy/due-diligence-agent
+   agy
+   ```
 
-> *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto $PROJECT_ID na região $REGION."*
+   > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto $PROJECT_ID na região $REGION."*
 
 2. Em uma segunda aba do Cloud Shell (`+`), você pode acompanhar o status da operação de longa duração (LRO) em paralelo:
 
-```bash
-cd ~/workshop-agy/due-diligence-agent
-agents-cli deploy --status --project $PROJECT_ID
-```
+   ```bash
+   cd ~/workshop-agy/due-diligence-agent
+   agents-cli deploy --status --project $PROJECT_ID
+   ```
 
 3. Ao término do deploy (3 a 7 minutos), anote o **Resource Name** gerado (`projects/.../locations/.../agents/...`).
 4. Valide a prontidão do agente remoto executando uma consulta de teste no `agy` e saia com `/exit`.

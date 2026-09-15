@@ -96,7 +96,38 @@ gcloud auth list
   ```markdown
   > ⚠️ **MUITO IMPORTANTE:** Sempre utilize uma **Janela Anônima (Incognito)**.
   ```
+* **Indent Code Blocks Inside Numbered Steps (Anti `1. 1. 1.` Invariant):** Any block placed between two ordered-list items (fenced code block, image, blockquote, paragraph) **must be indented to the item's content column** (3 spaces for `1. `–`9. `, 4 spaces for `10. `+). A block starting at column 0 terminates the list, so marked.js opens a brand-new `<ol>` for the next step and the browser renders every step as `1.`:
+  ````markdown
+  <!-- WRONG: fence at column 0 breaks the list -> renders 1. 1. 1. -->
+  1. Instale o `uv`:
+
+  ```bash
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  ```
+
+  2. Instale o `agy`:
+
+  <!-- CORRECT: fence indented 3 spaces stays inside item 1 -->
+  1. Instale o `uv`:
+
+     ```bash
+     curl -LsSf https://astral.sh/uv/install.sh | sh
+     ```
+
+  2. Instale o `agy`:
+  ````
+  The indentation is stripped at render time, so the Qwiklabs copy button still copies the command without leading spaces.
 * Avoid inserting raw unindented `<div>` tags directly in the middle of Markdown numbered lists, as this resets list numbering back to `1.`.
+* **Values the Student Must Paste Belong in Fenced Blocks, Not Inline Code:** Inline code spans (`` `...` ``) in the Qwiklabs renderer do not wrap and have no copy button, so long values (form fields, prompts, resource IDs) overflow horizontally and get visually truncated. Any string the student must transcribe into a console form or terminal must live in its own fenced block (indented into the step), with the field name in bold on the preceding line:
+  ````markdown
+  **Agent description:**
+
+  ```text
+  Revisão de contratos e auditoria de conformidade societária
+  ```
+  ````
+* **Never Show Bracket Placeholders as Paste Targets:** Strings like `projects/[PROJECT_ID]/locations/[REGION]/reasoningEngines/[ENGINE_ID]` induce students to type the brackets literally into console forms. Use them only to describe a *format* (prefer the shorter `projects/.../locations/.../reasoningEngines/...`), and for the actual step instruct the student to paste the **real value captured earlier** (e.g. the Resource Name returned by the deploy), optionally showing a realistic full example explicitly labeled *meramente ilustrativo (não copie)*.
+
 
 ### Rule 4: Cloud Shell Execution Invariants & Gotchas
 * **First-Run API Authorization Pop-up:** On the first execution of any command issuing API requests, Cloud Shell triggers a modal dialog: *"Autorizar o Cloud Shell a fazer chamadas de API do GCP" (Authorize Cloud Shell to make GCP API calls)*. Instructions must explicitly instruct the student to click **"Autorizar" (Authorize)**.
