@@ -97,18 +97,9 @@ gcloud auth list
   ```markdown
   > ⚠️ **MUITO IMPORTANTE:** Sempre utilize uma **Janela Anônima (Incognito)**.
   ```
-* **Indent Code Blocks Inside Numbered Steps (Anti `1. 1. 1.` Invariant):** Any block placed between two ordered-list items (fenced code block, image, blockquote, paragraph) **must be indented to the item's content column** (3 spaces for `1. `–`9. `, 4 spaces for `10. `+). A block starting at column 0 terminates the list, so marked.js opens a brand-new `<ol>` for the next step and the browser renders every step as `1.`:
+* **Indent Code Blocks & Continuation Blocks Inside Numbered Steps by 4 Spaces (Anti `1. 1. 1.` Qwiklabs Invariant):** While GitHub (`cmark-gfm` / CommonMark) accepts 3 spaces for `1. `, Qwiklabs's Markdown parser (`go/authoring-ql-md` / Redcarpet / Classic Markdown) strictly requires **4 spaces (`    `)** to keep blocks inside an `<ol>` list item (`<li>`), AND does not emit `<ol start="N">`. If a code block is indented by only 3 spaces (`   ```bash`), Qwiklabs closes `</ol>`, parses `   ```bash` as a top-level code block while preserving the 3 leading spaces inside `<code>` (`   curl...`), and resets the next step to `1.`. Always use 4-character markers (`1.  ` for `1`–`9`, `10. ` for `10`+) and **4 spaces (`    `)** for all continuation blocks (fenced code blocks, paragraphs, images, sub-lists):
   ````markdown
-  <!-- WRONG: fence at column 0 breaks the list -> renders 1. 1. 1. -->
-  1. Instale o `uv`:
-
-  ```bash
-  curl -LsSf https://astral.sh/uv/install.sh | sh
-  ```
-
-  2. Instale o `agy`:
-
-  <!-- CORRECT: fence indented 3 spaces stays inside item 1 -->
+  <!-- WRONG: 0 or 3 spaces breaks the list in Qwiklabs -> renders 1. 1. 1. and shifts code by 3 spaces -->
   1. Instale o `uv`:
 
      ```bash
@@ -116,8 +107,17 @@ gcloud auth list
      ```
 
   2. Instale o `agy`:
+
+  <!-- CORRECT: 4-char marker (1.  ) + 4-space indent (    ) works in BOTH Qwiklabs and GitHub -->
+  1.  Instale o `uv`:
+
+      ```bash
+      curl -LsSf https://astral.sh/uv/install.sh | sh
+      ```
+
+  2.  Instale o `agy`:
   ````
-  The indentation is stripped at render time, so the Qwiklabs copy button still copies the command without leading spaces.
+  Both Qwiklabs (4-space classic rule) and GitHub (`len("1.  ") == 4`) strip all 4 leading spaces at render time, so the Qwiklabs copy button copies the command with 0 leading spaces and numbering continues cleanly (`1., 2., 3.`).
 * Avoid inserting raw unindented `<div>` tags directly in the middle of Markdown numbered lists, as this resets list numbering back to `1.`.
 * **Values the Student Must Paste Belong in Fenced Blocks, Not Inline Code:** Inline code spans (`` `...` ``) in the Qwiklabs renderer do not wrap and have no copy button, so long values (form fields, prompts, resource IDs) overflow horizontally and get visually truncated. Any string the student must transcribe into a console form or terminal must live in its own fenced block (indented into the step), with the field name in bold on the preceding line:
   ````markdown
