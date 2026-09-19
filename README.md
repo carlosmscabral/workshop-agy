@@ -289,7 +289,7 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
     uv run adk web --allow_origins="*"
     ```
 
-2.  Assim que o terminal exibir **`ADK Web Server started | For local testing, access at http://127.0.0.1:8000.`**, clique diretamente no link **`http://127.0.0.1:8000`** no terminal (`CTRL+Clique` / `CMD+Clique`) para que o Cloud Shell abra automaticamente a interface do ADK Web em uma nova aba *(ou clique em **Visualização na Web** ![Ícone Web Preview](assets/imgs/web_preview.png) $\rightarrow$ **Alterar porta** para **`8000`**)*.
+2.  Assim que o terminal exibir **`ADK Web Server started | For local testing, access at http://127.0.0.1:8000.`**, clique diretamente no link **`http://127.0.0.1:8000`** no terminal (`CTRL+Clique` / `CMD+Clique`) para que o Cloud Shell abra automaticamente a interface do ADK Web em uma nova aba *(ou clique em **Visualização na Web** ![Ícone Web Preview](assets/imgs/web_preview.png) → **Alterar porta** para **`8000`**)*.
 3.  Consulte a minuta do contrato de amostra [sample_contract.pdf](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf) e teste a regra de gating e a auditoria enviando o documento no chat.
 4.  Caso deseje refinar prompts ou o formato do relatório, abra uma segunda aba no Cloud Shell (`+`) e inicie o `agy` na raiz do workspace (`~/workshop-agy`):
 

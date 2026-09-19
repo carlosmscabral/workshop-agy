@@ -69,6 +69,7 @@ When modifying or updating this project, strictly follow the rules codified in [
    - Every top-level list (ordered or unordered) **must** have a blank line (`\n\n`) preceding it, and use hyphen bullets (`- `).
    - Inside numbered steps (`1.  `, `2.  `), **fenced code blocks (`    ``` `) MUST be indented by 4 spaces (`    `) and placed at the very end of the step** (`0` or `3` spaces closes `<ol>` in Qwiklabs and resets numbering to `1.`).
    - **NEVER indent non-code lines (sub-bullets `- `, paragraphs, or images `![...]`) by 4 spaces after a blank line (`\n\n    `)** — Qwiklabs's parser treats any 4-space non-fenced line after `\n\n` as a classic Indented Code Block (`<pre><code>`), turning bullets and images into dark code boxes! Attach sub-bullets (`   - `) and images (`   ![...]`) on the immediate next line (`\n`, NO blank line) with **3 spaces (`   `)** of indentation before the step's final `    ``` ` fence (or `0` spaces after the last item of a list).
+   - **NEVER use LaTeX math (`$...$` or `$\rightarrow$`) in `lab_instructions.md`** — Qwiklabs does not support KaTeX/MathJax and prints literal `$\rightarrow$`. Always use Unicode symbols (`→` or `>`).
 4. **Image Hosting:** Images in `lab_instructions.md` must point to absolute raw GitHub URLs:
    `https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/<image_name>.png`.
 5. **Startup Packaging Workflow:**
