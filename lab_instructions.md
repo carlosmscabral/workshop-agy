@@ -186,13 +186,20 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
     export PATH="$HOME/.local/bin:$PATH"
     ```
 
-3.  💻 **Terminal Cloud Shell (`$`):** Inicie o setup interativo do **Antigravity CLI**:
+3.  💻 **Terminal Cloud Shell (`$`):** Instale e configure o `agents-cli` utilizando o `uvx` (ao concluir o setup, tanto a CLI quanto as **skills do agents-cli** serão instaladas e vinculadas automaticamente ao seu ambiente):  
+   ![Instalação do agents-cli e skills](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agents_cli_install.png)
+
+    ```bash
+    uvx google-agents-cli setup
+    ```
+
+4.  💻 **Terminal Cloud Shell (`$`):** Inicie o setup interativo do **Antigravity CLI**:
 
     ```bash
     agy
     ```
 
-4.  🤖 **Setup Interativo do Antigravity CLI (`agy`):** Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
+5.  🤖 **Setup Interativo do Antigravity CLI (`agy`):** Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
 
 - **Passo 1:** Selecione a opção **`2. Use a Google Cloud project`**:  
   ![Passo 1 - Inicialização](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_1.png)
@@ -222,7 +229,7 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
   ![Passo 9 - Confiança no Workspace](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_9.png)
 
 > 💡 **Ambiente Ativo ao Final da Tarefa 1:**  
-> Ao concluir o Passo 9 da autenticação, você estará conectado dentro da sessão interativa do assistente, indicada pelo prompt `agy >`.
+> Ao concluir o Passo 9 da autenticação, você já estará conectado dentro da sessão interativa do assistente (`agy >`), pronto para iniciar a Tarefa 2 sem precisar sair do terminal.
 
 > 💡 **Comandos Úteis do Antigravity CLI (`agy`):**
 > 
@@ -238,42 +245,22 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 ---
 
-## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
+## Tarefa 2. Habilitar skills e criar o agente com /grill-me
 
-Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence e configura o ambiente com o modelo `gemini-flash-3.8` na região `global`.
+Nesta tarefa, diretamente no prompt `agy >` já aberto, você confere o catálogo de skills do ADK, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence e configura o ambiente com o modelo `gemini-flash-3.8` na região `global`.
 
 > 💡 **O que são ADK Skills ([adk.dev/skills](https://adk.dev/skills/))?**  
 > As **Skills do ADK** são pacotes modulares que encapsulam diretrizes operacionais, checklists e fluxos de negócio em arquivos Markdown (`SKILL.md` e `references/`). Elas permitem que o agente opere com contexto progressivo (*progressive disclosure*), consultando conhecimentos especializados sob demanda sem sobrecarregar a janela de contexto principal.
 
-> ℹ️ **Atenção — Retornar ao terminal bash (sair do `agy`):**  
-> Ao concluir o setup interativo na Tarefa 1, o assistente `agy` é iniciado automaticamente e permanece ativo no seu terminal. Para executar os comandos de instalação a seguir (`uvx`, `export`), certifique-se de sair do assistente digitando `/exit` e pressionando `ENTER` para retornar ao prompt de comando do Cloud Shell (`$`).
+### Alinhar a arquitetura do agente com /grill-me
 
-### Habilitar skills e alinhar o agente com /grill-me
-
-1.  💻 **Terminal Cloud Shell (`$`):** No terminal do Cloud Shell (fora do `agy`), instale e configure o `agents-cli` utilizando o `uvx` (ao concluir o setup, tanto a CLI quanto as **skills do agents-cli** estarão instaladas e vinculadas automaticamente):  
-   ![Instalação do agents-cli e skills](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agents_cli_install.png)
-
-    ```bash
-    uvx google-agents-cli setup
-    ```
-
-2.  💻 **Terminal Cloud Shell (`$`):** Atualize o `PATH` da sessão atual:
-
-    ```bash
-    export PATH=$PATH:"$HOME/.local/bin"
-    ```
-
-3.  💻 **Terminal Cloud Shell (`$`):** Inicie o assistente `agy` no terminal *(opcional: digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas e pressione `ESC` para fechar o menu)*:  
+1.  🤖 **Prompt do Antigravity CLI (`agy >`):** *(Opcional)* Digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas e pressione `ESC` para fechar o menu:  
    ![Visualização das skills no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_agents_cli.png)
 
-    ```bash
-    agy
-    ```
-
-4.  🤖 **Prompt do Antigravity CLI (`agy >`):** **Configurar Modo Permissivo de Ferramentas (`always-proceed`):** Antes de iniciar o alinhamento arquitetural e a geração de código, configure a execução de ferramentas como permissiva. No prompt do `agy`, digite `/config`, navegue até a opção **Tool Permission**, altere para **`always-proceed`** (para que o assistente crie pastas, escreva arquivos e execute comandos com autonomia sem solicitar aprovação manual a cada ação) e pressione `ESC` para fechar o menu:  
+2.  🤖 **Prompt do Antigravity CLI (`agy >`):** **Configurar Modo Permissivo de Ferramentas (`always-proceed`):** Antes de iniciar o alinhamento arquitetural e a geração de código, configure a execução de ferramentas como permissiva. No prompt do `agy`, digite `/config`, navegue até a opção **Tool Permission**, altere para **`always-proceed`** (para que o assistente crie pastas, escreva arquivos e execute comandos com autonomia sem solicitar aprovação manual a cada ação) e pressione `ESC` para fechar o menu:  
    ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
 
-5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente, utilizando as seguintes respostas recomendadas baseadas na skill em `skills/due-diligence-contract/SKILL.md`:
+3.  🤖 **Prompt do Antigravity CLI (`agy >`):** Execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente, utilizando as seguintes respostas recomendadas baseadas na skill em `skills/due-diligence-contract/SKILL.md`:
    - **Objetivo central:** *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.*
    - **Ferramentas e skills:** *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.*
    - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
@@ -283,19 +270,19 @@ Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do AD
     /grill-me
     ```
 
-6.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
+4.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
 
     ```text
     Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
     ```
 
-7.  🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:
+5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:
 
     ```text
     /exit
     ```
 
-8.  💻 **Terminal Cloud Shell (`$`):** Acesse o diretório do agente recém-criado e crie o arquivo de configuração `.env` diretamente no seu local definitivo, definindo a região fixa como `global` e o modelo como `gemini-flash-3.8`:
+6.  💻 **Terminal Cloud Shell (`$`):** Acesse o diretório do agente recém-criado e crie o arquivo de configuração `.env` diretamente no seu local definitivo, definindo a região fixa como `global` e o modelo como `gemini-flash-3.8`:
 
     ```bash
     cd ~/workshop-agy/due-diligence-agent
@@ -308,7 +295,7 @@ Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do AD
     EOF
     ```
 
-9.  💻 **Terminal Cloud Shell (`$`):** Sincronize as dependências do projeto com o `uv`:
+7.  💻 **Terminal Cloud Shell (`$`):** Sincronize as dependências do projeto com o `uv`:
 
     ```bash
     uv sync
@@ -338,29 +325,13 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
 
 2.  🌐 **Navegador (Cloud Shell Web Preview):** No canto superior direito do Cloud Shell, clique no botão **Visualização na Web** (*Web Preview*) e selecione **Visualizar na porta 8000** (*Preview on port 8000*).
 
-3.  🌐 **Chat do ADK Web (Navegador):** **Cenário 1 — Teste de Gating Rule (Sem Contrato):** Envie a mensagem abaixo no chat da interface web e valide que o agente responde cordialmente solicitando o envio ou texto do contrato antes de carregar instruções adicionais (*Gating Rule*):
+3.  🌐 **Chat do ADK Web (Navegador):** No chat da interface web, execute os dois cenários de validação:
+   - **Cenário 1 — Teste de Gating Rule:** Envie `Olá, você pode analisar um contrato para mim?`. Valide que o agente responde cordialmente solicitando o envio ou texto do contrato antes de carregar instruções adicionais (*Gating Rule*).
+   - **Cenário 2 — Auditoria de Contrato:** Envie o texto do contrato (ou indique o arquivo `docs/sample_contract.pdf`). Valide que o agente carrega as instruções de `references/workflow.md`, analisa cláusulas societárias, administração, quotas e gera o relatório completo de Due Diligence estruturado com classificação de risco e parecer.
 
-    ```text
-    Olá, você pode analisar um contrato social para mim?
-    ```
+4.  🤖 **Prompt do agy (Segunda Aba do Cloud Shell):** **Refinamento e Depuração com agy:** Caso necessite ajustar prompts, reforçar regras de gating ou melhorar a formatação do relatório, clique no ícone **`+`** na barra superior do Cloud Shell para abrir uma nova aba de terminal e utilize o `agy` livremente para refinar os arquivos do agente.
 
-4.  🌐 **Chat do ADK Web (Navegador):** **Cenário 2 — Auditoria de Contrato (Com Contrato):** Cole o extrato abaixo do *Contrato Social Consolidado — Nexus Tecnologia Ltda.* no chat (ou baixe o [sample_contract.pdf](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf) e anexe-o pelo botão de clipe da interface) e valide que o agente carrega `references/workflow.md`, analisa cláusulas de administração, quotas e não concorrência e gera o relatório completo de Due Diligence:
-
-    ```text
-    Realize a Due Diligence completa do seguinte Contrato Social Consolidado da Nexus Tecnologia Ltda.:
-    Cláusula 5ª (Administração): A administração da sociedade caberá exclusivamente aos sócios Fulano e Beltrano, sendo necessária a assinatura conjunta para qualquer operação bancária ou alienação de ativos que supere o montante de R$ 50.000,00.
-    Cláusula 8ª (Cessão de Quotas): As quotas são indivisíveis e não poderão ser cedidas a terceiros sem o expresso consentimento dos demais sócios, assegurado o direito de preferência pelo prazo de 30 (trinta) dias.
-    Cláusula 12ª (Não Concorrência): Os sócios obrigam-se a não exercer atividade concorrente pelo prazo de 24 meses após sua retirada da sociedade.
-    ```
-
-5.  🤖 **Prompt do agy (Segunda Aba do Cloud Shell):** **Refinamento e Depuração com agy:** Caso necessite ajustar prompts, reforçar regras de gating ou melhorar a formatação do relatório, clique no ícone **`+`** na barra superior do Cloud Shell para abrir uma nova aba de terminal e inicie o `agy` no diretório do projeto:
-
-    ```bash
-    cd ~/workshop-agy
-    agy
-    ```
-
-6.  💻 **Terminal Cloud Shell (`$`):** Quando concluir a validação, retorne à primeira aba do terminal e pressione `CTRL+C` para encerrar o servidor do ADK Web.
+5.  💻 **Terminal Cloud Shell (`$`):** Quando concluir a validação, retorne à primeira aba do terminal e pressione `CTRL+C` para encerrar o servidor do ADK Web.
 
 ---
 

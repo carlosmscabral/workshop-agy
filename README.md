@@ -108,6 +108,13 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
     gcloud config set project $PROJECT_ID
     gcloud config set compute/region $REGION
     gcloud config set compute/zone $ZONE
+
+    cat << EOF >> ~/.bashrc
+    export PROJECT_ID=${PROJECT_ID}
+    export REGION=${REGION}
+    export ZONE=${ZONE}
+    export PATH="\$HOME/.local/bin:\$PATH"
+    EOF
     ```
 
 4.  Clone o repositório do workshop:
@@ -117,7 +124,8 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
     cd ~/workshop-agy
     ```
 
-5.  Instale o gerenciador de pacotes `uv` e a CLI do Antigravity (`agy`):
+5.  Instale o gerenciador de pacotes `uv`, a CLI do Antigravity (`agy`) e o `agents-cli`:  
+   ![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
 
     ```bash
     curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -125,9 +133,9 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
     curl -fsSL https://antigravity.google/cli/install.sh | bash
     export PATH="$HOME/.local/bin:$PATH"
-    ```
 
-   > ℹ️ **Nota:** Se o terminal indicar que o `uv` ou o `agy` já estão instalados (mensagens *already installed*), você pode ignorar o aviso e prosseguir.
+    uvx google-agents-cli setup
+    ```
 
 6.  Inicie o setup interativo do **Antigravity CLI**:
 
@@ -166,42 +174,29 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 ---
 
-## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
+## Tarefa 2. Habilitar skills e criar o agente com /grill-me
 
-Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence e configura o ambiente com o modelo `gemini-flash-3.8` na região `global`.
+Nesta tarefa, diretamente no prompt `agy >` já aberto, você confere o catálogo de skills do ADK, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence e configura o ambiente com o modelo `gemini-flash-3.8` na região `global`.
 
-> 💡 **Atenção:** Ao concluir o setup na Tarefa 1, o `agy` permanece ativo no terminal. Digite `/exit` e pressione `ENTER` para retornar ao terminal bash antes de executar os comandos a seguir.
-
-1.  Instale e configure o `agents-cli`:
-
-    ```bash
-    uvx google-agents-cli setup
-    export PATH=$PATH:"$HOME/.local/bin"
-    ```
-   ![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
-
-2.  Inicie o `agy` e verifique as skills disponíveis digitando `/skills`:
-
-    ```bash
-    agy
-    ```
+1.  No prompt do `agy`, verifique as skills disponíveis digitando `/skills` (pressione `ESC` para fechar):  
    ![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
 
-3.  (Recomendado) Ajuste o modo de execução de ferramentas para permissivo (`always-proceed`):
-
+2.  (Recomendado) Ajuste o modo de execução de ferramentas para permissivo (`always-proceed`):
    - No prompt do `agy`, digite `/config`;
    - Selecione a opção **Tool Permission** e altere para **`always-proceed`** para que o assistente gere arquivos e execute comandos sem solicitar aprovação manual a cada ação;
    - Pressione `ESC` para sair das configurações.  
    ![Configuração de Permissão de Ferramentas](assets/imgs/agy_config_tool_permission.png)
 
-4.  No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
-
+3.  No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
    - Responda às perguntas com foco na auditoria societária (veja tabela de suporte no arquivo `lab_instructions.md`).
 
-5.  Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
-   > *"Crie um projeto de agente ADK chamado `due-diligence-agent` seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do `agents-cli`. O agente deve carregar a skill especializada localizada em `../skills/due-diligence-contract/SKILL.md`, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar `references/workflow.md` para estruturar o relatório de auditoria."*
+4.  Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
 
-6.  Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
+    ```text
+    Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
+    ```
+
+5.  Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
 
     ```bash
     cd ~/workshop-agy/due-diligence-agent
@@ -214,7 +209,7 @@ Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do AD
     EOF
     ```
 
-7.  Sincronize as dependências do projeto com o `uv`:
+6.  Sincronize as dependências do projeto com o `uv`:
 
     ```bash
     uv sync
@@ -251,17 +246,25 @@ Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compi
     agy
     ```
 
-   > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto $PROJECT_ID na região $REGION."*
+2.  No prompt do `agy`, solicite o deploy:
 
-2.  Em uma segunda aba do Cloud Shell (`+`), você pode acompanhar o status da operação de longa duração (LRO) em paralelo:
+    ```text
+    Faça o deploy do agente due-diligence-agent no Agent Runtime. Use o projeto e a região já configurados neste Cloud Shell, obtendo os valores com "gcloud config get-value project" e "gcloud config get-value compute/region".
+    ```
+
+3.  Em uma segunda aba do Cloud Shell (`+`), você pode acompanhar o status da operação de longa duração (LRO) em paralelo:
 
     ```bash
     cd ~/workshop-agy/due-diligence-agent
     agents-cli deploy --status --project $PROJECT_ID
     ```
 
-3.  Ao término do deploy (3 a 7 minutos), anote o **Resource Name** gerado (`projects/.../locations/.../agents/...`).
-4.  Valide a prontidão do agente remoto executando uma consulta de teste no `agy` e saia com `/exit`.
+4.  Ao término do deploy (3 a 7 minutos), anote o **Resource Name** gerado (`projects/.../locations/.../reasoningEngines/...`).
+5.  Valide a prontidão do agente remoto executando uma consulta de teste no `agy` e saia com `/exit`:
+
+    ```text
+    Execute um teste rápido contra o agente remoto implantado no Agent Runtime enviando a mensagem "Olá, preciso auditar um contrato social" e confirme se o endpoint remoto responde aplicando a regra de gating.
+    ```
 
 ---
 
