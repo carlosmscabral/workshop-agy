@@ -349,26 +349,25 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 3.  Crie um aplicativo corporativo chamado **Cymbal Compliance & Legal Hub**:  
    ![Criar Instância do GE App](assets/imgs/ge_app_create.png)
 
-4.  Na aba **Features**, ative a opção **Agentes** (*Agents*).
-5.  No menu **Agentes**, clique em **Adicionar Agente** (*Add Agent*):  
+4.  No menu **Agentes**, clique em **Adicionar Agente** (*Add Agent*):  
    ![Adicionar Agente no GE App](assets/imgs/ge_app_add_agent.png)
 
-6.  Selecione o card **Custom agent via Agent Runtime** e clique em **Add**:  
+5.  Selecione o card **Custom agent via Agent Runtime** e clique em **Add**:  
    ![Apontar para o Agent Runtime](assets/imgs/ge_app_runtime.png)
 
-7.  Na etapa **1. Authorizations**, clique em **Skip**. Na etapa **2. Configuration**, informe o nome (`Legal Agent`), descrição (`Revisão de contratos`) e o **Resource Name** do Agent Runtime da Tarefa 4, e clique em **Create**:  
+6.  Na etapa **1. Authorizations**, clique em **Skip**. Na etapa **2. Configuration**, informe o nome (`Legal Agent`), descrição (`Revisão de contratos`) e o **Resource Name** do Agent Runtime da Tarefa 4, e clique em **Create**:  
    ![Configuração do Agente no Gemini Enterprise](assets/imgs/ge_app_agent_config.png)
 
-8.  Confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
+7.  Confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
    ![Agente Registrado no Gemini Enterprise](assets/imgs/ge_app_agents_table.png)
 
-9.  No menu lateral do aplicativo **Cymbal Compliance & Legal Hub**, acesse **Overview** e, no card **Preview Gemini Enterprise before customizing**, clique no botão **Preview**:  
+8.  No menu lateral do aplicativo **Cymbal Compliance & Legal Hub**, acesse **Overview** e, no card **Preview Gemini Enterprise before customizing**, clique no botão **Preview**:  
    ![Acessar Preview do Gemini Enterprise](assets/imgs/ge_app_preview.png)
 
-10. Na janela ou pop-up de visualização que carregar, clique em **Agents** no menu lateral e selecione o agente criado anteriormente (**Legal Agent**) na seção **From your organization**:  
+9.  Na janela ou pop-up de visualização que carregar, clique em **Agents** no menu lateral e selecione o agente criado anteriormente (**Legal Agent**) na seção **From your organization**:  
    ![Selecionar Legal Agent no Gemini Enterprise](assets/imgs/ge_app_select_agent.png)
 
-11. No chat aberto do agente corporativo, envie um trecho da minuta de contrato para validar a geração do parecer de conformidade e auditoria de Due Diligence em produção.
+10. No chat aberto do agente corporativo, envie um trecho da minuta de contrato para validar a geração do parecer de conformidade e auditoria de Due Diligence em produção.
 
 ---
 

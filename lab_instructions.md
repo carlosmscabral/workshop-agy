@@ -462,39 +462,37 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 3.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Criar uma Instância do App:** Crie um novo aplicativo corporativo com o nome **Cymbal Compliance & Legal Hub**:  
    ![Criar Instância do GE App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_create.png)
 
-4.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Habilitar Recursos de Agentes:** No menu lateral do aplicativo, clique na aba **Features** (Recursos) e ative a opção **Agentes** (*Agents*).
-
-5.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Adicionar Agente:** No menu lateral do aplicativo, clique em **Agentes** (*Agents*) e selecione **Adicionar Agente** (*Add Agent*):  
+4.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Adicionar Agente:** No menu lateral do aplicativo, clique em **Agentes** (*Agents*) e selecione **Adicionar Agente** (*Add Agent*):  
    ![Adicionar Agente no GE App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_add_agent.png)
 
-6.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Selecionar o Tipo de Agente:** Na tela **Choose an agent type**, localize o card **Custom agent via Agent Runtime** e clique em **Add**:  
+5.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Selecionar o Tipo de Agente:** Na tela **Choose an agent type**, localize o card **Custom agent via Agent Runtime** e clique em **Add**:  
    ![Selecionar Custom agent via Agent Runtime](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_runtime.png)
 
-7.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Configurar Nome do Agente:** Na etapa **1. Authorizations**, clique em **Skip** (pular). Na etapa **2. Configuration**, preencha o campo **Agent name** com o valor abaixo:
+6.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Configurar Nome do Agente:** Na etapa **1. Authorizations**, clique em **Skip** (pular). Na etapa **2. Configuration**, preencha o campo **Agent name** com o valor abaixo:
 
     ```text
     Legal Agent
     ```
 
-8.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Configurar Descrição do Agente:** No campo **Agent description**, cole o texto abaixo:
+7.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Configurar Descrição do Agente:** No campo **Agent description**, cole o texto abaixo:
 
     ```text
     Revisão de contratos e auditoria de conformidade societária
     ```
 
-9.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Vincular o Resource Name e Criar:** No campo **Agent Runtime reasoning engine**, cole o **Resource Name** real copiado no final da Tarefa 4 (a linha única que começa com `projects/`) e clique em **Create** para vincular o agente ao aplicativo corporativo:  
+8.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Vincular o Resource Name e Criar:** No campo **Agent Runtime reasoning engine**, cole o **Resource Name** real copiado no final da Tarefa 4 (a linha única que começa com `projects/`) e clique em **Create** para vincular o agente ao aplicativo corporativo:  
    ![Configuração do Agente no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_agent_config.png)
 
-10. ☁️ **Console Google Cloud (Gemini Enterprise):** **Confirmar Status do Agente:** Após a criação, confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
+9.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Confirmar Status do Agente:** Após a criação, confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
    ![Agente Registrado no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_agents_table.png)
 
-11. ☁️ **Console Google Cloud (Gemini Enterprise):** **Acessar a Visualização do Aplicativo (Preview):** No menu lateral do aplicativo **Cymbal Compliance & Legal Hub**, clique na aba **Overview** (Visão Geral) e, no card **Preview Gemini Enterprise before customizing**, clique no botão **Preview**:  
+10. ☁️ **Console Google Cloud (Gemini Enterprise):** **Acessar a Visualização do Aplicativo (Preview):** No menu lateral do aplicativo **Cymbal Compliance & Legal Hub**, clique na aba **Overview** (Visão Geral) e, no card **Preview Gemini Enterprise before customizing**, clique no botão **Preview**:  
    ![Acessar Preview do Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_preview.png)
 
-12. 🌐 **Interface Gemini Enterprise (Preview):** **Selecionar o Agente Corporativo:** Na janela de visualização do aplicativo, acesse o menu lateral **Agents** e, na seção **From your organization**, selecione o agente criado (**Legal Agent**):  
+11. 🌐 **Interface Gemini Enterprise (Preview):** **Selecionar o Agente Corporativo:** Na janela de visualização do aplicativo, acesse o menu lateral **Agents** e, na seção **From your organization**, selecione o agente criado (**Legal Agent**):  
    ![Selecionar Legal Agent no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_select_agent.png)
 
-13. 🌐 **Chat do Gemini Enterprise App (Produção):** **Executar a Auditoria de Contrato em Produção:** Com o chat do **Legal Agent** aberto, envie o trecho contratual abaixo e valide que o agente invoca o **Agent Runtime** na nuvem, processa os protocolos de Due Diligence estabelecidos na skill e retorna o parecer jurídico estruturado com classificação de risco e recomendações para a Cymbal Technologies:
+12. 🌐 **Chat do Gemini Enterprise App (Produção):** **Executar a Auditoria de Contrato em Produção:** Com o chat do **Legal Agent** aberto, envie o trecho contratual abaixo e valide que o agente invoca o **Agent Runtime** na nuvem, processa os protocolos de Due Diligence estabelecidos na skill e retorna o parecer jurídico estruturado com classificação de risco e recomendações para a Cymbal Technologies:
 
     ```text
     Por favor, audite a seguinte cláusula do Contrato Social da Nexus Tecnologia Ltda.:
