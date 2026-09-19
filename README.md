@@ -179,65 +179,82 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 - **Passo 9:** Em **Do you trust the contents of this project?**, selecione `Yes, I trust this folder`  
   ![Passo 9 - Confiança no Workspace](assets/imgs/agy_auth_9.png)
 
----
+### Explorar comandos básicos do agy e a estrutura da Skill
 
-## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
+1.  No prompt do `agy >`, execute `/help` para conhecer os atalhos e comandos interativos disponíveis:
 
-Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence e configura o ambiente com o modelo `gemini-flash-3.8` na região `global`.
+    ```text
+    /help
+    ```
 
-1.  Saia temporariamente do `agy` digitando `/exit` para retornar ao terminal do Cloud Shell (`$`):
+2.  Faça um teste rápido de leitura de contexto enviando o prompt abaixo para que o `agy` inspecione a skill pré-fornecida no repositório:
+
+    ```text
+    Leia o arquivo skills/due-diligence-contract/SKILL.md e resuma em 3 tópicos como funciona a regra de Gating deste agente.
+    ```
+
+3.  Após conferir a resposta do assistente, saia da sessão interativa digitando `/exit` para retornar ao terminal do Cloud Shell (`$`):
 
     ```text
     /exit
     ```
 
-2.  No terminal do Cloud Shell, instale e configure o `agents-cli` e atualize o `PATH`:
+4.  Na barra superior do Cloud Shell, clique em **Abrir Editor** (*Open Editor*) ![Ícone Open Editor](assets/imgs/cloud_shell_editor.png), abra `workshop-agy/skills/due-diligence-contract/SKILL.md` para visualizar a estrutura da skill do ADK e, em seguida, clique em **Abrir Terminal** (*Open Terminal*) para voltar ao prompt (`$`):  
+   ![Visualização da skill SKILL.md no Editor do Cloud Shell](assets/imgs/editor_skill_md.png)
+
+---
+
+## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
+
+Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence, configura o ambiente com o modelo `gemini-flash-3.8` na região `global` e inspeciona o código gerado em `app/agent.py`.
+
+1.  No terminal do Cloud Shell, instale e configure o `agents-cli` e atualize o `PATH`:
 
     ```bash
     uvx google-agents-cli setup
     export PATH="$HOME/.local/bin:$PATH"
     ```
 
-3.  Confirme que as skills foram vinculadas e inicie novamente o assistente `agy`:  
+2.  Confirme que as skills foram vinculadas e inicie novamente o assistente `agy`:  
    ![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
 
     ```bash
     agy
     ```
 
-4.  **Verificar as Skills Instaladas (Obrigatório):** Com o `agy` aberto, execute obrigatoriamente o comando `/skills` para validar que as skills do `agents-cli` foram carregadas:
+3.  **Verificar as Skills Instaladas (Obrigatório):** Com o `agy` aberto, execute obrigatoriamente o comando `/skills` para validar que as skills do `agents-cli` foram carregadas:
 
     ```text
     /skills
     ```
 
-5.  Confirme na lista exibida que as **7 skills** (`google-agents-cli-*`) estão ativas (conforme a imagem abaixo), pressione `ESC` para fechar o menu e execute `/config`:  
+4.  Confirme na lista exibida que as **7 skills** (`google-agents-cli-*`) estão ativas (conforme a imagem abaixo), pressione `ESC` para fechar o menu e execute `/config`:  
    ![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
 
     ```text
     /config
     ```
 
-6.  No menu do `/config`, selecione **Tool Permission**, altere para **`always-proceed`**, pressione `ESC` para fechar o menu e execute o comando `/grill-me`:  
+5.  No menu do `/config`, selecione **Tool Permission**, altere para **`always-proceed`**, pressione `ESC` para fechar o menu e execute o comando `/grill-me`:  
    ![Configuração de Permissão de Ferramentas](assets/imgs/agy_config_tool_permission.png)
 
     ```text
     /grill-me
     ```
 
-7.  Durante a entrevista do `/grill-me`, responda às perguntas com foco na auditoria societária:
+6.  Durante a entrevista do `/grill-me`, responda às perguntas com foco na auditoria societária:
    - **Objetivo central:** *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.*
    - **Ferramentas e skills:** *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.*
    - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
    - **Formato de saída esperado:** *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.*
 
-8.  Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
+7.  Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
 
     ```text
     Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
     ```
 
-9.  Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
+8.  Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
 
     ```bash
     cd ~/workshop-agy/due-diligence-agent
@@ -250,11 +267,14 @@ Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo 
     EOF
     ```
 
-10. Sincronize as dependências do projeto com o `uv`:
+9.  Sincronize as dependências do projeto com o `uv`:
 
     ```bash
     uv sync
     ```
+
+10. Antes de testar o agente, clique em **Abrir Editor** (*Open Editor*) ![Ícone Open Editor](assets/imgs/cloud_shell_editor.png) na barra superior do Cloud Shell, abra `due-diligence-agent/app/agent.py` para inspecionar o código Python gerado pelo `agy` e, em seguida, clique em **Abrir Terminal** (*Open Terminal*) para retornar ao terminal (`$`):  
+   ![Inspeção do arquivo agent.py no Editor do Cloud Shell](assets/imgs/editor_agent_py.png)
 
 ---
 
@@ -269,7 +289,7 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
     uv run adk web --allow_origins="*"
     ```
 
-2.  No Cloud Shell, clique em **Visualização na Web** (*Web Preview*) ![Ícone Web Preview](assets/imgs/web_preview.png) $\rightarrow$ **Alterar porta** (*Change port*), digite **`8000`** e clique em **Alterar e visualizar** (*Change and Preview*).
+2.  Assim que o terminal exibir **`ADK Web Server started | For local testing, access at http://127.0.0.1:8000.`**, clique diretamente no link **`http://127.0.0.1:8000`** no terminal (`CTRL+Clique` / `CMD+Clique`) para que o Cloud Shell abra automaticamente a interface do ADK Web em uma nova aba *(ou clique em **Visualização na Web** ![Ícone Web Preview](assets/imgs/web_preview.png) $\rightarrow$ **Alterar porta** para **`8000`**)*.
 3.  Consulte a minuta do contrato de amostra [sample_contract.pdf](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf) e teste a regra de gating e a auditoria enviando o documento no chat.
 4.  Refine prompts com o `agy` caso deseje ajustar o relatório.
 5.  Quando concluir a validação, pressione `CTRL+C` no terminal para encerrar o servidor do ADK Web.
