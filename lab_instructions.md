@@ -321,7 +321,7 @@ Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo 
 7.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
 
     ```text
-    Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
+    Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em skills/due-diligence-contract/SKILL.md (ou ../skills/due-diligence-contract/SKILL.md a partir da subpasta due-diligence-agent), respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
     ```
 
 8.  🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:
@@ -380,7 +380,12 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
    - **Cenário 1 — Teste de Gating Rule:** Envie `Olá, você pode analisar um contrato para mim?`. Valide que o agente responde cordialmente solicitando o envio ou texto do contrato antes de carregar instruções adicionais (*Gating Rule*).
    - **Cenário 2 — Auditoria de Contrato:** Envie o texto do contrato (ou indique o arquivo `docs/sample_contract.pdf`). Valide que o agente carrega as instruções de `references/workflow.md`, analisa cláusulas societárias, administração, quotas e gera o relatório completo de Due Diligence estruturado com classificação de risco e parecer.
 
-4.  🤖 **Prompt do agy (Segunda Aba do Cloud Shell):** **Refinamento e Depuração com agy:** Caso necessite ajustar prompts, reforçar regras de gating ou melhorar a formatação do relatório, clique no ícone **`+`** na barra superior do Cloud Shell para abrir uma nova aba de terminal e utilize o `agy` livremente para refinar os arquivos do agente.
+4.  🤖 **Prompt do agy (Segunda Aba do Cloud Shell):** **Refinamento e Depuração com agy:** Caso necessite ajustar prompts, reforçar regras de gating ou melhorar a formatação do relatório, clique no ícone **`+`** na barra superior do Cloud Shell para abrir uma nova aba de terminal e inicie o `agy` na raiz do workspace (`~/workshop-agy`):
+
+    ```bash
+    cd ~/workshop-agy
+    agy
+    ```
 
 5.  💻 **Terminal Cloud Shell (`$`):** Quando concluir a validação, retorne à primeira aba do terminal e pressione `CTRL+C` para encerrar o servidor do ADK Web.
 
@@ -400,17 +405,17 @@ Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compi
 
 ### Orquestrar o deployment com o Antigravity CLI
 
-1.  💻 **Terminal Cloud Shell (`$`):** No terminal do Cloud Shell, acesse a pasta do agente e inicie o `agy`:
+1.  💻 **Terminal Cloud Shell (`$`):** No terminal do Cloud Shell, retorne à raiz do workspace (`~/workshop-agy`, onde estão o arquivo `AGENTS.md` e as skills `.agents/skills/` configuradas) e inicie o `agy`:
 
     ```bash
-    cd ~/workshop-agy/due-diligence-agent
+    cd ~/workshop-agy
     agy
     ```
 
-2.  🤖 **Prompt do Antigravity CLI (`agy >`):** No prompt do `agy`, solicite a implantação do agente no Agent Runtime. O deploy usará o projeto <ql-variable key="project_0.project_id"></ql-variable> e a região <ql-variable key="project_0.default_region"></ql-variable>, que o próprio assistente descobre a partir da configuração do `gcloud` feita na Tarefa 1:
+2.  🤖 **Prompt do Antigravity CLI (`agy >`):** No prompt do `agy`, solicite a implantação do agente localizado em `./due-diligence-agent` no Agent Runtime. O deploy usará o projeto <ql-variable key="project_0.project_id"></ql-variable> e a região <ql-variable key="project_0.default_region"></ql-variable>, que o próprio assistente descobre a partir da configuração do `gcloud` feita na Tarefa 1:
 
     ```text
-    Faça o deploy do agente due-diligence-agent no Agent Runtime. Use o projeto e a região já configurados neste Cloud Shell, obtendo os valores com "gcloud config get-value project" e "gcloud config get-value compute/region".
+    Faça o deploy do agente localizado na pasta ./due-diligence-agent no Agent Runtime. Use o projeto e a região já configurados neste Cloud Shell, obtendo os valores com "gcloud config get-value project" e "gcloud config get-value compute/region".
     ```
 
 3.  💻 **Terminal Cloud Shell (Segunda Aba):** Enquanto o `agy` aguarda a compilação e o provisionamento na primeira aba, você pode acompanhar o status da operação de longa duração (*Long-Running Operation - LRO*) em uma segunda aba do terminal. No Cloud Shell, clique no ícone **`+`** na barra superior e execute o comando abaixo *(dica: como a compilação ocorre remotamente no Google Cloud, caso sua sessão do Cloud Shell desconecte por inatividade durante os 3 a 7 minutos de espera, basta clicar em **Reconectar** / **Reconnect** e executar este mesmo comando para consultar o progresso e obter o Resource Name)*:

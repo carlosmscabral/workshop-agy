@@ -251,7 +251,7 @@ Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo 
 7.  Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
 
     ```text
-    Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
+    Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em skills/due-diligence-contract/SKILL.md (ou ../skills/due-diligence-contract/SKILL.md a partir da subpasta due-diligence-agent), respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
     ```
 
 8.  Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
@@ -291,8 +291,14 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
 
 2.  Assim que o terminal exibir **`ADK Web Server started | For local testing, access at http://127.0.0.1:8000.`**, clique diretamente no link **`http://127.0.0.1:8000`** no terminal (`CTRL+Clique` / `CMD+Clique`) para que o Cloud Shell abra automaticamente a interface do ADK Web em uma nova aba *(ou clique em **Visualização na Web** ![Ícone Web Preview](assets/imgs/web_preview.png) $\rightarrow$ **Alterar porta** para **`8000`**)*.
 3.  Consulte a minuta do contrato de amostra [sample_contract.pdf](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf) e teste a regra de gating e a auditoria enviando o documento no chat.
-4.  Refine prompts com o `agy` caso deseje ajustar o relatório.
-5.  Quando concluir a validação, pressione `CTRL+C` no terminal para encerrar o servidor do ADK Web.
+4.  Caso deseje refinar prompts ou o formato do relatório, abra uma segunda aba no Cloud Shell (`+`) e inicie o `agy` na raiz do workspace (`~/workshop-agy`):
+
+    ```bash
+    cd ~/workshop-agy
+    agy
+    ```
+
+5.  Quando concluir a validação, pressione `CTRL+C` no terminal da primeira aba para encerrar o servidor do ADK Web.
 
 ---
 
@@ -300,17 +306,17 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
 
 Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compilação, containerização e implantação do agente no **Google Cloud Agent Runtime** através das skills integradas do `agents-cli`.
 
-1.  Acesse a pasta do agente, inicie o `agy` e solicite a implantação:
+1.  Retorne à raiz do workspace (`~/workshop-agy`), inicie o `agy` e solicite a implantação:
 
     ```bash
-    cd ~/workshop-agy/due-diligence-agent
+    cd ~/workshop-agy
     agy
     ```
 
 2.  No prompt do `agy`, solicite o deploy:
 
     ```text
-    Faça o deploy do agente due-diligence-agent no Agent Runtime. Use o projeto e a região já configurados neste Cloud Shell, obtendo os valores com "gcloud config get-value project" e "gcloud config get-value compute/region".
+    Faça o deploy do agente localizado na pasta ./due-diligence-agent no Agent Runtime. Use o projeto e a região já configurados neste Cloud Shell, obtendo os valores com "gcloud config get-value project" e "gcloud config get-value compute/region".
     ```
 
 3.  Em uma segunda aba do Cloud Shell (`+`), você pode acompanhar o status da operação de longa duração (LRO) em paralelo *(se o Cloud Shell desconectar por inatividade durante os 3 a 7 minutos, basta clicar em **Reconectar** e rodar este mesmo comando)*:
