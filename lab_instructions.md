@@ -88,10 +88,9 @@ Para acessar os recursos fornecidos para esta sessão, utilize os valores exibid
 3.  Cole a **Senha** temporária fornecida no painel e clique em **Avançar**.
 
 4.  Conclua as telas seguintes:
-
-    - Aceite os Termos e Condições do serviço;
-    - **NÃO** adicione opções de recuperação ou autenticação em duas etapas (2FA) nesta conta temporária;
-    - **NÃO** se inscreva para períodos de teste gratuito.
+   - Aceite os Termos e Condições do serviço;
+   - **NÃO** adicione opções de recuperação ou autenticação em duas etapas (2FA) nesta conta temporária;
+   - **NÃO** se inscreva para períodos de teste gratuito.
 
 Após alguns instantes, o Console do Google Cloud será aberto nesta aba anônima.
 
@@ -129,7 +128,7 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 2.  ☁️ **Console Google Cloud:** Se solicitado, clique em **Continuar** na janela informativa de provisionamento do Cloud Shell.
 
-3.  💻 **Terminal Cloud Shell (`$`):** Inicialize as variáveis de ambiente com o projeto sandbox ativo e a região atribuída executando o bloco abaixo:
+3.  💻 **Terminal Cloud Shell (`$`):** Inicialize as variáveis de ambiente com o projeto sandbox ativo e a região atribuída (persistindo no `~/.bashrc` para que novas abas do terminal herdem os valores):
 
     ```bash
     export PROJECT_ID=$DEVSHELL_PROJECT_ID
@@ -145,6 +144,13 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
     gcloud config set project $PROJECT_ID
     gcloud config set compute/region $REGION
     gcloud config set compute/zone $ZONE
+
+    cat << EOF >> ~/.bashrc
+    export PROJECT_ID=${PROJECT_ID}
+    export REGION=${REGION}
+    export ZONE=${ZONE}
+    export PATH="\$HOME/.local/bin:\$PATH"
+    EOF
 
     echo "=========================================="
     echo "Projeto Sandbox Ativo: ${PROJECT_ID}"
@@ -188,32 +194,32 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 4.  🤖 **Setup Interativo do Antigravity CLI (`agy`):** Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
 
-    - **Passo 1:** Selecione a opção **`2. Use a Google Cloud project`**:  
-      ![Passo 1 - Inicialização](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_1.png)
+- **Passo 1:** Selecione a opção **`2. Use a Google Cloud project`**:  
+  ![Passo 1 - Inicialização](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_1.png)
 
-    - **Passo 2:** Selecione a opção **`1. Continue with Google Cloud`**:  
-      ![Passo 2 - Autenticação](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_2.png)
+- **Passo 2:** Selecione a opção **`1. Continue with Google Cloud`**:  
+  ![Passo 2 - Autenticação](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_2.png)
 
-    - **Passo 3:** Abra o link de autorização exibido no terminal em uma nova aba da sua Janela Anônima, selecione a conta de estudante <ql-variable key="user_0.username"></ql-variable> e conceda o consentimento:  
-      ![Passo 3 - Permissões](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_3.png)
+- **Passo 3:** Abra o link de autorização exibido no terminal em uma nova aba da sua Janela Anônima, selecione a conta de estudante <ql-variable key="user_0.username"></ql-variable> e conceda o consentimento:  
+  ![Passo 3 - Permissões](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_3.png)
 
-    - **Passo 4:** Cole o ID do seu projeto sandbox (<ql-variable key="project_0.project_id"></ql-variable>) no prompt e confirme pressionando `ENTER`:  
-      ![Passo 4 - ID do Projeto](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_4.png)
+- **Passo 4:** Cole o ID do seu projeto sandbox (<ql-variable key="project_0.project_id"></ql-variable>) no prompt e confirme pressionando `ENTER`:  
+  ![Passo 4 - ID do Projeto](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_4.png)
 
-    - **Passo 5:** Em **Select Google Cloud Location**, selecione a opção **`global`** e confirme pressionando `ENTER`:  
-      ![Passo 5 - Região Global](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_5.png)
+- **Passo 5:** Em **Select Google Cloud Location**, selecione a opção **`global`** e confirme pressionando `ENTER`:  
+  ![Passo 5 - Região Global](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_5.png)
 
-    - **Passo 6:** Em **Select License**, selecione a opção **`1. Agent Platform`** e confirme pressionando `ENTER`:  
-      ![Passo 6 - Seleção de Licença](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_6.png)
+- **Passo 6:** Em **Select License**, selecione a opção **`1. Agent Platform`** e confirme pressionando `ENTER`:  
+  ![Passo 6 - Seleção de Licença](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_6.png)
 
-    - **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de sua preferência (como **`dark`**) e confirme pressionando `ENTER`:  
-      ![Passo 7 - Tema Visual](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_7.png)
+- **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de sua preferência (como **`dark`**) e confirme pressionando `ENTER`:  
+  ![Passo 7 - Tema Visual](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_7.png)
 
-    - **Passo 8:** Na tela **Terms of Service & Data Use**, navegue até a opção **`Done`** e confirme pressionando `ENTER` para aceitar os termos de serviço:  
-      ![Passo 8 - Termos de Serviço](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_8.png)
+- **Passo 8:** Na tela **Terms of Service & Data Use**, navegue até a opção **`Done`** e confirme pressionando `ENTER` para aceitar os termos de serviço:  
+  ![Passo 8 - Termos de Serviço](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_8.png)
 
-    - **Passo 9:** Na tela de confirmação **Do you trust the contents of this project?**, selecione **`Yes, I trust this folder`** e confirme pressionando `ENTER` para liberar o acesso ao workspace:  
-      ![Passo 9 - Confiança no Workspace](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_9.png)
+- **Passo 9:** Na tela de confirmação **Do you trust the contents of this project?**, selecione **`Yes, I trust this folder`** e confirme pressionando `ENTER` para liberar o acesso ao workspace:  
+  ![Passo 9 - Confiança no Workspace](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_9.png)
 
 > 💡 **Ambiente Ativo ao Final da Tarefa 1:**  
 > Ao concluir o Passo 9 da autenticação, você estará conectado dentro da sessão interativa do assistente, indicada pelo prompt `agy >`.
@@ -244,14 +250,12 @@ Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do AD
 
 ### Habilitar skills e alinhar o agente com /grill-me
 
-1.  💻 **Terminal Cloud Shell (`$`):** No terminal do Cloud Shell (fora do `agy`), instale e configure o `agents-cli` utilizando o `uvx`:
+1.  💻 **Terminal Cloud Shell (`$`):** No terminal do Cloud Shell (fora do `agy`), instale e configure o `agents-cli` utilizando o `uvx` (ao concluir o setup, tanto a CLI quanto as **skills do agents-cli** estarão instaladas e vinculadas automaticamente):  
+   ![Instalação do agents-cli e skills](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agents_cli_install.png)
 
     ```bash
     uvx google-agents-cli setup
     ```
-
-    Ao concluir o setup, tanto a CLI quanto as **skills do agents-cli** estarão instaladas e vinculadas automaticamente:  
-    ![Instalação do agents-cli e skills](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agents_cli_install.png)
 
 2.  💻 **Terminal Cloud Shell (`$`):** Atualize o `PATH` da sessão atual:
 
@@ -259,40 +263,35 @@ Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do AD
     export PATH=$PATH:"$HOME/.local/bin"
     ```
 
-3.  💻 **Terminal Cloud Shell (`$`):** Inicie o assistente `agy` no terminal:
+3.  💻 **Terminal Cloud Shell (`$`):** Inicie o assistente `agy` no terminal *(opcional: digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas e pressione `ESC` para fechar o menu)*:  
+   ![Visualização das skills no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_agents_cli.png)
 
     ```bash
     agy
     ```
 
-    *(Opcional: digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas; pressione `ESC` para fechar o menu)*:  
-    ![Visualização das skills no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_agents_cli.png)
-
 4.  🤖 **Prompt do Antigravity CLI (`agy >`):** **Configurar Modo Permissivo de Ferramentas (`always-proceed`):** Antes de iniciar o alinhamento arquitetural e a geração de código, configure a execução de ferramentas como permissiva. No prompt do `agy`, digite `/config`, navegue até a opção **Tool Permission**, altere para **`always-proceed`** (para que o assistente crie pastas, escreva arquivos e execute comandos com autonomia sem solicitar aprovação manual a cada ação) e pressione `ESC` para fechar o menu:  
-    ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
+   ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
 
-5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente:
+5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente, utilizando as seguintes respostas recomendadas baseadas na skill em `skills/due-diligence-contract/SKILL.md`:
+   - **Objetivo central:** *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.*
+   - **Ferramentas e skills:** *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.*
+   - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
+   - **Formato de saída esperado:** *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.*
 
-    ```
+    ```text
     /grill-me
     ```
 
-    Durante a execução do `/grill-me`, utilize as seguintes respostas recomendadas baseadas na skill em `skills/due-diligence-contract/SKILL.md`:
-
-    - **Objetivo central:** *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.*
-    - **Ferramentas e skills:** *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.*
-    - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
-    - **Formato de saída esperado:** *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.*
-
 6.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
 
-    ```
+    ```text
     Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
     ```
 
 7.  🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:
 
-    ```
+    ```text
     /exit
     ```
 
@@ -339,14 +338,29 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
 
 2.  🌐 **Navegador (Cloud Shell Web Preview):** No canto superior direito do Cloud Shell, clique no botão **Visualização na Web** (*Web Preview*) e selecione **Visualizar na porta 8000** (*Preview on port 8000*).
 
-3.  🌐 **Chat do ADK Web (Navegador):** No chat da interface web, execute os dois cenários de validação:
+3.  🌐 **Chat do ADK Web (Navegador):** **Cenário 1 — Teste de Gating Rule (Sem Contrato):** Envie a mensagem abaixo no chat da interface web e valide que o agente responde cordialmente solicitando o envio ou texto do contrato antes de carregar instruções adicionais (*Gating Rule*):
 
-    - **Cenário 1 — Teste de Gating Rule:** Envie `Olá, você pode analisar um contrato para mim?`. Valide que o agente responde cordialmente solicitando o envio ou texto do contrato antes de carregar instruções adicionais (*Gating Rule*).
-    - **Cenário 2 — Auditoria de Contrato:** Envie o texto do contrato (ou indique o arquivo `docs/sample_contract.pdf`). Valide que o agente carrega as instruções de `references/workflow.md`, analisa cláusulas societárias, administração, quotas e gera o relatório completo de Due Diligence estruturado com classificação de risco e parecer.
+    ```text
+    Olá, você pode analisar um contrato social para mim?
+    ```
 
-4.  🤖 **Prompt do agy (Segunda Aba do Cloud Shell):** **Refinamento e Depuração com agy:** Caso necessite ajustar prompts, reforçar regras de gating ou melhorar a formatação do relatório, clique no ícone **`+`** na barra superior do Cloud Shell para abrir uma nova aba de terminal e utilize o `agy` livremente para refinar os arquivos do agente.
+4.  🌐 **Chat do ADK Web (Navegador):** **Cenário 2 — Auditoria de Contrato (Com Contrato):** Cole o extrato abaixo do *Contrato Social Consolidado — Nexus Tecnologia Ltda.* no chat (ou baixe o [sample_contract.pdf](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf) e anexe-o pelo botão de clipe da interface) e valide que o agente carrega `references/workflow.md`, analisa cláusulas de administração, quotas e não concorrência e gera o relatório completo de Due Diligence:
 
-5.  💻 **Terminal Cloud Shell (`$`):** Quando concluir a validação, retorne à primeira aba do terminal e pressione `CTRL+C` para encerrar o servidor do ADK Web.
+    ```text
+    Realize a Due Diligence completa do seguinte Contrato Social Consolidado da Nexus Tecnologia Ltda.:
+    Cláusula 5ª (Administração): A administração da sociedade caberá exclusivamente aos sócios Fulano e Beltrano, sendo necessária a assinatura conjunta para qualquer operação bancária ou alienação de ativos que supere o montante de R$ 50.000,00.
+    Cláusula 8ª (Cessão de Quotas): As quotas são indivisíveis e não poderão ser cedidas a terceiros sem o expresso consentimento dos demais sócios, assegurado o direito de preferência pelo prazo de 30 (trinta) dias.
+    Cláusula 12ª (Não Concorrência): Os sócios obrigam-se a não exercer atividade concorrente pelo prazo de 24 meses após sua retirada da sociedade.
+    ```
+
+5.  🤖 **Prompt do agy (Segunda Aba do Cloud Shell):** **Refinamento e Depuração com agy:** Caso necessite ajustar prompts, reforçar regras de gating ou melhorar a formatação do relatório, clique no ícone **`+`** na barra superior do Cloud Shell para abrir uma nova aba de terminal e inicie o `agy` no diretório do projeto:
+
+    ```bash
+    cd ~/workshop-agy
+    agy
+    ```
+
+6.  💻 **Terminal Cloud Shell (`$`):** Quando concluir a validação, retorne à primeira aba do terminal e pressione `CTRL+C` para encerrar o servidor do ADK Web.
 
 ---
 
@@ -384,19 +398,23 @@ Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compi
     agents-cli deploy --status --project $DEVSHELL_PROJECT_ID
     ```
 
-4.  🤖 **Prompt do Antigravity CLI (`agy >`):** Ao término do deployment, retorne à primeira aba e **copie o Resource Name** do agente implantado exibido pelo `agy`. Esse mesmo valor também aparece na saída do comando `agents-cli deploy --status` executado na etapa anterior.
-
-    O Resource Name é uma linha única que começa com `projects/` e termina em um identificador numérico longo. Exemplo **meramente ilustrativo** (não copie este valor):
+4.  🤖 **Prompt do Antigravity CLI (`agy >`):** Ao término do deployment, retorne à primeira aba e **copie o Resource Name** real do agente implantado exibido pelo `agy` (ou na saída do comando `agents-cli deploy --status`). Guarde esse valor real para colá-lo na Tarefa 5 (nunca digite colchetes como `[PROJECT_ID]` ou `[REGION]`). O Resource Name segue o formato ilustrativo abaixo (não copie este exemplo):
 
     ```text
     projects/123456789012/locations/us-central1/reasoningEngines/4857320192387645440
     ```
 
-    ⚠️ **Importante:** guarde o valor real retornado pelo seu deploy, pois ele será colado no Gemini Enterprise na Tarefa 5. Nunca digite trechos entre colchetes como `[PROJECT_ID]`, `[REGION]` ou `[ENGINE_ID]` — eles representam apenas o formato do recurso.
+5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Valide a prontidão do agente remoto executando uma consulta de teste diretamente através do `agy`:
 
-5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Valide a prontidão do agente remoto executando uma consulta de teste diretamente através do `agy`.
+    ```text
+    Execute um teste rápido contra o agente remoto implantado no Agent Runtime enviando a mensagem "Olá, preciso auditar um contrato social" e confirme se ele responde aplicando a regra de gating.
+    ```
 
-6.  🤖 **Prompt do Antigravity CLI (`agy >`):** Quando concluir os testes, saia do assistente digitando `/exit` no prompt do `agy` para retornar ao prompt de comando do Cloud Shell (`$`).
+6.  🤖 **Prompt do Antigravity CLI (`agy >`):** Quando concluir os testes, saia do assistente digitando `/exit` no prompt do `agy` para retornar ao prompt de comando do Cloud Shell (`$`):
+
+    ```text
+    /exit
+    ```
 
 ---
 
@@ -412,57 +430,50 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 1.  ☁️ **Console Google Cloud:** No Console do Google Cloud, pesquise por **Gemini Enterprise** no campo de pesquisa superior ou navegue pelo **Menu de navegação (☰) > Mais produtos > Inteligência Artificial > Gemini Enterprise** (ou **Agent Builder** / **Discovery Engine**).
 
 2.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Ativação da Licença / Habilitação do GE App:** Se for a primeira vez que você acessa o painel nesta sessão, habilite o Gemini Enterprise App:  
-    ![Habilitar Gemini Enterprise App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_enable.png)
+   ![Habilitar Gemini Enterprise App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_enable.png)
 
 3.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Criar uma Instância do App:** Crie um novo aplicativo corporativo com o nome **Cymbal Compliance & Legal Hub**:  
-    ![Criar Instância do GE App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_create.png)
+   ![Criar Instância do GE App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_create.png)
 
 4.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Habilitar Recursos de Agentes:** No menu lateral do aplicativo, clique na aba **Features** (Recursos) e ative a opção **Agentes** (*Agents*).
 
 5.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Adicionar Agente:** No menu lateral do aplicativo, clique em **Agentes** (*Agents*) e selecione **Adicionar Agente** (*Add Agent*):  
-    ![Adicionar Agente no GE App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_add_agent.png)
+   ![Adicionar Agente no GE App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_add_agent.png)
 
 6.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Selecionar o Tipo de Agente:** Na tela **Choose an agent type**, localize o card **Custom agent via Agent Runtime** e clique em **Add**:  
-    ![Selecionar Custom agent via Agent Runtime](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_runtime.png)
+   ![Selecionar Custom agent via Agent Runtime](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_runtime.png)
 
-7.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Configurar e Vincular o Agente:** Na etapa **1. Authorizations**, clique em **Skip** (pular). Em seguida, na etapa **2. Configuration**, preencha os campos obrigatórios utilizando o botão de copiar de cada bloco abaixo.
-
-    **Agent name:**
+7.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Configurar Nome do Agente:** Na etapa **1. Authorizations**, clique em **Skip** (pular). Na etapa **2. Configuration**, preencha o campo **Agent name** com o valor abaixo:
 
     ```text
     Legal Agent
     ```
 
-    **Agent description:**
+8.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Configurar Descrição do Agente:** No campo **Agent description**, cole o texto abaixo:
 
     ```text
     Revisão de contratos e auditoria de conformidade societária
     ```
 
-    **Agent Runtime reasoning engine:** cole o **Resource Name** real copiado no final da Tarefa 4 (a linha única que começa com `projects/`).
+9.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Vincular o Resource Name e Criar:** No campo **Agent Runtime reasoning engine**, cole o **Resource Name** real copiado no final da Tarefa 4 (a linha única que começa com `projects/`) e clique em **Create** para vincular o agente ao aplicativo corporativo:  
+   ![Configuração do Agente no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_agent_config.png)
 
-    Clique em **Create** para vincular o agente ao aplicativo corporativo:  
-    ![Configuração do Agente no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_agent_config.png)
+10. ☁️ **Console Google Cloud (Gemini Enterprise):** **Confirmar Status do Agente:** Após a criação, confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
+   ![Agente Registrado no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_agents_table.png)
 
-8.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Confirmar Status do Agente:** Após a criação, confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
-    ![Agente Registrado no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_agents_table.png)
+11. ☁️ **Console Google Cloud (Gemini Enterprise):** **Acessar a Visualização do Aplicativo (Preview):** No menu lateral do aplicativo **Cymbal Compliance & Legal Hub**, clique na aba **Overview** (Visão Geral) e, no card **Preview Gemini Enterprise before customizing**, clique no botão **Preview**:  
+   ![Acessar Preview do Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_preview.png)
 
-9.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Acessar a Visualização do Aplicativo (Preview):** No menu lateral do aplicativo **Cymbal Compliance & Legal Hub**, clique na aba **Overview** (Visão Geral) e, no card **Preview Gemini Enterprise before customizing**, clique no botão **Preview**:  
-    ![Acessar Preview do Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_preview.png)
+12. 🌐 **Interface Gemini Enterprise (Preview):** **Selecionar o Agente Corporativo:** Na janela de visualização do aplicativo, acesse o menu lateral **Agents** e, na seção **From your organization**, selecione o agente criado (**Legal Agent**):  
+   ![Selecionar Legal Agent no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_select_agent.png)
 
-10. 🌐 **Interface Gemini Enterprise (Preview):** **Selecionar o Agente Corporativo:** Na janela de visualização do aplicativo, acesse o menu lateral **Agents** e, na seção **From your organization**, selecione o agente criado (**Legal Agent**):  
-    ![Selecionar Legal Agent no Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_select_agent.png)
-
-11. 🌐 **Chat do Gemini Enterprise App (Produção):** **Executar a Auditoria de Contrato em Produção:**
-    Com o chat do **Legal Agent** aberto, envie o seguinte trecho contratual para validação em produção:
+13. 🌐 **Chat do Gemini Enterprise App (Produção):** **Executar a Auditoria de Contrato em Produção:** Com o chat do **Legal Agent** aberto, envie o trecho contratual abaixo e valide que o agente invoca o **Agent Runtime** na nuvem, processa os protocolos de Due Diligence estabelecidos na skill e retorna o parecer jurídico estruturado com classificação de risco e recomendações para a Cymbal Technologies:
 
     ```text
     Por favor, audite a seguinte cláusula do Contrato Social da Nexus Tecnologia Ltda.:
     "A administração da sociedade caberá exclusivamente aos sócios Fulano e Beltrano, sendo necessária a assinatura conjunta para qualquer operação bancária ou alienação de ativos que supere o montante de R$ 50.000,00."
     Qual o parecer e classificação de risco para a Cymbal Technologies?
     ```
-
-    Valide que o agente invoca o **Agent Runtime** na nuvem, processa os protocolos de Due Diligence estabelecidos na skill e retorna o parecer jurídico estruturado com classificação de risco e recomendações para a Cymbal Technologies.
 
 ---
 
@@ -471,12 +482,11 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 1.  Quando você tiver concluído todas as atividades práticas, clique no botão vermelho **Terminar o laboratório** (*End Lab*) no painel superior esquerdo.
 2.  Na janela de confirmação, clique em **Enviar** (*Submit*). Todos os recursos provisionados na sua sessão temporária serão desalocados e excluídos com segurança.
 3.  Avalie sua experiência com o laboratório selecionando a quantidade de estrelas correspondente:
-
-    - 1 estrela = Muito insatisfeito
-    - 2 estrelas = Insatisfeito
-    - 3 estrelas = Neutro
-    - 4 estrelas = Satisfeito
-    - 5 estrelas = Muito satisfeito
+   - 1 estrela = Muito insatisfeito
+   - 2 estrelas = Insatisfeito
+   - 3 estrelas = Neutro
+   - 4 estrelas = Satisfeito
+   - 5 estrelas = Muito satisfeito
 4.  Se desejar, deixe um comentário detalhado com seu feedback para ajudar a equipe a aprimorar o treinamento.
 
 ---

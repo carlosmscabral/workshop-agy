@@ -97,19 +97,19 @@ gcloud auth list
   ```markdown
   > ⚠️ **MUITO IMPORTANTE:** Sempre utilize uma **Janela Anônima (Incognito)**.
   ```
-* **Indent Code Blocks & Continuation Blocks Inside Numbered Steps by 4 Spaces (Anti `1. 1. 1.` Qwiklabs Invariant):** While GitHub (`cmark-gfm` / CommonMark) accepts 3 spaces for `1. `, Qwiklabs's Markdown parser (`go/authoring-ql-md` / Redcarpet / Classic Markdown) strictly requires **4 spaces (`    `)** to keep blocks inside an `<ol>` list item (`<li>`), AND does not emit `<ol start="N">`. If a code block is indented by only 3 spaces (`   ```bash`), Qwiklabs closes `</ol>`, parses `   ```bash` as a top-level code block while preserving the 3 leading spaces inside `<code>` (`   curl...`), and resets the next step to `1.`. Always use 4-character markers (`1.  ` for `1`–`9`, `10. ` for `10`+) and **4 spaces (`    `)** for all continuation blocks (fenced code blocks, paragraphs, images, sub-lists):
+* **Indent Fenced Code Blocks Inside Numbered Steps by 4 Spaces — NEVER Indent Non-Code Lines by 4 Spaces (Anti `1. 1. 1.` & Anti `<pre><code>` Qwiklabs Invariant):**
+  Qwiklabs's Markdown parser (`explore.qwiklabs.com`) enforces two strict rules that differ from GitHub CommonMark:
+  1. **Fenced code blocks (`    ``` `) inside `<ol>` items MUST be indented by 4 spaces (`    `) and placed at the end of the step.** If a fenced code block is indented by `0` or `3` spaces, Qwiklabs closes `</ol>`, parses the fence at top level (keeping 3 leading spaces inside `<code>`), and resets the next item to `1.`.
+  2. **Non-code text (sub-bullets `- `, paragraphs, or images `![...]`) MUST NEVER have 4 spaces of indentation after a blank line (`\n\n    `).** In Qwiklabs's parser, *any* non-fenced text preceded by a blank line and indented by 4 spaces is parsed as a classic **4-space Indented Code Block (`<pre><code>`)**, turning bullets and images into raw dark code boxes! Always attach sub-bullets (`   - `) and images (`   ![...]`) on the **immediate next line (`\n`, NO blank line)** with **3 spaces (`   `)** of indentation, placed *before* the step's final `    ``` ` fenced code block:
   ````markdown
-  <!-- WRONG: 0 or 3 spaces breaks the list in Qwiklabs -> renders 1. 1. 1. and shifts code by 3 spaces -->
-  1. Instale o `uv`:
+  <!-- WRONG: 4 spaces on non-code lines after a blank line turns bullets/images into a dark <pre><code> block! -->
+  1.  Clique em **Agent** e preencha:
 
-     ```bash
-     curl -LsSf https://astral.sh/uv/install.sh | sh
-     ```
+      - **Agent name**: `due-diligence-agent`
 
-  2. Instale o `agy`:
-
-  <!-- CORRECT: 4-char marker (1.  ) + 4-space indent (    ) works in BOTH Qwiklabs and GitHub -->
-  1.  Instale o `uv`:
+  <!-- CORRECT: \n + 3 spaces for images/sub-bullets (no blank line), followed by \n\n + 4 spaces ONLY for fenced code blocks -->
+  1.  Instale o `uv` no Cloud Shell:
+     ![Instalação do uv](https://.../img.png)
 
       ```bash
       curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -117,7 +117,6 @@ gcloud auth list
 
   2.  Instale o `agy`:
   ````
-  Both Qwiklabs (4-space classic rule) and GitHub (`len("1.  ") == 4`) strip all 4 leading spaces at render time, so the Qwiklabs copy button copies the command with 0 leading spaces and numbering continues cleanly (`1., 2., 3.`).
 * Avoid inserting raw unindented `<div>` tags directly in the middle of Markdown numbered lists, as this resets list numbering back to `1.`.
 * **Values the Student Must Paste Belong in Fenced Blocks, Not Inline Code:** Inline code spans (`` `...` ``) in the Qwiklabs renderer do not wrap and have no copy button, so long values (form fields, prompts, resource IDs) overflow horizontally and get visually truncated. Any string the student must transcribe into a console form or terminal must live in its own fenced block (indented into the step), with the field name in bold on the preceding line:
   ````markdown

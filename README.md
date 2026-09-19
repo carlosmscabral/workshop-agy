@@ -127,7 +127,7 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
     export PATH="$HOME/.local/bin:$PATH"
     ```
 
-    > ℹ️ **Nota:** Se o terminal indicar que o `uv` ou o `agy` já estão instalados (mensagens *already installed*), você pode ignorar o aviso e prosseguir.
+   > ℹ️ **Nota:** Se o terminal indicar que o `uv` ou o `agy` já estão instalados (mensagens *already installed*), você pode ignorar o aviso e prosseguir.
 
 6.  Inicie o setup interativo do **Antigravity CLI**:
 
@@ -137,32 +137,32 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 7.  Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
 
-    - **Passo 1:** Selecione `2. Use a Google Cloud project`  
-      ![Passo 1 - Inicialização](assets/imgs/agy_auth_1.png)
+- **Passo 1:** Selecione `2. Use a Google Cloud project`  
+  ![Passo 1 - Inicialização](assets/imgs/agy_auth_1.png)
 
-    - **Passo 2:** Selecione `1. Continue with Google Cloud`  
-      ![Passo 2 - Autenticação](assets/imgs/agy_auth_2.png)
+- **Passo 2:** Selecione `1. Continue with Google Cloud`  
+  ![Passo 2 - Autenticação](assets/imgs/agy_auth_2.png)
 
-    - **Passo 3:** Conceda as permissões de acesso na Janela Anônima  
-      ![Passo 3 - Permissões](assets/imgs/agy_auth_3.png)
+- **Passo 3:** Conceda as permissões de acesso na Janela Anônima  
+  ![Passo 3 - Permissões](assets/imgs/agy_auth_3.png)
 
-    - **Passo 4:** Cole o ID do seu projeto sandbox (`echo $PROJECT_ID`)  
-      ![Passo 4 - ID do Projeto](assets/imgs/agy_auth_4.png)
+- **Passo 4:** Cole o ID do seu projeto sandbox (`echo $PROJECT_ID`)  
+  ![Passo 4 - ID do Projeto](assets/imgs/agy_auth_4.png)
 
-    - **Passo 5:** Em **Select Google Cloud Location**, selecione a opção `global`  
-      ![Passo 5 - Região Global](assets/imgs/agy_auth_5.png)
+- **Passo 5:** Em **Select Google Cloud Location**, selecione a opção `global`  
+  ![Passo 5 - Região Global](assets/imgs/agy_auth_5.png)
 
-    - **Passo 6:** Em **Select License**, selecione a opção `1. Agent Platform`  
-      ![Passo 6 - Seleção de Licença](assets/imgs/agy_auth_6.png)
+- **Passo 6:** Em **Select License**, selecione a opção `1. Agent Platform`  
+  ![Passo 6 - Seleção de Licença](assets/imgs/agy_auth_6.png)
 
-    - **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de preferência (ex: `dark`)  
-      ![Passo 7 - Tema Visual](assets/imgs/agy_auth_7.png)
+- **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de preferência (ex: `dark`)  
+  ![Passo 7 - Tema Visual](assets/imgs/agy_auth_7.png)
 
-    - **Passo 8:** Em **Terms of Service & Data Use**, selecione `Done` para aceitar os termos  
-      ![Passo 8 - Termos de Serviço](assets/imgs/agy_auth_8.png)
+- **Passo 8:** Em **Terms of Service & Data Use**, selecione `Done` para aceitar os termos  
+  ![Passo 8 - Termos de Serviço](assets/imgs/agy_auth_8.png)
 
-    - **Passo 9:** Em **Do you trust the contents of this project?**, selecione `Yes, I trust this folder`  
-      ![Passo 9 - Confiança no Workspace](assets/imgs/agy_auth_9.png)
+- **Passo 9:** Em **Do you trust the contents of this project?**, selecione `Yes, I trust this folder`  
+  ![Passo 9 - Confiança no Workspace](assets/imgs/agy_auth_9.png)
 
 ---
 
@@ -178,28 +178,28 @@ Nesta tarefa, você instala o `agents-cli`, habilita o catálogo de skills do AD
     uvx google-agents-cli setup
     export PATH=$PATH:"$HOME/.local/bin"
     ```
-    ![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
+   ![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
 
 2.  Inicie o `agy` e verifique as skills disponíveis digitando `/skills`:
 
     ```bash
     agy
     ```
-    ![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
+   ![Visualização das skills no agy](assets/imgs/agy_agents_cli.png)
 
 3.  (Recomendado) Ajuste o modo de execução de ferramentas para permissivo (`always-proceed`):
 
-    - No prompt do `agy`, digite `/config`;
-    - Selecione a opção **Tool Permission** e altere para **`always-proceed`** para que o assistente gere arquivos e execute comandos sem solicitar aprovação manual a cada ação;
-    - Pressione `ESC` para sair das configurações.  
-    ![Configuração de Permissão de Ferramentas](assets/imgs/agy_config_tool_permission.png)
+   - No prompt do `agy`, digite `/config`;
+   - Selecione a opção **Tool Permission** e altere para **`always-proceed`** para que o assistente gere arquivos e execute comandos sem solicitar aprovação manual a cada ação;
+   - Pressione `ESC` para sair das configurações.  
+   ![Configuração de Permissão de Ferramentas](assets/imgs/agy_config_tool_permission.png)
 
 4.  No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
 
-    - Responda às perguntas com foco na auditoria societária (veja tabela de suporte no arquivo `lab_instructions.md`).
+   - Responda às perguntas com foco na auditoria societária (veja tabela de suporte no arquivo `lab_instructions.md`).
 
 5.  Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
-    > *"Crie um projeto de agente ADK chamado `due-diligence-agent` seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do `agents-cli`. O agente deve carregar a skill especializada localizada em `../skills/due-diligence-contract/SKILL.md`, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar `references/workflow.md` para estruturar o relatório de auditoria."*
+   > *"Crie um projeto de agente ADK chamado `due-diligence-agent` seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do `agents-cli`. O agente deve carregar a skill especializada localizada em `../skills/due-diligence-contract/SKILL.md`, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar `references/workflow.md` para estruturar o relatório de auditoria."*
 
 6.  Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
 
@@ -251,7 +251,7 @@ Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compi
     agy
     ```
 
-    > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto $PROJECT_ID na região $REGION."*
+   > *"Faça o deploy do agente `due-diligence-agent` no Agent Runtime no projeto $PROJECT_ID na região $REGION."*
 
 2.  Em uma segunda aba do Cloud Shell (`+`), você pode acompanhar o status da operação de longa duração (LRO) em paralelo:
 
@@ -274,29 +274,29 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 
 1.  No Console do Google Cloud, pesquise por **Gemini Enterprise** ou **Agent Builder**.
 2.  Habilite o Gemini Enterprise App:  
-    ![Habilitar Gemini Enterprise App](assets/imgs/ge_app_enable.png)
+   ![Habilitar Gemini Enterprise App](assets/imgs/ge_app_enable.png)
 
 3.  Crie um aplicativo corporativo chamado **Cymbal Compliance & Legal Hub**:  
-    ![Criar Instância do GE App](assets/imgs/ge_app_create.png)
+   ![Criar Instância do GE App](assets/imgs/ge_app_create.png)
 
 4.  Na aba **Features**, ative a opção **Agentes** (*Agents*).
 5.  No menu **Agentes**, clique em **Adicionar Agente** (*Add Agent*):  
-    ![Adicionar Agente no GE App](assets/imgs/ge_app_add_agent.png)
+   ![Adicionar Agente no GE App](assets/imgs/ge_app_add_agent.png)
 
 6.  Selecione o card **Custom agent via Agent Runtime** e clique em **Add**:  
-    ![Apontar para o Agent Runtime](assets/imgs/ge_app_runtime.png)
+   ![Apontar para o Agent Runtime](assets/imgs/ge_app_runtime.png)
 
 7.  Na etapa **1. Authorizations**, clique em **Skip**. Na etapa **2. Configuration**, informe o nome (`Legal Agent`), descrição (`Revisão de contratos`) e o **Resource Name** do Agent Runtime da Tarefa 4, e clique em **Create**:  
-    ![Configuração do Agente no Gemini Enterprise](assets/imgs/ge_app_agent_config.png)
+   ![Configuração do Agente no Gemini Enterprise](assets/imgs/ge_app_agent_config.png)
 
 8.  Confirme que o agente aparece listado na tabela de agentes com o status **Enabled**:  
-    ![Agente Registrado no Gemini Enterprise](assets/imgs/ge_app_agents_table.png)
+   ![Agente Registrado no Gemini Enterprise](assets/imgs/ge_app_agents_table.png)
 
 9.  No menu lateral do aplicativo **Cymbal Compliance & Legal Hub**, acesse **Overview** e, no card **Preview Gemini Enterprise before customizing**, clique no botão **Preview**:  
-    ![Acessar Preview do Gemini Enterprise](assets/imgs/ge_app_preview.png)
+   ![Acessar Preview do Gemini Enterprise](assets/imgs/ge_app_preview.png)
 
 10. Na janela ou pop-up de visualização que carregar, clique em **Agents** no menu lateral e selecione o agente criado anteriormente (**Legal Agent**) na seção **From your organization**:  
-    ![Selecionar Legal Agent no Gemini Enterprise](assets/imgs/ge_app_select_agent.png)
+   ![Selecionar Legal Agent no Gemini Enterprise](assets/imgs/ge_app_select_agent.png)
 
 11. No chat aberto do agente corporativo, envie um trecho da minuta de contrato para validar a geração do parecer de conformidade e auditoria de Due Diligence em produção.
 
