@@ -68,9 +68,18 @@ Para concluir este laboratório, você precisa de:
 ### Fazer login no Console do Google Cloud
 
 1.  No painel lateral esquerdo do laboratório, clique com o botão direito no botão **Abrir console do Google Cloud** e selecione **Abrir link em janela anônima**.
-2.  Na tela de login do Google, cole o **Nome de usuário** temporário fornecido pelo painel e clique em **Avançar**.
-3.  Cole a **Senha** temporária fornecida e clique em **Avançar**.
-4.  Conclua as telas seguintes aceitando os termos e **NÃO** adicionando telefone de recuperação ou 2FA nesta conta temporária.
+2.  Se a página exibir a caixa de diálogo **Escolher uma conta** (*Choose an account*), clique em **Usar outra conta** (*Use another account*):  
+   ![Escolher uma conta - Usar outra conta](assets/imgs/google_choose_account.png)
+3.  Na tela de login do Google, cole o **Nome de usuário** temporário fornecido pelo painel e clique em **Avançar** (*Next*).
+4.  Cole a **Senha** temporária fornecida e clique em **Avançar** (*Next*).
+5.  Conclua as telas seguintes da conta temporária:
+   - Na tela **Bem-vindo à sua nova conta**, clique em **Entendi** / **Aceitar**;
+   - Na tela **Proteja sua conta**, **NÃO** adicione telefone de recuperação ou 2FA — clique em **Atualizar mais tarde** / **Agora não** (*Update later* / *Not now*);
+   - Aceite os **Termos de Serviço** do Google Cloud Console clicando em **Concordar e continuar**, sem se inscrever em períodos de teste gratuito.
+
+> 💡 **Dica de Navegação no Console do Google Cloud:**  
+> Para acessar os produtos e serviços do Google Cloud, clique no **Menu de navegação** (`☰`) no canto superior esquerdo ou digite o nome do serviço no campo **Pesquisar** (`Search (/)`):  
+> ![Menu de navegação e barra de pesquisa do Console](assets/imgs/console_topbar_menu.png)
 
 ---
 
@@ -88,11 +97,12 @@ Você será responsável por configurar o assistente **Antigravity CLI (`agy`)**
 
 ## Tarefa 1. Configurar o ambiente e inicializar o Antigravity CLI
 
-Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos do workshop, instala as ferramentas CLI (`uv` e `agy`) e autentica o assistente de desenvolvimento no seu projeto Google Cloud.
+Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos do workshop, instala as ferramentas CLI (`uv`, `agy` e `agents-cli`) e autentica o assistente de desenvolvimento no seu projeto Google Cloud.
 
-1.  No Console do Google Cloud, clique em **Ativar o Cloud Shell** (ícone `>_`).
-2.  Quando for exibida a janela pop-up solicitando **"Autorizar o Cloud Shell a fazer chamadas de API do GCP"**, clique obrigatoriamente em **Autorizar** (*Authorize*).
-3.  Inicialize as variáveis de ambiente com o projeto sandbox ativo:
+1.  No Console do Google Cloud, clique em **Ativar o Cloud Shell** ![Ícone Ativar o Cloud Shell](assets/imgs/devshell.png) e, na janela informativa, clique em **Continuar** (*Continue*):  
+   ![Continuar no Cloud Shell](assets/imgs/cloudshell_continue.png)
+
+2.  Inicialize as variáveis de ambiente com o projeto sandbox ativo (quando o primeiro comando `gcloud` exibir o pop-up **"Autorizar o Cloud Shell a fazer chamadas de API do GCP"**, clique obrigatoriamente em **Autorizar** / *Authorize*):
 
     ```bash
     export PROJECT_ID=$DEVSHELL_PROJECT_ID
@@ -117,14 +127,14 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
     EOF
     ```
 
-4.  Clone o repositório do workshop:
+3.  Clone o repositório do workshop:
 
     ```bash
     git clone https://github.com/carlosmscabral/workshop-agy.git ~/workshop-agy
     cd ~/workshop-agy
     ```
 
-5.  Instale o gerenciador de pacotes `uv`, a CLI do Antigravity (`agy`) e o `agents-cli`:  
+4.  Instale o gerenciador de pacotes `uv`, a CLI do Antigravity (`agy`) e o `agents-cli`:  
    ![Instalação do agents-cli e skills](assets/imgs/agents_cli_install.png)
 
     ```bash
@@ -137,13 +147,13 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
     uvx google-agents-cli setup
     ```
 
-6.  Inicie o setup interativo do **Antigravity CLI**:
+5.  Inicie o setup interativo do **Antigravity CLI**:
 
     ```bash
     agy
     ```
 
-7.  Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
+6.  Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal *(dica: use `CTRL+Clique` / `CMD+Clique` para abrir links e `CTRL+SHIFT+V` / `CMD+V` para colar no terminal; não use `CTRL+C` para não interromper o `agy`)*:
 
 - **Passo 1:** Selecione `2. Use a Google Cloud project`  
   ![Passo 1 - Inicialização](assets/imgs/agy_auth_1.png)
@@ -151,10 +161,10 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 - **Passo 2:** Selecione `1. Continue with Google Cloud`  
   ![Passo 2 - Autenticação](assets/imgs/agy_auth_2.png)
 
-- **Passo 3:** Conceda as permissões de acesso na Janela Anônima  
+- **Passo 3:** Conceda as permissões de acesso na Janela Anônima e cole o código de autorização no terminal (`CTRL+SHIFT+V` / `CMD+V`)  
   ![Passo 3 - Permissões](assets/imgs/agy_auth_3.png)
 
-- **Passo 4:** Cole o ID do seu projeto sandbox (`echo $PROJECT_ID`)  
+- **Passo 4:** Cole (`CTRL+SHIFT+V` / `CMD+V`) o ID do seu projeto sandbox (`echo $PROJECT_ID`)  
   ![Passo 4 - ID do Projeto](assets/imgs/agy_auth_4.png)
 
 - **Passo 5:** Em **Select Google Cloud Location**, selecione a opção `global`  
@@ -237,7 +247,7 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
     uv run adk web --allow_origins="*"
     ```
 
-2.  No Cloud Shell, clique em **Visualização na Web** (*Web Preview*) e selecione a porta **8000**.
+2.  No Cloud Shell, clique em **Visualização na Web** (*Web Preview*) ![Ícone Web Preview](assets/imgs/web_preview.png) $\rightarrow$ **Alterar porta** (*Change port*), digite **`8000`** e clique em **Alterar e visualizar** (*Change and Preview*).
 3.  Consulte a minuta do contrato de amostra [sample_contract.pdf](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf) e teste a regra de gating e a auditoria enviando o documento no chat.
 4.  Refine prompts com o `agy` caso deseje ajustar o relatório.
 5.  Quando concluir a validação, pressione `CTRL+C` no terminal para encerrar o servidor do ADK Web.
@@ -261,7 +271,7 @@ Nesta tarefa, você utiliza o assistente Antigravity CLI para orquestrar a compi
     Faça o deploy do agente due-diligence-agent no Agent Runtime. Use o projeto e a região já configurados neste Cloud Shell, obtendo os valores com "gcloud config get-value project" e "gcloud config get-value compute/region".
     ```
 
-3.  Em uma segunda aba do Cloud Shell (`+`), você pode acompanhar o status da operação de longa duração (LRO) em paralelo:
+3.  Em uma segunda aba do Cloud Shell (`+`), você pode acompanhar o status da operação de longa duração (LRO) em paralelo *(se o Cloud Shell desconectar por inatividade durante os 3 a 7 minutos, basta clicar em **Reconectar** e rodar este mesmo comando)*:
 
     ```bash
     cd ~/workshop-agy/due-diligence-agent
