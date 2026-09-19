@@ -194,20 +194,13 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
     export PATH="$HOME/.local/bin:$PATH"
     ```
 
-3.  💻 **Terminal Cloud Shell (`$`):** Instale e configure o `agents-cli` utilizando o `uvx` (ao concluir o setup, tanto a CLI quanto as **skills do agents-cli** serão instaladas e vinculadas automaticamente ao seu ambiente):  
-   ![Instalação do agents-cli e skills](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agents_cli_install.png)
-
-    ```bash
-    uvx google-agents-cli setup
-    ```
-
-4.  💻 **Terminal Cloud Shell (`$`):** Inicie o setup interativo do **Antigravity CLI**:
+3.  💻 **Terminal Cloud Shell (`$`):** Inicie o setup interativo do **Antigravity CLI**:
 
     ```bash
     agy
     ```
 
-5.  🤖 **Setup Interativo do Antigravity CLI (`agy`):** Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
+4.  🤖 **Setup Interativo do Antigravity CLI (`agy`):** Siga as 9 etapas de autenticação, configuração e inicialização exibidas no terminal:
 
 - **Passo 1:** Selecione a opção **`2. Use a Google Cloud project`**:  
   ![Passo 1 - Inicialização](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_1.png)
@@ -237,7 +230,7 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
   ![Passo 9 - Confiança no Workspace](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_9.png)
 
 > 💡 **Ambiente Ativo ao Final da Tarefa 1:**  
-> Ao concluir o Passo 9 da autenticação, você já estará conectado dentro da sessão interativa do assistente (`agy >`), pronto para iniciar a Tarefa 2 sem precisar sair do terminal.
+> Ao concluir o Passo 9 da autenticação, você estará conectado dentro da sessão interativa do assistente, indicada pelo prompt `agy >`.
 
 > 💡 **Comandos Úteis do Antigravity CLI (`agy`):**
 > 
@@ -253,46 +246,74 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 ---
 
-## Tarefa 2. Habilitar skills e criar o agente com /grill-me
+## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
 
-Nesta tarefa, diretamente no prompt `agy >` já aberto, você confere o catálogo de skills do ADK, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence e configura o ambiente com o modelo `gemini-flash-3.8` na região `global`.
+Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence e configura o ambiente com o modelo `gemini-flash-3.8` na região `global`.
 
 > 💡 **O que são ADK Skills ([adk.dev/skills](https://adk.dev/skills/))?**  
 > As **Skills do ADK** são pacotes modulares que encapsulam diretrizes operacionais, checklists e fluxos de negócio em arquivos Markdown (`SKILL.md` e `references/`). Elas permitem que o agente opere com contexto progressivo (*progressive disclosure*), consultando conhecimentos especializados sob demanda sem sobrecarregar a janela de contexto principal.
 
-### Alinhar a arquitetura do agente com /grill-me
+### Habilitar skills e alinhar o agente com /grill-me
 
-1.  🤖 **Prompt do Antigravity CLI (`agy >`):** *(Opcional)* Digite `/skills` no prompt do `agy` para visualizar a lista de skills do `agents-cli` integradas e pressione `ESC` para fechar o menu:  
-   ![Visualização das skills no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_agents_cli.png)
-
-2.  🤖 **Prompt do Antigravity CLI (`agy >`):** **Configurar Modo Permissivo de Ferramentas (`always-proceed`):** Antes de iniciar o alinhamento arquitetural e a geração de código, configure a execução de ferramentas como permissiva. No prompt do `agy`, digite `/config`, navegue até a opção **Tool Permission**, altere para **`always-proceed`** (para que o assistente crie pastas, escreva arquivos e execute comandos com autonomia sem solicitar aprovação manual a cada ação) e pressione `ESC` para fechar o menu:  
-   ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
-
-3.  🤖 **Prompt do Antigravity CLI (`agy >`):** Execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente:
-
-    ```text
-    /grill-me
-    ```
-
-4.  🤖 **Prompt do Antigravity CLI (`agy >`):** Durante a execução do `/grill-me`, utilize as seguintes respostas recomendadas baseadas na skill em `skills/due-diligence-contract/SKILL.md`:
-   - **Objetivo central:** *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.*
-   - **Ferramentas e skills:** *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.*
-   - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
-   - **Formato de saída esperado:** *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.*
-
-5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
-
-    ```text
-    Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
-    ```
-
-6.  🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:
+1.  🤖 **Prompt do Antigravity CLI (`agy >`):** Saia temporariamente da sessão do assistente digitando `/exit` para retornar ao prompt do Cloud Shell (`$`):
 
     ```text
     /exit
     ```
 
-7.  💻 **Terminal Cloud Shell (`$`):** Acesse o diretório do agente recém-criado e crie o arquivo de configuração `.env` diretamente no seu local definitivo, definindo a região fixa como `global` e o modelo como `gemini-flash-3.8`:
+2.  💻 **Terminal Cloud Shell (`$`):** No terminal do Cloud Shell, instale e configure o `agents-cli` utilizando o `uvx` e atualize o `PATH`:
+
+    ```bash
+    uvx google-agents-cli setup
+    export PATH="$HOME/.local/bin:$PATH"
+    ```
+
+3.  💻 **Terminal Cloud Shell (`$`):** Confirme na saída do terminal que a CLI e as **skills do `agents-cli`** foram instaladas e vinculadas automaticamente (conforme a imagem abaixo) e inicie novamente o assistente `agy`:  
+   ![Instalação do agents-cli e skills](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agents_cli_install.png)
+
+    ```bash
+    agy
+    ```
+
+4.  🤖 **Prompt do Antigravity CLI (`agy >`):** **Verificar as Skills Instaladas (Obrigatório):** Com o `agy` aberto, execute obrigatoriamente o comando `/skills` para validar que o catálogo de skills do `agents-cli` foi integrado ao seu ambiente:
+
+    ```text
+    /skills
+    ```
+
+5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Confirme na tela que as **7 skills** (`google-agents-cli-*`) aparecem listadas no workspace (conforme a imagem abaixo), pressione `ESC` para fechar o menu de skills e, em seguida, execute o comando `/config`:  
+   ![Visualização das skills no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_agents_cli.png)
+
+    ```text
+    /config
+    ```
+
+6.  🤖 **Prompt do Antigravity CLI (`agy >`):** **Configurar Modo Permissivo de Ferramentas (`always-proceed`):** No menu aberto pelo `/config`, navegue até a opção **Tool Permission**, altere para **`always-proceed`** (para que o assistente crie pastas, escreva arquivos e execute comandos com autonomia sem solicitar aprovação manual a cada ação), pressione `ESC` para fechar o menu e execute o comando `/grill-me`:  
+   ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
+
+    ```text
+    /grill-me
+    ```
+
+7.  🤖 **Prompt do Antigravity CLI (`agy >`):** Durante a execução do `/grill-me`, utilize as seguintes respostas recomendadas baseadas na skill em `skills/due-diligence-contract/SKILL.md`:
+   - **Objetivo central:** *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.*
+   - **Ferramentas e skills:** *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.*
+   - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
+   - **Formato de saída esperado:** *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.*
+
+8.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
+
+    ```text
+    Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
+    ```
+
+9.  🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:
+
+    ```text
+    /exit
+    ```
+
+10. 💻 **Terminal Cloud Shell (`$`):** Acesse o diretório do agente recém-criado e crie o arquivo de configuração `.env` diretamente no seu local definitivo, definindo a região fixa como `global` e o modelo como `gemini-flash-3.8`:
 
     ```bash
     cd ~/workshop-agy/due-diligence-agent
@@ -305,7 +326,7 @@ Nesta tarefa, diretamente no prompt `agy >` já aberto, você confere o catálog
     EOF
     ```
 
-8.  💻 **Terminal Cloud Shell (`$`):** Sincronize as dependências do projeto com o `uv`:
+11. 💻 **Terminal Cloud Shell (`$`):** Sincronize as dependências do projeto com o `uv`:
 
     ```bash
     uv sync
