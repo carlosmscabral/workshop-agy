@@ -50,22 +50,23 @@ Recomendações objetivas para a equipe jurídica e executiva da Cymbal Technolo
 ## 3. Environment & Configuration Standards
 
 When creating or configuring the agent in `due-diligence-agent/`:
-- **Directory Invariant:** Always create the project inside `~/workshop-agy/due-diligence-agent/`.
-- **Environment Configuration (`.env`):**
+- **Workspace Root Invariant:** The `agy` assistant runs from the repository root (`~/workshop-agy`), and creates/manages the agent project inside the subfolder `./due-diligence-agent/` (`~/workshop-agy/due-diligence-agent/`).
+- **Skill Path Resolution:** Inside `./due-diligence-agent/`, reference the skill directory at `../skills/due-diligence-contract/` (or copy/symlink it into the agent package so it is bundled into the container during Agent Runtime deployment).
+- **Environment Configuration (`due-diligence-agent/.env`):**
   ```env
   GOOGLE_GENAI_USE_VERTEXAI=TRUE
   GOOGLE_CLOUD_PROJECT=<PROJECT_ID>
   GOOGLE_CLOUD_LOCATION=global
   MODEL=gemini-flash-3.8
   ```
-- **Dependencies:** Manage dependencies using `uv` (`uv sync`).
+- **Dependencies:** Manage dependencies inside `~/workshop-agy/due-diligence-agent` using `uv` (`uv sync`).
 
 ---
 
 ## 4. Local Testing & Web Preview (ADK Web)
 
 When launching the interactive testing server inside Google Cloud Shell:
-- Always run from the agent project root (`cd ~/workshop-agy/due-diligence-agent`).
+- Always run from the agent project directory (`cd ~/workshop-agy/due-diligence-agent`).
 - Pass `--allow_origins="*"` to allow Cloud Shell Web Preview reverse proxy traffic:
   ```bash
   uv run adk web --allow_origins="*"
@@ -76,10 +77,10 @@ When launching the interactive testing server inside Google Cloud Shell:
 
 ## 5. Cloud Deployment (Agent Runtime & Gemini Enterprise)
 
-- **Deployment Tool:** Use the `google-agents-cli-deploy` skill / tools to containerize and deploy to **Google Cloud Agent Runtime** on Vertex AI.
-- **Resource Name:** Upon successful deployment, extract and display the canonical Resource Name:
-  `projects/[PROJECT_ID]/locations/[REGION]/agents/[AGENT_ID]`
-- **Integration:** This Resource Name is used by the student to publish the agent inside the **Gemini Enterprise App** (*Cymbal Compliance & Legal Hub*).
+- **Deployment Tool:** Use the `google-agents-cli-deploy` skill / tools (`agents-cli deploy`) targeting `./due-diligence-agent` to containerize and deploy to **Google Cloud Agent Runtime** on Vertex AI.
+- **Resource Name:** Upon successful deployment, extract and clearly display the canonical Reasoning Engine Resource Name:
+  `projects/<PROJECT_NUMBER_OR_ID>/locations/<REGION>/reasoningEngines/<REASONING_ENGINE_ID>`
+- **Integration:** This `reasoningEngines` Resource Name is copied by the student and pasted into the **Agent Runtime reasoning engine** field when publishing the **Legal Agent** inside the **Gemini Enterprise App** (*Cymbal Compliance & Legal Hub*).
 
 ---
 
