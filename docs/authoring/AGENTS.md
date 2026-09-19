@@ -127,6 +127,11 @@ gcloud auth list
   ```
   ````
 * **Never Show Bracket Placeholders as Paste Targets:** Strings like `projects/[PROJECT_ID]/locations/[REGION]/reasoningEngines/[ENGINE_ID]` induce students to type the brackets literally into console forms. Use them only to describe a *format* (prefer the shorter `projects/.../locations/.../reasoningEngines/...`), and for the actual step instruct the student to paste the **real value captured earlier** (e.g. the Resource Name returned by the deploy), optionally showing a realistic full example explicitly labeled *meramente ilustrativo (não copie)*.
+* **Never Use LaTeX / MathJax Syntax (`$...$`, `$\rightarrow$`):** The Qwiklabs Markdown renderer (`explore.qwiklabs.com`) does **not** load KaTeX or MathJax. Any LaTeX expression such as `$\rightarrow$` is printed literally as raw text (`$\rightarrow$`) in the student's browser. Always use native Unicode characters (`→` or `>`) for navigation paths and arrows.
+* **Command Box Before Resulting Screenshot Pattern:** Because fenced code blocks (`    ``` `) must be placed at the very end of a numbered step (`<ol>`) to avoid resetting the step counter to `1.`, if you put both a screenshot of a command's output and the command block inside the *same* step, the screenshot will render **before** the command the student needs to type. To ensure the black command box always appears **above** its resulting screenshot without breaking `<ol>`:
+  1. Place the `    ``` ` command block at the end of **Step `N`**.
+  2. Attach the confirmation screenshot (`   ![...]`, indented by 3 spaces on `\n` with no blank line) at the beginning of **Step `N+1`**, followed by the next command block at the end of Step `N+1`.
+* **Single Workspace Root Invariant for AI CLI Assistants (`agy`):** Always launch the `agy` assistant from the **exact same workspace root directory** (`~/workshop-agy`) across every task in the lab. Never instruct the student to launch `agy` in the root folder in Tasks 1–3 and then in a subfolder (`~/workshop-agy/due-diligence-agent`) in Task 4 — switching `agy`'s working directory breaks workspace-scoped `.agents/skills/` discovery, loses the root `AGENTS.md` context, and triggers a redundant *Do you trust the contents of this project?* prompt.
 
 
 ### Rule 4: Cloud Shell Execution Invariants & Gotchas
