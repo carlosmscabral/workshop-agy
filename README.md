@@ -187,16 +187,25 @@ Nesta tarefa, diretamente no prompt `agy >` já aberto, você confere o catálog
    - Pressione `ESC` para sair das configurações.  
    ![Configuração de Permissão de Ferramentas](assets/imgs/agy_config_tool_permission.png)
 
-3.  No prompt do `agy`, execute o comando `/grill-me` para alinhamento interativo:
-   - Responda às perguntas com foco na auditoria societária (veja tabela de suporte no arquivo `lab_instructions.md`).
+3.  No prompt do `agy`, execute o comando `/grill-me` para iniciar o alinhamento interativo:
 
-4.  Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
+    ```text
+    /grill-me
+    ```
+
+4.  Durante a entrevista do `/grill-me`, responda às perguntas com foco na auditoria societária:
+   - **Objetivo central:** *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.*
+   - **Ferramentas e skills:** *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.*
+   - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
+   - **Formato de saída esperado:** *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.*
+
+5.  Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
 
     ```text
     Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
     ```
 
-5.  Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
+6.  Saia do `agy` digitando `/exit`, acesse o diretório do agente recém-criado e configure o arquivo `.env` diretamente no seu local definitivo:
 
     ```bash
     cd ~/workshop-agy/due-diligence-agent
@@ -209,7 +218,7 @@ Nesta tarefa, diretamente no prompt `agy >` já aberto, você confere o catálog
     EOF
     ```
 
-6.  Sincronize as dependências do projeto com o `uv`:
+7.  Sincronize as dependências do projeto com o `uv`:
 
     ```bash
     uv sync

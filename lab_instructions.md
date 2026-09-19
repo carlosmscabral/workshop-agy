@@ -260,29 +260,31 @@ Nesta tarefa, diretamente no prompt `agy >` já aberto, você confere o catálog
 2.  🤖 **Prompt do Antigravity CLI (`agy >`):** **Configurar Modo Permissivo de Ferramentas (`always-proceed`):** Antes de iniciar o alinhamento arquitetural e a geração de código, configure a execução de ferramentas como permissiva. No prompt do `agy`, digite `/config`, navegue até a opção **Tool Permission**, altere para **`always-proceed`** (para que o assistente crie pastas, escreva arquivos e execute comandos com autonomia sem solicitar aprovação manual a cada ação) e pressione `ESC` para fechar o menu:  
    ![Configuração de Permissão de Ferramentas no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_config_tool_permission.png)
 
-3.  🤖 **Prompt do Antigravity CLI (`agy >`):** Execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente, utilizando as seguintes respostas recomendadas baseadas na skill em `skills/due-diligence-contract/SKILL.md`:
-   - **Objetivo central:** *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.*
-   - **Ferramentas e skills:** *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.*
-   - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
-   - **Formato de saída esperado:** *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.*
+3.  🤖 **Prompt do Antigravity CLI (`agy >`):** Execute o comando `/grill-me` para iniciar a entrevista interativa de alinhamento arquitetural do agente:
 
     ```text
     /grill-me
     ```
 
-4.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
+4.  🤖 **Prompt do Antigravity CLI (`agy >`):** Durante a execução do `/grill-me`, utilize as seguintes respostas recomendadas baseadas na skill em `skills/due-diligence-contract/SKILL.md`:
+   - **Objetivo central:** *Auditar contratos sociais e minutas societárias para identificar riscos jurídicos, cláusulas de administração e restrições de quotas.*
+   - **Ferramentas e skills:** *Utilizar a especificação formal de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)), incorporando o pacote de skill em `skills/due-diligence-contract/SKILL.md` e os templates do `agents-cli`.*
+   - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
+   - **Formato de saída esperado:** *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.*
+
+5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
 
     ```text
     Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em ../skills/due-diligence-contract/SKILL.md, respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
     ```
 
-5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:
+6.  🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:
 
     ```text
     /exit
     ```
 
-6.  💻 **Terminal Cloud Shell (`$`):** Acesse o diretório do agente recém-criado e crie o arquivo de configuração `.env` diretamente no seu local definitivo, definindo a região fixa como `global` e o modelo como `gemini-flash-3.8`:
+7.  💻 **Terminal Cloud Shell (`$`):** Acesse o diretório do agente recém-criado e crie o arquivo de configuração `.env` diretamente no seu local definitivo, definindo a região fixa como `global` e o modelo como `gemini-flash-3.8`:
 
     ```bash
     cd ~/workshop-agy/due-diligence-agent
@@ -295,7 +297,7 @@ Nesta tarefa, diretamente no prompt `agy >` já aberto, você confere o catálog
     EOF
     ```
 
-7.  💻 **Terminal Cloud Shell (`$`):** Sincronize as dependências do projeto com o `uv`:
+8.  💻 **Terminal Cloud Shell (`$`):** Sincronize as dependências do projeto com o `uv`:
 
     ```bash
     uv sync
