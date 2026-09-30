@@ -271,7 +271,7 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 ## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
 
-Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence, configura o ambiente com o modelo `gemini-flash-3.8` na região `global` e inspeciona o código gerado em `app/agent.py`.
+Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence, configura o ambiente com o modelo `gemini-3.8-flash` na região `global` e inspeciona o código gerado em `app/agent.py`.
 
 > 💡 **O que são ADK Skills ([adk.dev/skills](https://adk.dev/skills/))?**  
 > As **Skills do ADK** são pacotes modulares que encapsulam diretrizes operacionais, checklists e fluxos de negócio em arquivos Markdown (`SKILL.md` e `references/`). Elas permitem que o agente opere com contexto progressivo (*progressive disclosure*), consultando conhecimentos especializados sob demanda sem sobrecarregar a janela de contexto principal.
@@ -330,7 +330,7 @@ Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo 
     /exit
     ```
 
-9.  💻 **Terminal Cloud Shell (`$`):** Acesse o diretório do agente recém-criado e crie o arquivo de configuração `.env` diretamente no seu local definitivo, definindo a região fixa como `global` e o modelo como `gemini-flash-3.8`:
+9.  💻 **Terminal Cloud Shell (`$`):** Acesse o diretório do agente recém-criado e crie o arquivo de configuração `.env` diretamente no seu local definitivo, definindo a região fixa como `global` e o modelo como `gemini-3.8-flash`:
 
     ```bash
     cd ~/workshop-agy/due-diligence-agent
@@ -339,7 +339,7 @@ Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo 
     GOOGLE_GENAI_USE_VERTEXAI=TRUE
     GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
     GOOGLE_CLOUD_LOCATION=global
-    MODEL=gemini-flash-3.8
+    MODEL=gemini-3.8-flash
     EOF
     ```
 

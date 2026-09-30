@@ -38,7 +38,7 @@ curl -s -X POST   -H "Authorization: Bearer ${ADC_TOKEN}"   -H "X-Goog-User-Proj
 
 ## 2. Vertex AI Gemini Foundation Model Inference (Global Endpoint)
 
-For labs evaluating or classifying intents using Gemini Flash models (such as `gemini-flash-3.8`):
+For labs evaluating or classifying intents using Gemini Flash models (such as `gemini-3.8-flash`):
 
 ### Endpoint Location
 Use the **`global`** Vertex AI endpoint:
@@ -46,8 +46,8 @@ Use the **`global`** Vertex AI endpoint:
 https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publishers/google/models/{model}:generateContent
 ```
 
-### Model Name Fallback Architecture
-Model aliases in Vertex AI can vary between `gemini-flash-3.8` and `gemini-3.8-flash`. When executing python test scripts from Cloud Shell, always implement automatic fallback:
+### Model Name
+The canonical Vertex AI model ID is **`gemini-3.8-flash`** (`gemini-<versão>-flash`). Do NOT use the inverted form `gemini-flash-3.8` — it is not a valid publisher model ID. When executing python test scripts from Cloud Shell, the snippet below calls the global endpoint:
 
 ```python
 import subprocess
@@ -58,7 +58,7 @@ import urllib.error
 token = subprocess.check_output(["gcloud", "auth", "print-access-token"]).decode("utf-8").strip()
 project_id = subprocess.check_output(["gcloud", "config", "get-value", "project"]).decode("utf-8").strip()
 
-model = "gemini-flash-3.8"
+model = "gemini-3.8-flash"
 url = f"https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publishers/google/models/{model}:generateContent"
 
 payload = {
@@ -76,15 +76,8 @@ try:
     with urllib.request.urlopen(req) as resp:
         print(resp.read().decode("utf-8"))
 except urllib.error.HTTPError as e:
-    # Automatic fallback for alternative publisher ID
-    url_alt = f"https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publishers/google/models/gemini-3.8-flash:generateContent"
-    req_alt = urllib.request.Request(
-        url_alt,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
-    )
-    with urllib.request.urlopen(req_alt) as resp:
-        print(resp.read().decode("utf-8"))
+    # Surface the API error body (e.g. 404 NOT_FOUND if the model ID is wrong)
+    print(f"HTTP {e.code}: {e.read().decode('utf-8')}")
 ```
 
 ---

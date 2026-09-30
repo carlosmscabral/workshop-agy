@@ -111,7 +111,7 @@ function check_task_2() {
         fi
     done
     if [ ${env_found} -eq 0 ]; then
-        check_fail "Arquivo .env ausente." "Crie o arquivo .env em due-diligence-agent/.env com GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION=global e MODEL=gemini-flash-3.8 conforme Tarefa 2."
+        check_fail "Arquivo .env ausente." "Crie o arquivo .env em due-diligence-agent/.env com GOOGLE_CLOUD_PROJECT, GOOGLE_CLOUD_LOCATION=global e MODEL=gemini-3.8-flash conforme Tarefa 2."
     fi
 
     # 2. Skill de Due Diligence

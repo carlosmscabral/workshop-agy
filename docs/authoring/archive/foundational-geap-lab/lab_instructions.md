@@ -179,7 +179,7 @@ cat << EOF > .env
 PROJECT_ID=${PROJECT_ID}
 REGION=${REGION}
 APP_ID=agy-enterprise-app
-GEMINI_MODEL=gemini-flash-3.7
+GEMINI_MODEL=gemini-3.7-flash
 VERTEX_LOCATION=global
 EOF
 
@@ -230,7 +230,7 @@ token = subprocess.check_output(["gcloud", "auth", "print-access-token"]).decode
 project_id = subprocess.check_output(["gcloud", "config", "get-value", "project"]).decode("utf-8").strip()
 
 # Endpoint fixo na região global para o modelo Gemini 3.7 Flash
-model = "gemini-flash-3.7"
+model = "gemini-3.7-flash"
 url = f"https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publishers/google/models/{model}:generateContent"
 
 payload = {
@@ -248,15 +248,8 @@ try:
     with urllib.request.urlopen(req) as resp:
         print(resp.read().decode("utf-8"))
 except urllib.error.HTTPError as e:
-    # Suporte para o alias gemini-3.7-flash caso haja variação de registro
-    url_alt = f"https://aiplatform.googleapis.com/v1/projects/{project_id}/locations/global/publishers/google/models/gemini-3.7-flash:generateContent"
-    req_alt = urllib.request.Request(
-        url_alt,
-        data=json.dumps(payload).encode("utf-8"),
-        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
-    )
-    with urllib.request.urlopen(req_alt) as resp:
-        print(resp.read().decode("utf-8"))
+    # Exibe o corpo do erro da API (ex.: 404 NOT_FOUND se o ID do modelo estiver incorreto)
+    print(f"HTTP {e.code}: {e.read().decode('utf-8')}")
 EOF
 
 python3 test_gemini.py

@@ -206,7 +206,7 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 ## Tarefa 2. Instalar o agents-cli, habilitar skills e criar o agente
 
-Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence, configura o ambiente com o modelo `gemini-flash-3.8` na região `global` e inspeciona o código gerado em `app/agent.py`.
+Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo de skills do ADK no assistente `agy`, utiliza o comando `/grill-me` para alinhar e gerar a arquitetura do agente de Due Diligence, configura o ambiente com o modelo `gemini-3.8-flash` na região `global` e inspeciona o código gerado em `app/agent.py`.
 
 1.  No terminal do Cloud Shell, instale e configure o `agents-cli` e atualize o `PATH`:
 
@@ -263,7 +263,7 @@ Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo 
     GOOGLE_GENAI_USE_VERTEXAI=TRUE
     GOOGLE_CLOUD_PROJECT=${PROJECT_ID}
     GOOGLE_CLOUD_LOCATION=global
-    MODEL=gemini-flash-3.8
+    MODEL=gemini-3.8-flash
     EOF
     ```
 

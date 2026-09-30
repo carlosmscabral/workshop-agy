@@ -57,7 +57,7 @@ When creating or configuring the agent in `due-diligence-agent/`:
   GOOGLE_GENAI_USE_VERTEXAI=TRUE
   GOOGLE_CLOUD_PROJECT=<PROJECT_ID>
   GOOGLE_CLOUD_LOCATION=global
-  MODEL=gemini-flash-3.8
+  MODEL=gemini-3.8-flash
   ```
 - **Dependencies:** Manage dependencies inside `~/workshop-agy/due-diligence-agent` using `uv` (`uv sync`).
 
