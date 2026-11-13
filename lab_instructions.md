@@ -321,7 +321,7 @@ Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo 
 7.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
 
     ```text
-    Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. O agente deve carregar a skill especializada localizada em skills/due-diligence-contract/SKILL.md (ou ../skills/due-diligence-contract/SKILL.md a partir da subpasta due-diligence-agent), respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
+    Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. Copie a pasta completa skills/due-diligence-contract (SKILL.md, references e assets) para dentro do pacote Python do agente, em due-diligence-agent/app/skills/due-diligence-contract, e carregue a skill a partir desse caminho relativo ao módulo, sem usar ../skills nem symlink, para que a skill seja empacotada no deploy. O agente deve respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
     ```
 
 8.  🤖 **Prompt do Antigravity CLI (`agy >`):** Saia do assistente digitando `/exit` no prompt do `agy` para retornar ao terminal do Cloud Shell:

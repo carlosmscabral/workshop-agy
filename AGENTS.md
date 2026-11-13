@@ -51,7 +51,7 @@ Recomendações objetivas para a equipe jurídica e executiva da Cymbal Technolo
 
 When creating or configuring the agent in `due-diligence-agent/`:
 - **Workspace Root Invariant:** The `agy` assistant runs from the repository root (`~/workshop-agy`), and creates/manages the agent project inside the subfolder `./due-diligence-agent/` (`~/workshop-agy/due-diligence-agent/`).
-- **Skill Path Resolution:** Inside `./due-diligence-agent/`, reference the skill directory at `../skills/due-diligence-contract/` (or copy/symlink it into the agent package so it is bundled into the container during Agent Runtime deployment).
+- **Skill Path Resolution:** Copy the complete skill directory (`SKILL.md`, `references/`, `assets/`) into the Python package of the agent: `due-diligence-agent/app/skills/due-diligence-contract/` (`app/` is the default package of the `agents-cli` scaffold). Resolve the path relative to the module (`Path(__file__).parent / "skills" / "due-diligence-contract"`). Do not reference `../skills/` and do not use a symlink. The Agent Runtime container copies only the agent package, and a skill outside the package works in `adk web` but fails after deployment.
 - **Environment Configuration (`due-diligence-agent/.env`):**
   ```env
   GOOGLE_GENAI_USE_VERTEXAI=TRUE

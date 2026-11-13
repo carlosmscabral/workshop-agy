@@ -1,57 +1,56 @@
 # Checklist Consolidado de Due Diligence Contratual
 
-Use este checklist para auditar cada cláusula do contrato e identificar pontos de vulnerabilidade jurídica.
+Use este checklist de 10 pontos para auditar contratos sociais e minutas societárias e identificar pontos de vulnerabilidade jurídica.
 
 ---
 
-## 1. Qualificação das Partes e Legitimidade
-- [ ] As partes estão qualificadas de forma completa (Razão Social, CNPJ, Endereço da Sede)?
-- [ ] Foi verificado se o signatário possui poderes de representação (ex: Administrador segundo o Contrato Social ou Procurador com procuração vigente)?
-- [ ] Há garantia de solvência ou exigência de garantias adicionais (fiança, aval, seguro-garantia), se aplicável?
+## 1. Qualificação dos Sócios e Representação
+- [ ] Os sócios estão qualificados de forma completa (nome ou razão social, CNPJ/CPF, endereço)?
+- [ ] Os sócios pessoa jurídica estão representados por quem tem poderes para assinar?
+- [ ] O contrato identifica o controlador e eventuais grupos de sócios vinculados?
 
-## 2. Objeto e Escopo
-- [ ] O objeto está descrito de forma clara, precisa e inequívoca?
-- [ ] Há exclusão explícita de itens fora do escopo para evitar a "expansão de escopo" (scope creep) sem remuneração adicional?
-- [ ] Os critérios de aceitação de entregáveis (milestones) estão definidos com precisão?
+## 2. Denominação, Sede e Objeto Social
+- [ ] A denominação e a sede estão descritas de forma precisa?
+- [ ] O objeto social é claro e compatível com a atividade real da sociedade?
+- [ ] O objeto social inclui atividades reguladas que exigem licença ou autorização?
 
-## 3. Preço, Condições de Pagamento e Reajuste
-- [ ] Os valores, moedas, tributos inclusos/exclusos e datas de vencimento estão explícitos?
-- [ ] Há cláusula de reajuste anual atrelada a um índice oficial de inflação (IPCA, IGP-M, etc.)?
-- [ ] Em caso de atraso, os encargos moratórios estão limitados aos patamares legais (multa de 2% e juros de 1% ao mês pro rata die)?
-- [ ] Existe previsão de suspensão de serviços/entregas em caso de inadimplemento prolongado do cliente?
+## 3. Capital Social e Quotas
+- [ ] O capital social está totalmente subscrito e integralizado?
+- [ ] A distribuição de quotas entre os sócios soma 100% e bate com os valores declarados?
+- [ ] Existem quotas com ônus, penhor ou direitos especiais?
 
-## 4. Vigência e Rescisão
-- [ ] A vigência é determinada ou indeterminada? Há renovação automática? Se sim, há prazo razoável para notificação de não-renovação?
-- [ ] Há previsão de denúncia unilateral imotivada (rescisão sem justa causa) mediante aviso prévio razoável (geralmente 30, 60 ou 90 dias)?
-- [ ] A rescisão motivada (por justa causa) exige notificação prévia concedendo prazo de cura (cure period, ex: 10 a 15 dias) para correção da falha antes do encerramento?
-- [ ] Existem multas rescisórias abusivas ou desproporcionais?
+## 4. Administração e Poderes de Assinatura
+- [ ] O contrato define quem administra a sociedade e por qual prazo?
+- [ ] A assinatura é isolada ou conjunta? Um único administrador consegue obrigar a sociedade sozinho?
+- [ ] Há regra de destituição e substituição de administradores?
 
-## 5. Responsabilidade e Indenização
-- [ ] Há cláusula de Limitação de Responsabilidade (Liability Cap) limitando as perdas totais a um montante razoável (ex: valor total pago nos últimos 12 meses do contrato)?
-- [ ] Há exclusão expressa de danos indiretos, incidentais, punitivos ou lucros cessantes?
-- [ ] A cláusula de indenização por perdas e danos é recíproca?
-- [ ] Há obrigação de indenizar terceiros em caso de violação de Propriedade Intelectual causada pela parte criadora?
+## 5. Alçadas e Quóruns de Deliberação
+- [ ] Existem limites de valor para empréstimos, garantias, alienação de ativos e contratações?
+- [ ] O quórum de aprovação desses atos dá poder de veto a algum sócio? O veto pode gerar impasse (*deadlock*)?
+- [ ] O contrato prevê mecanismo para resolver impasses entre os sócios?
 
-## 6. Propriedade Intelectual (PI)
-- [ ] Fica claro que as propriedades intelectuais preexistentes de cada parte continuam pertencendo exclusivamente a elas (Background IP)?
-- [ ] A propriedade dos novos entregáveis criados sob o contrato (Foreground IP) é transmitida a quem paga, ou é apenas licenciada?
-- [ ] Há outorga de licença de uso recíproca apenas para os fins de execução do contrato?
+## 6. Cessão de Quotas e Direito de Preferência
+- [ ] Os demais sócios têm direito de preferência na cessão de quotas a terceiros?
+- [ ] O contrato define prazo, forma de notificação e critério de preço para o exercício da preferência?
+- [ ] Há restrições de cessão (*lock-up*) ou regras para ingresso de herdeiros e sucessores?
 
-## 7. Confidencialidade
-- [ ] O dever de confidencialidade é bidirecional (mútuo)?
-- [ ] A vigência da obrigação de sigilo sobrevive ao término do contrato por um prazo razoável (recomenda-se de 3 a 5 anos)?
-- [ ] As exceções clássicas (informações públicas, já conhecidas anteriormente ou reveladas por ordem judicial) estão cobertas?
+## 7. Tag-Along e Drag-Along
+- [ ] O *tag-along* garante ao minoritário qual percentual do preço pago ao controlador?
+- [ ] Qual participação mínima aciona o *drag-along*? O minoritário tem proteção de preço mínimo?
+- [ ] Os gatilhos (alienação de controle, oferta de terceiro) estão definidos sem ambiguidade?
 
-## 8. Proteção de Dados (LGPD)
-- [ ] Estão definidos claramente os papéis de Controlador (Controller) e Operador (Processor) de dados pessoais?
-- [ ] Há obrigação de o Operador cooperar com o Controlador no atendimento aos direitos dos titulares e em auditorias?
-- [ ] Há prazo expresso (geralmente 24h a 48h) para que o Operador notifique o Controlador sobre qualquer incidente de segurança ou vazamento de dados?
+## 8. Passivos, Contingências e Declarações
+- [ ] O contrato ou seus anexos declaram processos judiciais, trabalhistas ou fiscais?
+- [ ] Qual o valor estimado e a classificação de risco de cada contingência (provável, possível, remota)?
+- [ ] Há garantia, retenção de preço ou indenização dos sócios para cobrir esses passivos?
 
-## 9. Compliance e Anticorrupção
-- [ ] Há cláusula de conformidade com a Lei Anticorrupção brasileira (Lei nº 12.846/2013) e estrangeiras (FCPA/UK Bribery Act), se aplicável?
-- [ ] Há previsão de rescisão imediata e motivada em caso de violação de normas éticas ou sanções governamentais?
+## 9. Não Concorrência, Confidencialidade e Penalidades
+- [ ] A não concorrência tem prazo, escopo geográfico e segmento de atuação definidos?
+- [ ] O prazo após a saída do sócio é razoável (em geral até 24 meses) ou é passível de questionamento?
+- [ ] A multa é proporcional ao dano? O contrato define se a multa substitui ou se soma a perdas e danos?
+- [ ] O dever de confidencialidade tem prazo e exceções definidos?
 
 ## 10. Resolução de Conflitos e Foro
-- [ ] A lei aplicável é a legislação da República Federativa do Brasil?
-- [ ] O foro eleito para dirimir conflitos é conveniente e neutro?
-- [ ] Há cláusula prevendo tentativa de resolução amigável/mediação antes de recorrer à via judicial ou arbitral?
+- [ ] O contrato elege arbitragem ou foro judicial? A câmara arbitral e o regulamento estão identificados?
+- [ ] Há foro subsidiário para medidas de urgência e execução?
+- [ ] A numeração e os títulos das cláusulas são consistentes, sem duplicidade ou cláusula ausente?
