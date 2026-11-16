@@ -170,7 +170,7 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 - **Passo 6:** Em **Select License**, selecione a opção `1. Agent Platform`  
   ![Passo 6 - Seleção de Licença](assets/imgs/agy_auth_6.png)
 
-- **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de preferência (ex: `dark`)  
+- **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de preferência (ex: `dark`). Em **Migration options**, mantenha `Import extensions from Gemini CLI` desmarcada e confirme em `Next`  
   ![Passo 7 - Tema Visual](assets/imgs/agy_auth_7.png)
 
 - **Passo 8:** Em **Terms of Service & Data Use**, selecione `Done` para aceitar os termos  
@@ -200,6 +200,7 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
     ```
 
 4.  Na barra superior do Cloud Shell, clique em **Abrir Editor** (*Open Editor*) ![Ícone Open Editor](assets/imgs/cloud_shell_editor.png), abra `workshop-agy/skills/due-diligence-contract/SKILL.md` para visualizar a estrutura da skill do ADK e, em seguida, clique em **Abrir Terminal** (*Open Terminal*) para voltar ao prompt (`$`):  
+   ![Botão Open Editor na barra superior do Cloud Shell](assets/imgs/cloud_shell_open_editor_bar.png)
    ![Visualização da skill SKILL.md no Editor do Cloud Shell](assets/imgs/editor_skill_md.png)
 
 ---
@@ -248,7 +249,7 @@ Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo 
    - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
    - **Formato de saída esperado:** *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.*
 
-7.  Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)):
+7.  Solicite ao `agy` para criar a estrutura do agente utilizando a especificação de ADK Skills ([adk.dev/skills](https://adk.dev/skills/)). ⏳ **Este é o passo mais demorado do laboratório:** o `agy` cria o projeto, copia a skill e instala as dependências, o que leva cerca de **4 a 6 minutos**. É normal ver vários comandos em sequência. Não interrompa o assistente e aguarde o prompt `agy >` voltar.
 
     ```text
     Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. Copie a pasta completa skills/due-diligence-contract (SKILL.md, references e assets) para dentro do pacote Python do agente, em due-diligence-agent/app/skills/due-diligence-contract, e carregue a skill a partir desse caminho relativo ao módulo, sem usar ../skills nem symlink, para que a skill seja empacotada no deploy. O agente deve respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
@@ -290,7 +291,7 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
     ```
 
 2.  Assim que o terminal exibir **`ADK Web Server started | For local testing, access at http://127.0.0.1:8000.`**, clique diretamente no link **`http://127.0.0.1:8000`** no terminal (`CTRL+Clique` / `CMD+Clique`) para que o Cloud Shell abra automaticamente a interface do ADK Web em uma nova aba *(ou clique em **Visualização na Web** ![Ícone Web Preview](assets/imgs/web_preview.png) → **Alterar porta** para **`8000`**)*.
-3.  Consulte a minuta do contrato de amostra [sample_contract.pdf](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf) e teste a regra de gating e a auditoria enviando o documento no chat.
+3.  Abra o [texto do contrato de amostra](docs/sample_contract.md) (também em [PDF](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf)), teste a regra de gating e, em seguida, cole o texto completo do contrato no chat para testar a auditoria. O agente não abre arquivos por caminho de pasta.
 4.  Caso deseje refinar prompts ou o formato do relatório, abra uma segunda aba no Cloud Shell (`+`) e inicie o `agy` na raiz do workspace (`~/workshop-agy`):
 
     ```bash

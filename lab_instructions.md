@@ -220,7 +220,7 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 - **Passo 6:** Em **Select License**, selecione a opção **`1. Agent Platform`** e confirme pressionando `ENTER`:  
   ![Passo 6 - Seleção de Licença](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_6.png)
 
-- **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de sua preferência (como **`dark`**) e confirme pressionando `ENTER`:  
+- **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de sua preferência (como **`dark`**). Em **Migration options**, mantenha a opção **`Import extensions from Gemini CLI`** desmarcada (`[ ]`), navegue até **`Next`** e confirme pressionando `ENTER`:  
   ![Passo 7 - Tema Visual](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_7.png)
 
 - **Passo 8:** Na tela **Terms of Service & Data Use**, navegue até a opção **`Done`** e confirme pressionando `ENTER` para aceitar os termos de serviço:  
@@ -265,6 +265,7 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
     ```
 
 4.  📝 **Editor do Cloud Shell:** Na barra superior do Cloud Shell, clique no botão **Abrir Editor** (*Open Editor*) ![Ícone Open Editor](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/cloud_shell_editor.png). Na árvore de arquivos à esquerda, expanda `workshop-agy` → `skills` → `due-diligence-contract` e clique em **`SKILL.md`** para visualizar como uma skill do ADK é estruturada (metadados YAML no topo, seção `<gating_rule>` e ponteiros de contexto progressivo para `references/workflow.md` e `references/checklist.md`). Em seguida, clique no botão **Abrir Terminal** (*Open Terminal*) na barra superior direita do Cloud Shell para voltar ao prompt (`$`):  
+   ![Botão Open Editor na barra superior do Cloud Shell](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/cloud_shell_open_editor_bar.png)
    ![Visualização da skill SKILL.md no Editor do Cloud Shell](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/editor_skill_md.png)
 
 ---
@@ -318,7 +319,7 @@ Nesta tarefa, você instala o `agents-cli`, valida obrigatoriamente o catálogo 
    - **Regra de gating de entrada:** *O agente só deve carregar o checklist detalhado após receber um contrato ou texto jurídico válido do usuário.*
    - **Formato de saída esperado:** *Relatório estruturado em Markdown com classificação de risco (Alto/Médio/Baixo) e recomendações práticas.*
 
-7.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente:
+7.  🤖 **Prompt do Antigravity CLI (`agy >`):** Concluído o alinhamento com o `/grill-me`, envie a seguinte instrução no prompt do `agy` para gerar o projeto do agente. ⏳ **Este é o passo mais demorado do laboratório:** o `agy` cria o projeto, copia a skill e instala as dependências, o que leva cerca de **4 a 6 minutos**. É normal ver vários comandos em sequência. Não interrompa o assistente e aguarde o prompt `agy >` voltar.
 
     ```text
     Crie um projeto de agente ADK chamado due-diligence-agent seguindo a especificação oficial de ADK Skills (adk.dev/skills) e as convenções do agents-cli. Copie a pasta completa skills/due-diligence-contract (SKILL.md, references e assets) para dentro do pacote Python do agente, em due-diligence-agent/app/skills/due-diligence-contract, e carregue a skill a partir desse caminho relativo ao módulo, sem usar ../skills nem symlink, para que a skill seja empacotada no deploy. O agente deve respeitar estritamente a regra de gating (não carregar instruções detalhadas antes que um contrato seja enviado) e consultar references/workflow.md para estruturar o relatório de auditoria.
@@ -360,7 +361,7 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
 
 > 📄 **Acesso ao Contrato de Amostra:**  
 > Para consultar a minuta utilizada no teste de auditoria (*Contrato Social Consolidado — Nexus Tecnologia Ltda.*), você pode abrir e inspecionar o documento diretamente pelo Cloud Storage:  
-> 🔗 **[Visualizar sample_contract.pdf no navegador](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf)** *(também disponível localmente no seu ambiente em `docs/sample_contract.pdf`)*.
+> 🔗 **[Abrir o texto do contrato de amostra para copiar](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/docs/sample_contract.md)** *(a versão em PDF está em [sample_contract.pdf](https://storage.googleapis.com/workshop-agy-public-assets/sample_contract.pdf))*.
 
 > 📑 **Estrutura Esperada no Relatório de Due Diligence:**  
 > O relatório gerado deve conter a identificação da empresa auditada, classificação geral de risco (**ALTO**, **MÉDIO** ou **BAIXO**), matriz de riscos societários (administração, direito de preferência, não concorrência) e parecer conclusivo com recomendações práticas para a Cymbal Technologies.
@@ -378,7 +379,7 @@ Nesta tarefa, você valida o comportamento do agente e suas regras de gating atr
 
 3.  🌐 **Chat do ADK Web (Navegador):** No chat da interface web, execute os dois cenários de validação:
    - **Cenário 1 — Teste de Gating Rule:** Envie `Olá, você pode analisar um contrato para mim?`. Valide que o agente responde cordialmente solicitando o envio ou texto do contrato antes de carregar instruções adicionais (*Gating Rule*).
-   - **Cenário 2 — Auditoria de Contrato:** Envie o texto do contrato (ou indique o arquivo `docs/sample_contract.pdf`). Valide que o agente carrega as instruções de `references/workflow.md`, analisa cláusulas societárias, administração, quotas e gera o relatório completo de Due Diligence estruturado com classificação de risco e parecer.
+   - **Cenário 2 — Auditoria de Contrato:** Abra o texto do contrato de amostra pelo link acima, selecione todo o conteúdo (`CTRL+A` ou `CMD+A`), copie e cole no chat. O agente não abre arquivos por caminho de pasta, portanto não envie apenas `docs/sample_contract.pdf`. Como alternativa, anexe o PDF pelo botão **`+`** → **Upload local file**. Valide que o agente carrega as instruções de `references/workflow.md`, analisa cláusulas societárias, administração, quotas e gera o relatório completo de Due Diligence estruturado com classificação de risco e parecer.
 
 4.  🤖 **Prompt do agy (Segunda Aba do Cloud Shell):** **Refinamento e Depuração com agy:** Caso necessite ajustar prompts, reforçar regras de gating ou melhorar a formatação do relatório, clique no ícone **`+`** na barra superior do Cloud Shell para abrir uma nova aba de terminal e inicie o `agy` na raiz do workspace (`~/workshop-agy`):
 
