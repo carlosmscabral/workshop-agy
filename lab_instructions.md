@@ -211,14 +211,14 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 - **Passo 3:** Abra o link de autorização exibido no terminal (`CTRL+Clique` ou `CMD+Clique`) em uma nova aba da sua Janela Anônima, selecione a conta de estudante <ql-variable key="user_0.username"></ql-variable>, conceda o consentimento e cole o código de autorização de volta no terminal (`CTRL+SHIFT+V` ou `CMD+V`):  
   ![Passo 3 - Permissões](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_3.png)
 
-- **Passo 4:** Cole (`CTRL+SHIFT+V` ou `CMD+V`) o ID do seu projeto sandbox (<ql-variable key="project_0.project_id"></ql-variable>) no prompt e confirme pressionando `ENTER`:  
-  ![Passo 4 - ID do Projeto](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_4.png)
+- **Passo 4:** Em **Select billing model**, use a seta para baixo para selecionar **`2. Pay As You Go`** e confirme pressionando `ENTER`. Não confirme a opção `1. Subscriptions`, que vem selecionada por padrão:  
+  ![Passo 4 - Modelo de Cobrança](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_billing.png)
 
-- **Passo 5:** Em **Select Google Cloud Location**, selecione a opção **`global`** e confirme pressionando `ENTER`:  
-  ![Passo 5 - Região Global](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_5.png)
+- **Passo 5:** Em **Provide Google Cloud project**, cole (`CTRL+SHIFT+V` ou `CMD+V`) o ID do seu projeto sandbox (<ql-variable key="project_0.project_id"></ql-variable>) no prompt e confirme pressionando `ENTER`:  
+  ![Passo 5 - ID do Projeto](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_4.png)
 
-- **Passo 6:** Em **Select License**, selecione a opção **`1. Agent Platform`** e confirme pressionando `ENTER`:  
-  ![Passo 6 - Seleção de Licença](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_6.png)
+- **Passo 6:** Em **Choose region**, selecione a opção **`global`** e confirme pressionando `ENTER`:  
+  ![Passo 6 - Região Global](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_5.png)
 
 - **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de sua preferência (como **`dark`**). Em **Migration options**, mantenha a opção **`Import extensions from Gemini CLI`** desmarcada (`[ ]`), navegue até **`Next`** e confirme pressionando `ENTER`:  
   ![Passo 7 - Tema Visual](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_auth_7.png)
@@ -246,25 +246,34 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 ### Explorar comandos básicos do agy e a estrutura da Skill
 
-1.  🤖 **Prompt do Antigravity CLI (`agy >`):** Execute o comando `/help` para conhecer os atalhos, comandos interativos (`/skills`, `/config`, `/grill-me`, `/clear`, `/exit`) e recursos nativos do assistente:
+1.  🤖 **Prompt do Antigravity CLI (`agy >`):** **Selecionar o modelo do assistente (Obrigatório):** O modelo padrão do `agy` não está liberado neste ambiente de laboratório. Antes de enviar qualquer prompt, abra o seletor de modelos:
+
+    ```text
+    /model
+    ```
+
+2.  🤖 **Prompt do Antigravity CLI (`agy >`):** Na lista **Switch Model**, selecione **`Gemini 3.8 Flash`**, mantenha **Effort** em **`medium`** e confirme pressionando `ENTER`. Se em algum momento o `agy` exibir o erro `Organization Policy constraint constraints/vertexai.allowedModels violated`, execute `/model` e selecione **`Gemini 3.8 Flash`** novamente:  
+   ![Seleção do modelo Gemini 3.8 Flash no agy](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/agy_model_flash.png)
+
+3.  🤖 **Prompt do Antigravity CLI (`agy >`):** Execute o comando `/help` para conhecer os atalhos, comandos interativos (`/skills`, `/config`, `/grill-me`, `/clear`, `/exit`) e recursos nativos do assistente:
 
     ```text
     /help
     ```
 
-2.  🤖 **Prompt do Antigravity CLI (`agy >`):** Faça um teste rápido de leitura de contexto enviando o prompt abaixo para que o `agy` inspecione a skill pré-fornecida no repositório:
+4.  🤖 **Prompt do Antigravity CLI (`agy >`):** Faça um teste rápido de leitura de contexto enviando o prompt abaixo para que o `agy` inspecione a skill pré-fornecida no repositório:
 
     ```text
     Leia o arquivo skills/due-diligence-contract/SKILL.md e resuma em 3 tópicos como funciona a regra de Gating deste agente.
     ```
 
-3.  🤖 **Prompt do Antigravity CLI (`agy >`):** Após conferir a resposta do assistente, saia da sessão interativa digitando `/exit` para retornar ao prompt do terminal do Cloud Shell (`$`):
+5.  🤖 **Prompt do Antigravity CLI (`agy >`):** Após conferir a resposta do assistente, saia da sessão interativa digitando `/exit` para retornar ao prompt do terminal do Cloud Shell (`$`):
 
     ```text
     /exit
     ```
 
-4.  📝 **Editor do Cloud Shell:** Na barra superior do Cloud Shell, clique no botão **Abrir Editor** (*Open Editor*) ![Ícone Open Editor](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/cloud_shell_editor.png). Na árvore de arquivos à esquerda, expanda `workshop-agy` → `skills` → `due-diligence-contract` e clique em **`SKILL.md`** para visualizar como uma skill do ADK é estruturada (metadados YAML no topo, seção `<gating_rule>` e ponteiros de contexto progressivo para `references/workflow.md` e `references/checklist.md`). Em seguida, clique no botão **Abrir Terminal** (*Open Terminal*) na barra superior direita do Cloud Shell para voltar ao prompt (`$`):  
+6.  📝 **Editor do Cloud Shell:** Na barra superior do Cloud Shell, clique no botão **Abrir Editor** (*Open Editor*) ![Ícone Open Editor](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/cloud_shell_editor.png). Na árvore de arquivos à esquerda, expanda `workshop-agy` → `skills` → `due-diligence-contract` e clique em **`SKILL.md`** para visualizar como uma skill do ADK é estruturada (metadados YAML no topo, seção `<gating_rule>` e ponteiros de contexto progressivo para `references/workflow.md` e `references/checklist.md`). Em seguida, clique no botão **Abrir Terminal** (*Open Terminal*) na barra superior direita do Cloud Shell para voltar ao prompt (`$`):  
    ![Botão Open Editor na barra superior do Cloud Shell](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/cloud_shell_open_editor_bar.png)
    ![Visualização da skill SKILL.md no Editor do Cloud Shell](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/editor_skill_md.png)
 
@@ -457,8 +466,8 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 
 1.  ☁️ **Console Google Cloud:** No Console do Google Cloud, pesquise por **Gemini Enterprise** no campo de pesquisa superior ou navegue pelo **Menu de navegação (☰) > Mais produtos > Inteligência Artificial > Gemini Enterprise** (ou **Agent Builder** / **Discovery Engine**).
 
-2.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Ativação da Licença / Habilitação do GE App:** Se for a primeira vez que você acessa o painel nesta sessão, habilite o Gemini Enterprise App:  
-   ![Habilitar Gemini Enterprise App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_enable.png)
+2.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Iniciar a criação do App:** Na tela **Welcome to Gemini Enterprise**, clique em **Create your first app**:  
+   ![Tela de boas-vindas do Gemini Enterprise](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_enable.png)
 
 3.  ☁️ **Console Google Cloud (Gemini Enterprise):** **Criar uma Instância do App:** Crie um novo aplicativo corporativo com o nome **Cymbal Compliance & Legal Hub**:  
    ![Criar Instância do GE App](https://raw.githubusercontent.com/carlosmscabral/workshop-agy/main/assets/imgs/ge_app_create.png)

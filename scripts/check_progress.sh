@@ -138,7 +138,7 @@ function check_task_2() {
 
     if [ -n "${agent_dir}" ]; then
         check_pass "Diretório do agente '${agent_dir}' detectado."
-        if [ -f "${agent_dir}/pyproject.toml" ] || [ -f "${agent_dir}/agent.py" ]; then
+        if [ -f "${agent_dir}/pyproject.toml" ] || [ -f "${agent_dir}/app/agent.py" ]; then
             check_pass "Arquivos de código do agente localizados em '${agent_dir}'."
         else
             check_warn "Estrutura do agente em '${agent_dir}' parece incompleta." "Peça ao agy para gerar o agente ADK."
@@ -197,9 +197,10 @@ function check_task_5() {
     echo -e "${BOLD}--- Validando Tarefa 5: Publicação no Gemini Enterprise App ---${NC}"
     check_info "A publicação final no Gemini Enterprise App é realizada via Console do Google Cloud."
     check_info "Certifique-se de que:"
-    echo -e "     1. A funcionalidade de Agentes (Agents) foi ativada na aba Features do App;"
+    # O Gemini Enterprise aceita apenas o Resource Name da coleção reasoningEngines do Agent Runtime.
+    echo -e "     1. O agente foi adicionado no menu Agents do App como agente do Agent Runtime;"
     echo -e "     2. O Resource Name do agente foi colado no formato:"
-    echo -e "        projects/<PROJECT_ID>/locations/<REGION>/agents/<AGENT_ID>"
+    echo -e "        projects/<PROJECT_NUMBER_OR_ID>/locations/<REGION>/reasoningEngines/<REASONING_ENGINE_ID>"
     echo ""
 }
 

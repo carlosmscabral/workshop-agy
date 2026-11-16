@@ -161,14 +161,14 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 - **Passo 3:** Conceda as permissões de acesso na Janela Anônima e cole o código de autorização no terminal (`CTRL+SHIFT+V` / `CMD+V`)  
   ![Passo 3 - Permissões](assets/imgs/agy_auth_3.png)
 
-- **Passo 4:** Cole (`CTRL+SHIFT+V` / `CMD+V`) o ID do seu projeto sandbox (`echo $PROJECT_ID`)  
-  ![Passo 4 - ID do Projeto](assets/imgs/agy_auth_4.png)
+- **Passo 4:** Em **Select billing model**, selecione `2. Pay As You Go` (a opção `1. Subscriptions` vem selecionada por padrão)  
+  ![Passo 4 - Modelo de Cobrança](assets/imgs/agy_auth_billing.png)
 
-- **Passo 5:** Em **Select Google Cloud Location**, selecione a opção `global`  
-  ![Passo 5 - Região Global](assets/imgs/agy_auth_5.png)
+- **Passo 5:** Em **Provide Google Cloud project**, cole (`CTRL+SHIFT+V` / `CMD+V`) o ID do seu projeto sandbox (`echo $PROJECT_ID`)  
+  ![Passo 5 - ID do Projeto](assets/imgs/agy_auth_4.png)
 
-- **Passo 6:** Em **Select License**, selecione a opção `1. Agent Platform`  
-  ![Passo 6 - Seleção de Licença](assets/imgs/agy_auth_6.png)
+- **Passo 6:** Em **Choose region**, selecione a opção `global`  
+  ![Passo 6 - Região Global](assets/imgs/agy_auth_5.png)
 
 - **Passo 7:** Em **Choose your color scheme**, selecione o tema de cores de preferência (ex: `dark`). Em **Migration options**, mantenha `Import extensions from Gemini CLI` desmarcada e confirme em `Next`  
   ![Passo 7 - Tema Visual](assets/imgs/agy_auth_7.png)
@@ -181,25 +181,34 @@ Nesta tarefa, você inicializa as variáveis do Cloud Shell, clona os artefatos 
 
 ### Explorar comandos básicos do agy e a estrutura da Skill
 
-1.  No prompt do `agy >`, execute `/help` para conhecer os atalhos e comandos interativos disponíveis:
+1.  **Selecionar o modelo do assistente (Obrigatório):** o modelo padrão do `agy` não está liberado no ambiente de laboratório. Antes de enviar qualquer prompt, abra o seletor de modelos:
+
+    ```text
+    /model
+    ```
+
+2.  Selecione `Gemini 3.8 Flash`, mantenha **Effort** em `medium` e confirme com `ENTER`. Se o `agy` exibir o erro `constraints/vertexai.allowedModels violated`, repita este passo:  
+   ![Seleção do modelo Gemini 3.8 Flash no agy](assets/imgs/agy_model_flash.png)
+
+3.  No prompt do `agy >`, execute `/help` para conhecer os atalhos e comandos interativos disponíveis:
 
     ```text
     /help
     ```
 
-2.  Faça um teste rápido de leitura de contexto enviando o prompt abaixo para que o `agy` inspecione a skill pré-fornecida no repositório:
+4.  Faça um teste rápido de leitura de contexto enviando o prompt abaixo para que o `agy` inspecione a skill pré-fornecida no repositório:
 
     ```text
     Leia o arquivo skills/due-diligence-contract/SKILL.md e resuma em 3 tópicos como funciona a regra de Gating deste agente.
     ```
 
-3.  Após conferir a resposta do assistente, saia da sessão interativa digitando `/exit` para retornar ao terminal do Cloud Shell (`$`):
+5.  Após conferir a resposta do assistente, saia da sessão interativa digitando `/exit` para retornar ao terminal do Cloud Shell (`$`):
 
     ```text
     /exit
     ```
 
-4.  Na barra superior do Cloud Shell, clique em **Abrir Editor** (*Open Editor*) ![Ícone Open Editor](assets/imgs/cloud_shell_editor.png), abra `workshop-agy/skills/due-diligence-contract/SKILL.md` para visualizar a estrutura da skill do ADK e, em seguida, clique em **Abrir Terminal** (*Open Terminal*) para voltar ao prompt (`$`):  
+6.  Na barra superior do Cloud Shell, clique em **Abrir Editor** (*Open Editor*) ![Ícone Open Editor](assets/imgs/cloud_shell_editor.png), abra `workshop-agy/skills/due-diligence-contract/SKILL.md` para visualizar a estrutura da skill do ADK e, em seguida, clique em **Abrir Terminal** (*Open Terminal*) para voltar ao prompt (`$`):  
    ![Botão Open Editor na barra superior do Cloud Shell](assets/imgs/cloud_shell_open_editor_bar.png)
    ![Visualização da skill SKILL.md no Editor do Cloud Shell](assets/imgs/editor_skill_md.png)
 
@@ -344,8 +353,8 @@ Nesta tarefa final, você conecta o recurso do Agent Runtime ao **Gemini Enterpr
 > Ao vincular o agente e clicar em **Create**, caso a interface exiba erro temporário de permissão, aguarde de 30 a 60 segundos e clique novamente em **Create** para que a conta de serviço do Gemini Enterprise conclua a propagação de permissões no Google Cloud IAM.
 
 1.  No Console do Google Cloud, pesquise por **Gemini Enterprise** ou **Agent Builder**.
-2.  Habilite o Gemini Enterprise App:  
-   ![Habilitar Gemini Enterprise App](assets/imgs/ge_app_enable.png)
+2.  Na tela **Welcome to Gemini Enterprise**, clique em **Create your first app**:  
+   ![Tela de boas-vindas do Gemini Enterprise](assets/imgs/ge_app_enable.png)
 
 3.  Crie um aplicativo corporativo chamado **Cymbal Compliance & Legal Hub**:  
    ![Criar Instância do GE App](assets/imgs/ge_app_create.png)
